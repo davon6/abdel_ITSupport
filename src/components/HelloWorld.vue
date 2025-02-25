@@ -43,7 +43,7 @@ onMounted(() => {
 
       <!-- Block 1 -->
       <div class="info-block fade-in">
-        <img src="C:\Users\davon\abdel_website\my-vue-app\src\assets\digitization.jpg" alt="Network Security">
+        <img src="\digitization.jpg" alt="Network Security">
         <div class="text">
           <h3>Network Security</h3>
           <p>We provide advanced security solutions to protect your network from cyber threats.</p>
@@ -56,12 +56,12 @@ onMounted(() => {
           <h3>IT Consulting</h3>
           <p>Our expert IT consultants help you optimize technology strategies for business growth.</p>
         </div>
-        <img src="C:\Users\davon\abdel_website\my-vue-app\src\assets\global.jpg" alt="IT Consulting">
+        <img src="\global.jpg" alt="IT Consulting">
       </div>
 
       <!-- Block 3 -->
       <div class="info-block slide-in-right">
-        <img src="C:\Users\davon\abdel_website\my-vue-app\src\assets\istockphoto.jpg" alt="Cloud Solutions">
+        <img src="\istockphoto.jpg" alt="Cloud Solutions">
         <div class="text">
           <h3>Cloud Solutions</h3>
           <p>Seamless cloud integration services to enhance collaboration and efficiency.</p>
@@ -74,7 +74,7 @@ onMounted(() => {
           <h3>24/7 Tech Support</h3>
           <p>Round-the-clock technical support to resolve your issues quickly and efficiently.</p>
         </div>
-        <img src="C:\Users\davon\abdel_website\my-vue-app\src\assets\world-wide-web.jpg" alt="24/7 Tech Support">
+        <img src="\world-wide-web.jpg" alt="24/7 Tech Support">
       </div>
     </section>
 
