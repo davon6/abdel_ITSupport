@@ -102,6 +102,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f4f4f9;
   color: #333;
+  margin: 0 auto;
 }
 
 /* Navigation Bar */
