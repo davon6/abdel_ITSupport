@@ -4,12 +4,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <img class="logo" src="\business.jpg" alt="Your Image Description" />
+ 
   </div>
   <HelloWorld msg="Vite + Vue" />
 </template>
@@ -26,5 +22,13 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.img {
+  width: 100%;
+  height: 10px;
+  max-height: 60px;
+  display: block;
+  margin: 0 auto;
 }
 </style>

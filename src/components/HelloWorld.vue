@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {/* ref,*/ onMounted } from 'vue'
+import SupportForm from './SupportForm.vue' 
 
 //const count = ref(0)
 
@@ -27,7 +28,9 @@ onMounted(() => {
   <header>
     <nav>
       <div class="logo">IT Support Hub</div>
-      <ul>
+
+   
+      <ul class="nav-links">
         <li><a href="#">Home</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Contact</a></li>
@@ -77,12 +80,16 @@ onMounted(() => {
         <img src="\world-wide-web.jpg" alt="24/7 Tech Support">
       </div>
     </section>
-
+    <SupportForm />
+<!--
     <section class="hero">
       <h1>Reliable IT Support Services</h1>
       <p>Expert solutions for all your tech needs, from troubleshooting to system optimization.</p>
-      <button class="btn">Get Support</button>
+    
+
     </section>
+  -->
+  
   </main>
 
   <footer>
@@ -92,6 +99,7 @@ onMounted(() => {
 
 <style scoped>
 /* Basic Reset */
+/* Basic Reset */
 * {
   margin: 0;
   padding: 0;
@@ -99,10 +107,11 @@ onMounted(() => {
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f9;
+  background: linear-gradient(to bottom right, #f4f4f9, #e1e9f0);  /* Light gradient with soft blue tones */
   color: #333;
-  margin: 0 auto;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt.png');  /* Subtle texture */
+  background-blend-mode: overlay;
+  background-size: cover;
 }
 
 /* Navigation Bar */
@@ -142,6 +151,10 @@ nav ul li a:hover {
   padding: 80px 20px;
   background: url('https://source.unsplash.com/1600x900/?technology,computer') no-repeat center center/cover;
   color: white;
+  background-position: center center;
+  background-size: cover;
+  padding: 50px 20px;
+
 }
 
 .hero h1 {
@@ -250,4 +263,93 @@ footer {
   color: white;
   margin-top: 20px;
 }
+
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Prevents sideways shifting */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* For mobile screens */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .hero, .what-we-do {
+    padding-top: 30px;
+  }
+
+  nav {
+    flex-direction: column;  /* Stack the logo and nav links vertically */
+    align-items: center;     /* Center the content */
+    padding: 10px;           /* Add some space around */
+  }
+
+  nav .logo {
+    font-size: 1.2rem;       /* Reduce font size for smaller screens */
+    margin-bottom: 10px;     /* Add space below the logo */
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;  /* Stack links vertically */
+    gap: 10px;               /* Space between the links */
+    padding: 0;
+    margin: 0;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;         /* Adjust font size */
+  }
+
+
+
+
+/* For mobile screens (below 600px) */
+@media (max-width: 600px) {
+  nav {
+    align-items: center;
+    padding: 10px !important; /* Force padding */
+  }
+
+  nav .logo {
+    font-size: 1.2rem !important;        /* Adjust font size */
+    margin-bottom: 10px !important;      /* Space between logo and nav links */
+  }
+
+  nav ul {
+    display: flex !important;
+    flex-direction: row !important;      /* Keep navigation links in a row */
+    gap: 15px !important;                /* Space between the navigation items */
+    justify-content: center !important;  /* Center the nav items */
+    margin-top: 10px !important;         /* Add some space above the nav links */
+  }
+
+  /* Adjust spacing for the support button */
+  .hero .btn {
+    margin-top: 10px !important;  /* Reduce the gap from content above */
+  }
+
+  /* Optional: Reduce margin between sections for mobile */
+  .info-block {
+    margin-bottom: 20px !important; /* Reduce gap between info blocks */
+  }
+}
+
+
+
+
+
+}
+
+
+
 </style>
