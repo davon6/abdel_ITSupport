@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
 
 export default defineConfig({
   plugins: [vue()],
@@ -11,8 +12,13 @@ export default defineConfig({
       clientPort: 443,
     },
     allowedHosts: [
-      ".ngrok-free.app",  // Allow all ngrok-generated subdomains
+      ".ngrok-free.app",
       "localhost",
     ],
-  }
+  },
+  resolve: {               // <-- here
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 })

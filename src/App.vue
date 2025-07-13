@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <img class="logo" src="\business.jpg" alt="Your Image Description" />
- 
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!-- Optional: global logo or header visible on every page -->
+  <img class="logo" src="/business.jpg" alt="ShoTech logo" />
+
+  <!-- Route views -->
+  <router-view />
 </template>
 
 <style scoped>
@@ -22,13 +21,5 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
-
-.img {
-  width: 100%;
-  height: 10px;
-  max-height: 60px;
-  display: block;
-  margin: 0 auto;
 }
 </style>
