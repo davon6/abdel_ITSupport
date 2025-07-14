@@ -512,7 +512,7 @@ html {
 }
 .section-parallax {
   position: relative;
-  background-image: url('/istockphoto.jpg'); /* Or another IT/tech background you like */
+  background-image: url('/world-wide-web.jpg'); /* Or another IT/tech background you like */
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
