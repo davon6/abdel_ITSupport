@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ChoiceModal from '@/components/ChoiceModal.vue'
+import { useRouter, useRoute } from 'vue-router'
 
-onMounted(() => {
-  AOS.init({
-    duration: 800,
-    once: true,
-  })
-
-  new Rellax('.rellax') // ← now it’ll actually initialize parallax effect
-})
-
-
-
-const router = useRouter()
 const showModal = ref(false)
+const router = useRouter()
+const route = useRoute()
 
 function onDiscoverClick() {
   showModal.value = true
@@ -28,10 +18,33 @@ function handleClose() {
   showModal.value = false
 }
 
-function handleNavigate(path) {
-  router.push(path)
+function handleNavigate(url: string) {
+  if (url.includes('#')) {
+    const [path, hash] = url.split('#')
+    if (route.path === path) {
+      // Force re-trigger hash navigation on the same path
+      router.replace({ hash: '' }).then(() => {
+        router.push({ hash: `#${hash}` })
+      })
+    } else {
+      router.push(url)
+    }
+  } else {
+    router.push(url)
+  }
   showModal.value = false
 }
+
+onMounted(() => {
+  AOS.init({
+    duration: 800,
+    once: true,
+  })
+
+  new Rellax('.rellax')
+})
+
+
 </script>
 
 
@@ -320,5 +333,7 @@ footer {
   color: white;
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
 </style>

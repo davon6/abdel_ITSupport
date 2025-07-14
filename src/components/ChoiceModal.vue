@@ -18,7 +18,7 @@ const particulierServices = [
 ]
 
 function selectProfessionnel() {
-  emits('navigate', '/professionels')
+  emits('navigate', '/professionnels')
   emits('close')
 }
 
