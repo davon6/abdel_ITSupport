@@ -44,6 +44,9 @@ onMounted(() => {
   new Rellax('.rellax')
 })
 
+const props = defineProps<{
+  openSupportModal: () => void
+}>()
 
 </script>
 
@@ -75,16 +78,24 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Presentation Section -->
-    <section class="section-light">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Votre partenaire IT de confiance</h2>
-        <p class="lead" data-aos="fade-up" data-aos-delay="100">
-          ShoTech accompagne les particuliers, indépendants, TPE/PME et associations dans la gestion, la sécurisation et l'optimisation de leur environnement informatique.
-        </p>
-        <a href="#contact" class="btn-secondary" data-aos="fade-up" data-aos-delay="200">Contactez-nous</a>
-      </div>
-    </section>
+    <div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+    <path d="M0,100 C480,0 960,0 1440,100 L1440,0 L0,0 Z" fill="#f4f4f9"></path>
+  </svg>
+</div>
+
+<!-- Presentation Section -->
+<section class="section-light rellax presentation-wrapper" data-rellax-speed="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Votre partenaire IT de confiance</h2>
+    <p class="lead" data-aos="fade-up" data-aos-delay="100">
+      ShoTech accompagne les particuliers, indépendants, TPE/PME et associations dans la gestion, la sécurisation et l'optimisation de leur environnement informatique.
+    </p>
+  </div>
+</section>
+
+
 
     <!-- Services Section -->
     <section id="services" class="section-dark">
@@ -126,14 +137,21 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Parallax Image Section -->
-    <section class="parallax-image rellax" data-rellax-speed="-2">
-      <img src="/istockphoto.jpg" alt="IT Infrastructure">
-      <div class="overlay"></div>
-      <div class="container text-center">
-        <h2 class="text-white" data-aos="fade-up">Votre IT, notre métier</h2>
-      </div>
-    </section>
+    <!-- Contact Section -->
+<section id="contact" class="section-light contact-wrapper rellax" data-rellax-speed="0.5">
+  <div class="overlay"></div>
+  <div class="container text-center" data-aos="fade-up">
+    <h2>Prêt à booster votre infrastructure informatique ?</h2>
+    <p>Contactez-nous dès aujourd’hui pour un diagnostic gratuit et personnalisé.</p>
+
+    <div class="cta-badge" @click="props.openSupportModal">
+  🚀 Demander un diagnostic
+</div>
+
+  </div>
+</section>
+
+
 
     <!-- Why Choose Us Section -->
     <section id="whyus" class="section-dark">
@@ -162,17 +180,7 @@ onMounted(() => {
           </div>
 
         </div>
-        <a href="#contact" class="btn-main" data-aos="zoom-in">Demander un devis</a>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section-light">
-      <div class="container text-center" data-aos="fade-up">
-        <h2>Prêt à booster votre infrastructure informatique ?</h2>
-        <p>Contactez-nous dès aujourd’hui pour un diagnostic gratuit et personnalisé.</p>
-        <a href="tel:0123456789" class="btn-main">📞 01 23 45 67 89</a>
-        <a href="mailto:contact@techsupportpro.fr" class="btn-secondary">✉️ contact@techsupportpro.fr</a>
+    
       </div>
     </section>
 
@@ -235,6 +243,7 @@ nav a {
   align-items: center;
   text-align: center;
 }
+
 
 .parallax-hero .overlay,
 .parallax-image .overlay {
@@ -336,4 +345,134 @@ footer {
 html {
   scroll-behavior: smooth;
 }
+
+.presentation-wrapper {
+  padding: 120px 20px;
+  background: linear-gradient(135deg, #f4f4f9 0%, #ffffff 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.section-title {
+  margin-bottom: 30px;
+}
+
+.lead {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section-divider {
+  height: 60px;
+  background: url('/divider-wave.svg') no-repeat center;
+  background-size: cover;
+}
+
+.presentation-wrapper {
+  position: relative;
+  padding: 120px 20px;
+  background: url('/presentation-bg.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.presentation-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(244, 244, 249, 0.85);
+  z-index: 1;
+}
+
+.presentation-wrapper .container {
+  position: relative;
+  z-index: 2;
+}
+
+.section-title {
+  margin-bottom: 30px;
+}
+
+.lead {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+
+.wave-divider {
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+.contact-wrapper {
+  position: relative;
+  padding: 120px 20px;
+  background: url('/contact-bg.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.contact-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(244, 244, 249, 0.9);
+  z-index: 1;
+}
+
+.contact-wrapper .container {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-wrapper h2 {
+  margin-bottom: 20px;
+}
+
+.contact-wrapper p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+/* Modern CTA Badge */
+.cta-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #0077cc, #00aaff);
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.3);
+}
+
+.cta-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 119, 204, 0.4);
+}
+
+/* Optional: Smooth fade-in animations for visual polish */
+[data-aos] {
+  transition: all 0.6s ease-in-out;
+}
+
+
 </style>

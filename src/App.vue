@@ -1,12 +1,43 @@
-<script setup lang="ts">
+<script setup>
+import { ref, watch, onUnmounted } from 'vue';
+import SupportModal from '@/components/SupportForm.vue';
+
+const isSupportModalOpen = ref(false);
+
+const openSupportModal = () => {
+  isSupportModalOpen.value = true;
+};
+
+const closeSupportModal = () => {
+  isSupportModalOpen.value = false;
+};
+
+watch(isSupportModalOpen, (newVal) => {
+  document.body.style.overflow = newVal ? 'hidden' : 'auto';
+});
+
+// Clean up on unmount
+onUnmounted(() => {
+  document.body.style.overflow = 'auto';
+});
 </script>
+
+
+
 
 <template>
   <!-- Optional: global logo or header visible on every page -->
   <img class="logo" src="/business.jpg" alt="ShoTech logo" />
 
   <!-- Route views -->
-  <router-view />
+
+  <router-view :openSupportModal="openSupportModal" />
+
+<SupportModal
+  :isOpen="isSupportModalOpen"
+  @close="closeSupportModal"
+  @submitted="closeSupportModal"
+/>
 </template>
 
 <style scoped>

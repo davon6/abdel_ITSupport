@@ -57,7 +57,7 @@ onMounted(() => {
      
       <ul class="nav-links">
         <li> <router-link to="/">Acceuil</router-link></li>
-        <li><router-link to="/professionels">Professionels</router-link></li>
+        <li><router-link to="/professionnels">Professionels</router-link></li>
         <li><a href="#Apropos">A propos</a></li>
       </ul>
     </nav>

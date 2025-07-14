@@ -1,36 +1,28 @@
 <script setup lang="ts">
-import { ref} from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
-const isOpen = ref(false);
+const props = defineProps({
+  isOpen: Boolean
+});
 
-const openForm = () => {
-  isOpen.value = true;
-  document.body.style.overflow = 'hidden'; // Prevent background scroll
-};
-
-const closeForm = () => {
-  isOpen.value = false;
-  document.body.style.overflow = 'auto'; // Restore scrolling
-};
+const emit = defineEmits(['close', 'submitted']);
 
 const submitForm = () => {
-  alert('Alors Abdel ? Form submitted (mock) 🎉');
-  closeForm();
+  alert('Form submitted (mock) 🎉');
+  emit('submitted');
 };
 </script>
 
 <template>
-  <!-- Button to trigger modal -->
-  <button class="btn" @click="openForm">Get Support</button>
-
-  <!-- Modal -->
   <transition name="fade">
-    <div v-if="isOpen" class="modal-overlay" @click="closeForm">
+    <div v-if="isOpen" class="modal-overlay" @click="$emit('close')">
       <transition name="slide">
-        <div v-if="isOpen" class="modal-content" @click.stop>
+        <div class="modal-content" @click.stop>
           <h2>Get Support</h2>
 
           <form @submit.prevent="submitForm">
+            <!-- form fields -->
+
             <label for="name">Name</label>
             <input type="text" id="name" placeholder="Your Name" required />
 
@@ -53,13 +45,14 @@ const submitForm = () => {
             <textarea id="message" placeholder="Describe your issue..." required></textarea>
 
             <button type="submit" class="btn submit-btn">Submit</button>
-            <button type="button" class="btn close-btn" @click="closeForm">Close</button>
+            <button type="button" class="btn close-btn" @click="$emit('close')">Close</button>
           </form>
         </div>
       </transition>
     </div>
   </transition>
 </template>
+
 
 <style scoped>
 /* Button */
@@ -179,4 +172,23 @@ input, select, textarea {
   padding: 20px;
   box-sizing: border-box; /* Ensures padding doesn't push elements out of bounds */
 }
+
+/* Modern CTA Badge */
+.cta-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #0077cc, #00aaff);
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 119, 204, 0.3);
+}
+
+.cta-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 119, 204, 0.4);
+}
+
 </style>
