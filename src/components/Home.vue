@@ -96,46 +96,47 @@ const props = defineProps<{
 </section>
 
 
+<!-- Services Section -->
+<section id="services" class="section-parallax">
+  <div class="overlay"></div>
+  <div class="container">
+    <h2 class="section-title text-white" data-aos="fade-right">Nos services</h2>
+    <div class="services-grid">
 
-    <!-- Services Section -->
-    <section id="services" class="section-dark">
-      <div class="container">
-        <h2 class="section-title text-white" data-aos="fade-right">Nos services</h2>
-        <div class="services-grid">
-
-          <div class="service-card" data-aos="zoom-in">
-            <h3>Maintenance & Dépannage</h3>
-            <p>Assistance PC/Mac, configuration, dépannage, virus, données.</p>
-          </div>
-
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
-            <h3>Infogérance & Parc IT</h3>
-            <p>Gestion complète de votre infrastructure et sécurité renforcée.</p>
-          </div>
-
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
-            <h3>Cybersécurité</h3>
-            <p>Audit, antivirus pro, VPN, PRA/PCA et sensibilisation.</p>
-          </div>
-
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
-            <h3>Téléphonie VoIP</h3>
-            <p>Standard téléphonique physique et virtuel, softphones et maintenance.</p>
-          </div>
-
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
-            <h3>Admin Systèmes & Réseaux</h3>
-            <p>Serveurs, réseaux LAN/WAN, VPN, virtualisation et supervision.</p>
-          </div>
-
-          <div class="service-card" data-aos="zoom-in" data-aos-delay="500">
-            <h3>Solutions Cloud</h3>
-            <p>Microsoft 365, Google Workspace, hébergement cloud et télétravail sécurisé.</p>
-          </div>
-
-        </div>
+      <div class="service-card" data-aos="fade-up">
+        <h3>Maintenance & Dépannage</h3>
+        <p>Assistance PC/Mac, configuration, dépannage, virus, données.</p>
       </div>
-    </section>
+
+      <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Infogérance & Parc IT</h3>
+        <p>Gestion complète de votre infrastructure et sécurité renforcée.</p>
+      </div>
+
+      <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>Cybersécurité</h3>
+        <p>Audit, antivirus pro, VPN, PRA/PCA et sensibilisation.</p>
+      </div>
+
+      <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>Téléphonie VoIP</h3>
+        <p>Standard téléphonique physique et virtuel, softphones et maintenance.</p>
+      </div>
+
+      <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+        <h3>Admin Systèmes & Réseaux</h3>
+        <p>Serveurs, réseaux LAN/WAN, VPN, virtualisation et supervision.</p>
+      </div>
+
+      <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+        <h3>Solutions Cloud</h3>
+        <p>Microsoft 365, Google Workspace, hébergement cloud et télétravail sécurisé.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
     <!-- Contact Section -->
 <section id="contact" class="section-light contact-wrapper rellax" data-rellax-speed="0.5">
@@ -153,36 +154,40 @@ const props = defineProps<{
 
 
 
-    <!-- Why Choose Us Section -->
-    <section id="whyus" class="section-dark">
-      <div class="container text-center">
-        <h2 class="section-title text-white" data-aos="fade-up">Pourquoi choisir ShoTech ?</h2>
-        <div class="advantages-grid">
+  <!-- Why Choose Us Section -->
+<section id="whyus" class="section-dark2">
+  <div class="container text-center">
+    <h2 class="section-title text-white" data-aos="fade-up">Pourquoi choisir ShoTech&nbsp;?</h2>
 
-          <div class="advantage" data-aos="fade-up">
-            <h3>10+ ans</h3>
-            <p>d’expertise IT certifiée</p>
-          </div>
+    <!-- Decorative Image -->
+    <img src="/istockphoto.jpg" alt="Business IT Solutions" class="whyus-image" data-aos="zoom-in" />
 
-          <div class="advantage" data-aos="fade-up" data-aos-delay="100">
-            <h3>100%</h3>
-            <p>de satisfaction client</p>
-          </div>
+    <div class="advantages-grid">
 
-          <div class="advantage" data-aos="fade-up" data-aos-delay="200">
-            <h3>24/7</h3>
-            <p>Support réactif</p>
-          </div>
-
-          <div class="advantage" data-aos="fade-up" data-aos-delay="300">
-            <h3>∞</h3>
-            <p>Solutions sur-mesure</p>
-          </div>
-
-        </div>
-    
+      <div class="advantage" data-aos="fade-up">
+        <h3>+10 ans</h3>
+        <p>de maîtrise technique et de conseil en solutions IT innovantes</p>
       </div>
-    </section>
+
+      <div class="advantage" data-aos="fade-up" data-aos-delay="100">
+        <h3>100%</h3>
+        <p>de clients satisfaits grâce à un accompagnement personnalisé</p>
+      </div>
+
+      <div class="advantage" data-aos="fade-up" data-aos-delay="200">
+        <h3>24/7</h3>
+        <p>Support technique réactif et assistance proactive continue</p>
+      </div>
+
+      <div class="advantage" data-aos="fade-up" data-aos-delay="300">
+        <h3>∞</h3>
+        <p>Solutions sur-mesure adaptées à chaque environnement métier</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
   </main>
 
@@ -474,5 +479,94 @@ html {
   transition: all 0.6s ease-in-out;
 }
 
+.section-dark2 {
+  background-color: #190544;
+  color: #fff;
+  padding: 100px 20px;
+}
+
+.whyus-image {
+  max-width: 90%;
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.advantage h3 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #00aaff;
+}
+
+.advantage p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+.section-parallax {
+  position: relative;
+  background-image: url('/istockphoto.jpg'); /* Or another IT/tech background you like */
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  padding: 120px 20px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.section-parallax .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.7);
+  z-index: 1;
+}
+
+.section-parallax .container {
+  position: relative;
+  z-index: 2;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.service-card h3 {
+  font-size: 1.6rem;
+  color: #00aaff;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.1);
+}
 
 </style>
