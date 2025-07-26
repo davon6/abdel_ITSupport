@@ -5,6 +5,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ChoiceModal from '@/components/ChoiceModal.vue'
 import { useRouter, useRoute } from 'vue-router'
+import ContactForm from '@/components/ContactForm.vue'
+
 
 const showModal = ref(false)
 const router = useRouter()
@@ -54,14 +56,7 @@ const props = defineProps<{
 
 <template>
   <header>
-    <nav>
-     
-      <ul class="nav-links">
-        <li> <router-link to="/particuliers">Particuliers</router-link></li>
-        <li> <router-link to="/professionnels">Professionnels</router-link></li>
-        <li><a href="#Apropos">A propos</a></li>
-      </ul>
-    </nav>
+
   </header>
 
   <main>
@@ -72,7 +67,7 @@ const props = defineProps<{
       <div class="container text-center">
         <h1>ShoTech — Solutions Informatiques & Conseil IT</h1>
         <p>Experts en gestion, sécurité et performance informatique pour particuliers et entreprises.</p>
-         <button @click="onDiscoverClick" class="btn-main">Découvrir Nos Services</button>
+
   <ChoiceModal :visible="showModal" @close="handleClose" @navigate="handleNavigate" />
 
       </div>
@@ -145,9 +140,8 @@ const props = defineProps<{
     <h2>Prêt à booster votre infrastructure informatique ?</h2>
     <p>Contactez-nous dès aujourd’hui pour un diagnostic gratuit et personnalisé.</p>
 
-    <div class="cta-badge" @click="props.openSupportModal">
-  🚀 Demander un diagnostic
-</div>
+   <!-- <ContactForm />-->
+
 
   </div>
 </section>

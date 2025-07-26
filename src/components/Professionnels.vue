@@ -12,13 +12,7 @@ onMounted(() => {
 
 <template>
   <header>
-    <nav>
-      <ul class="nav-links">
-        <li><router-link to="/">Accueil</router-link></li>
-        <li><router-link to="/particuliers">Particuliers</router-link></li>
-        <li><router-link to="/professionels" class="active">Professionels</router-link></li>
-      </ul>
-    </nav>
+
   </header>
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">

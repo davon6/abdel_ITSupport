@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onUnmounted } from 'vue';
 import SupportModal from '@/components/SupportForm.vue';
-
+import AppHeader from '@/components/AppHeader.vue'
 const isSupportModalOpen = ref(false);
 
 const openSupportModal = () => {
@@ -30,7 +30,7 @@ onUnmounted(() => {
   <img class="logo" src="/business.jpg" alt="ShoTech logo" />
 
   <!-- Route views -->
-
+  <AppHeader />
   <router-view :openSupportModal="openSupportModal" />
 
 <SupportModal
@@ -39,6 +39,12 @@ onUnmounted(() => {
   @submitted="closeSupportModal"
 />
 </template>
+
+<style>
+body {
+  background-color: #e6f0ff; /* light blue */
+}
+</style>
 
 <style scoped>
 .logo {
