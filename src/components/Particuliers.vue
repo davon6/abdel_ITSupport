@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, nextTick } from 'vue'
+import { onMounted, nextTick, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 const route = useRoute()
+const opacity = ref(1) // Define opacity as a reactive property
 
 function disableAOSScroll() {
   // Remove scroll event listeners that AOS attached

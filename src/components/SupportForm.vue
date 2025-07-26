@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
-
-const props = defineProps({
-  isOpen: Boolean
-});
+import { defineEmits } from 'vue';
 
 const emit = defineEmits(['close', 'submitted']);
 
