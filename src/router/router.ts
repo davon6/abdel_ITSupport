@@ -2,6 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
+import type { RouterScrollBehavior } from 'vue-router';
+
+const scrollBehavior: RouterScrollBehavior = ( savedPosition) => {
+  if (savedPosition) {
+    return savedPosition;
+  } else {
+    return { left: 0, top: 0 };
+  }
+};
 
 
 const routes = [

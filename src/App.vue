@@ -1,6 +1,5 @@
 <script setup>
 import { ref, watch, onUnmounted } from 'vue';
-import SupportModal from '@/components/SupportForm.vue';
 import AppHeader from '@/components/AppHeader.vue'
 const isSupportModalOpen = ref(false);
 
@@ -31,13 +30,8 @@ onUnmounted(() => {
 
   <!-- Route views -->
   <AppHeader />
-  <router-view :openSupportModal="openSupportModal" />
+  <router-view />
 
-<SupportModal
-  :isOpen="isSupportModalOpen"
-  @close="closeSupportModal"
-  @submitted="closeSupportModal"
-/>
 </template>
 
 <style>
