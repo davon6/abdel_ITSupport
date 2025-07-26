@@ -3,18 +3,14 @@ import { ref, onMounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import ChoiceModal from '@/components/ChoiceModal.vue'
 import { useRouter, useRoute } from 'vue-router'
-import ContactForm from '@/components/ContactForm.vue'
+
 
 
 const showModal = ref(false)
 const router = useRouter()
 const route = useRoute()
 
-function onDiscoverClick() {
-  showModal.value = true
-}
 
 function handleClose() {
   showModal.value = false
@@ -46,9 +42,6 @@ onMounted(() => {
   new Rellax('.rellax')
 })
 
-const props = defineProps<{
-  openSupportModal: () => void
-}>()
 
 </script>
 
