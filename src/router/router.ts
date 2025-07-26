@@ -5,7 +5,7 @@ import Professionnels from '../components/Professionnels.vue'
 import type { RouterScrollBehavior } from 'vue-router';
 
 // define scrollBehavior properly
-const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
+const scrollBehavior: RouterScrollBehavior = (to, savedPosition) => {
   if (to.hash) {
     return {
       el: to.hash,
