@@ -4,35 +4,30 @@ import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
 import type { RouterScrollBehavior } from 'vue-router';
 
-const scrollBehavior: RouterScrollBehavior = ( savedPosition) => {
+// define scrollBehavior properly
+const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
+  if (to.hash) {
+    return {
+      el: to.hash,
+      behavior: 'smooth',
+    };
+  }
   if (savedPosition) {
     return savedPosition;
-  } else {
-    return { left: 0, top: 0 };
   }
+  return { top: 0 };
 };
-
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/particuliers', name: 'Particuliers', component: Particuliers },
   { path: '/professionnels', name: 'Professionnels', component: Professionnels },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,  scrollBehavior(to,savedPosition) {
-    if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      }
-    }
-    if (savedPosition) {
-      return savedPosition
-    }
-    return { top: 0 }
-  }
-})
+  routes,
+  scrollBehavior, // use the properly typed function
+});
 
-export default router
+export default router;
