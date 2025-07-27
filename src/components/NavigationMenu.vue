@@ -363,6 +363,10 @@ transform: none;
     text-align: left;
     width: 100%;
   }
+
+  nav, .nav-list {
+    overflow: visible !important;
+  }
 }
 
 
