@@ -1,5 +1,5 @@
 <template>
-    <nav class="relative">
+    <nav class="relative overflow-x-hidden">
       <ul class="nav-list">
         <li
           v-for="item in navigationLinks"
@@ -328,6 +328,42 @@ transform: none;
   display: block;
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .sub-sub-menu {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 0.75rem;
+    background: white;
+    z-index: 999;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-menu {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 1rem 0.5rem;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-button {
+    text-align: left;
+    width: 100%;
+  }
+}
+
 
   </style>
   

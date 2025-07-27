@@ -37,6 +37,7 @@ onUnmounted(() => {
 <style>
 body {
   background-color: #e6f0ff; /* light blue */
+  overflow-x: hidden;
 }
 </style>
 
