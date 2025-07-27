@@ -45,6 +45,19 @@ html{
   overflow-x: hidden;
   max-width: 100vw;
 }
+
+body::after {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100vh;
+  background: red;
+  z-index: 9999;
+  pointer-events: none;
+}
 </style>
 
 <style scoped>
