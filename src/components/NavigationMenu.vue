@@ -27,28 +27,30 @@
                   >
                     {{ sub.label }}
                   </button>
-  
                   <transition name="flyout">
-                    <teleport to="body">
-                      <ul
-                        v-if="hoveredSub === sub.label"
-                        @mouseenter="handleSubHover(sub.label)"
-                        @mouseleave="clearSubHover"
-                        :class="['sub-sub-menu absolute z-20 w-64 p-4 rounded-lg', sub.label.toLowerCase()]"
-                        :style="teleportStyles(sub)"
-                      >
-                        <li v-for="link in sub.children" :key="link.anchor">
-                          <router-link
-                            :to="`${sub.basePath || ''}#${link.anchor}`"
-                            @click.prevent="handleAnchor(sub.basePath, link.anchor)"
-                            class="text-black hover:text-blue-500 transition"
-                          >
-                            {{ link.label }}
-                          </router-link>
-                        </li>
-                      </ul>
-                    </teleport>
-                  </transition>
+  <teleport to="body">
+    <div
+      v-if="hoveredSub === sub.label"
+      @mouseenter="handleSubHover(sub.label)"
+      @mouseleave="clearSubHover"
+      :style="teleportStyles(sub)"
+      class="sub-sub-menu absolute z-20"
+    >
+      <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
+        <li v-for="link in sub.children" :key="link.anchor">
+          <router-link
+            :to="`${sub.basePath || ''}#${link.anchor}`"
+            @click.prevent="handleAnchor(sub.basePath, link.anchor)"
+            class="text-black hover:text-blue-500 transition"
+          >
+            {{ link.label }}
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </teleport>
+</transition>
+
                 </template>
   
                 <template v-else>
@@ -75,17 +77,18 @@
   const submenuPos = ref({ top: 0, left: 0 })
   
   function teleportStyles(_sub: any) {
-    return {
-      position: 'absolute',
-      top: submenuPos.value.top + 'px',
-      left: submenuPos.value.left + 'px',
-      minWidth: '240px',
-      background: 'white', // ensure visible background
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-      borderRadius: '0.5rem',
-      zIndex: 9999,
-    }
+  return {
+    position: 'absolute',
+    top: submenuPos.value.top + 'px',
+    left: submenuPos.value.left + 'px',
+    minWidth: '240px',
+    background: 'white',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+    borderRadius: '0.5rem',
+    zIndex: 9999,
   }
+}
+
   
   function updateSubmenuPosition(label: string) {
     nextTick(() => {
