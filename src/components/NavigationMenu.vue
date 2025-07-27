@@ -341,6 +341,8 @@ transform: none;
     z-index: 999;
     border-radius: 0.5rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
   }
 
   .dropdown-menu {
@@ -351,6 +353,8 @@ transform: none;
     box-shadow: none;
     border-radius: 0;
     padding: 1rem 0.5rem;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
   }
 
   .nav-list {
