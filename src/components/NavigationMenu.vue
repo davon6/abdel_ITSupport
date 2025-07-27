@@ -354,7 +354,7 @@ transform: none;
   }
 
   .nav-list {
-    flex-direction: column;
+   /* flex-direction: column;*/
     gap: 0;
   }
 
