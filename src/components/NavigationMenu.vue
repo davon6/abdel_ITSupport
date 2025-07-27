@@ -78,6 +78,22 @@
   const submenuPos = ref({ top: 0, left: 0 })
   
   function teleportStyles(_sub: any): CSSProperties {
+  const isMobile = window.innerWidth <= 768
+
+  if (isMobile) {
+    return {
+      position: 'absolute',
+      top: submenuPos.value.top + 'px',
+      left: '10px', // pinned with margin
+      right: '10px', // ensure it doesn't go beyond screen
+      minWidth: 'calc(100vw - 20px)',
+      background: 'white',
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+      borderRadius: '0.5rem',
+      zIndex: 9999,
+    }
+  }
+
   return {
     position: 'absolute',
     top: submenuPos.value.top + 'px',
@@ -367,17 +383,18 @@ transform: none;
     position: static !important;
     left: auto !important;
     top: auto !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 95vw !important;       /* ✨ Not full width — leaves padding on sides */
-    max-width: 95vw !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    padding: 1rem;                /* ✨ More breathing room inside */
+    width: 100% !important;
+    margin-left: 0 !important;
     background: white;
-    z-index: 999;
+    z-index: 9999;
     border-radius: 0.5rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box !important;
+  }
+
+  .sub-sub-menu ul {
+    width: 100%;
+    padding: 0.5rem 1rem;
   }
   .dropdown-menu {
     width: 95vw !important;
