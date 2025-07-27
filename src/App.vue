@@ -38,6 +38,12 @@ onUnmounted(() => {
 body {
   background-color: #e6f0ff; /* light blue */
   overflow-x: hidden;
+  max-width: 100vw;
+}
+
+html{
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 </style>
 
