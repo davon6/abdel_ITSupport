@@ -71,12 +71,13 @@
   
   <script setup lang="ts">
   import { ref, watch, nextTick } from 'vue'
+  import type { CSSProperties } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { navigationLinks } from '../data/navigation'
   
   const submenuPos = ref({ top: 0, left: 0 })
   
-  function teleportStyles(_sub: any) {
+  function teleportStyles(_sub: any): CSSProperties {
   return {
     position: 'absolute',
     top: submenuPos.value.top + 'px',
@@ -88,6 +89,7 @@
     zIndex: 9999,
   }
 }
+
 
   
   function updateSubmenuPosition(label: string) {
