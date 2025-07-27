@@ -28,12 +28,14 @@
       </button>
 
       <transition name="flyout">
-        <ul
-          v-if="hoveredSub === sub.label"
-          @mouseenter="handleSubHover(sub.label)"
-          @mouseleave="clearSubHover"
-          :class="['sub-sub-menu absolute left-full top-0 ml-4 z-20 w-64 p-4 rounded-lg', sub.label.toLowerCase()]"
-        >
+  <teleport to="body">
+    <ul
+      v-if="hoveredSub === sub.label"
+      @mouseenter="handleSubHover(sub.label)"
+      @mouseleave="clearSubHover"
+      :class="['sub-sub-menu absolute left-full top-0 ml-4 z-20 w-64 p-4 rounded-lg', sub.label.toLowerCase()]"
+      :style="teleportStyles(sub)"
+    >
           <li v-for="link in sub.children" :key="link.anchor">
             <router-link
               :to="`${sub.basePath || ''}#${link.anchor}`"
@@ -44,7 +46,8 @@
             </router-link>
           </li>
         </ul>
-      </transition>
+    </teleport>
+</transition>
     </template>
 
     <template v-else>
