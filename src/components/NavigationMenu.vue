@@ -5,7 +5,7 @@
           v-for="item in navigationLinks"
           :key="item.label"
           class="relative group"
-           @mouseenter="openLabel = item.label; handleMouseEnter()"
+          @mouseenter="openLabel = item.label; handleMouseEnter()"
           @mouseleave="handleMouseLeave"
         >
           <button class="nav-button">
@@ -13,96 +13,122 @@
           </button>
           <div v-if="item.children && openLabel === item.label" class="dropdown-menu flex gap-2">
             <ul>
-  <li
-    v-for="sub in item.children"
-    :key="sub.label"
-    class="mb-2 relative"
-    @mouseenter="handleSubHover(sub.label)"
-    @mouseleave="clearSubHover"
-  >
-    <template v-if="sub.children">
-      <button
-        class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
-      >
-        {{ sub.label }}
-      </button>
-
-      <transition name="flyout">
-  <teleport to="body">
-    <ul
-      v-if="hoveredSub === sub.label"
-      @mouseenter="handleSubHover(sub.label)"
-      @mouseleave="clearSubHover"
-      :class="['sub-sub-menu absolute left-full top-0 ml-4 z-20 w-64 p-4 rounded-lg', sub.label.toLowerCase()]"
-      :style="teleportStyles(sub)"
-    >
-          <li v-for="link in sub.children" :key="link.anchor">
-            <router-link
-              :to="`${sub.basePath || ''}#${link.anchor}`"
-              @click.prevent="handleAnchor(sub.basePath, link.anchor)"
-              class="text-black hover:text-blue-500 transition"
-            >
-              {{ link.label }}
-            </router-link>
-          </li>
-        </ul>
-    </teleport>
-</transition>
-    </template>
-
-    <template v-else>
-      <router-link
-        :to="`${sub.basePath || ''}`"
-        class="text-black hover:text-blue-600 transition block mt-1"
-      >
-        {{ sub.label }}
-      </router-link>
-    </template>
-  </li>
-</ul>
-
-</div>
-
-
+              <li
+                v-for="sub in item.children"
+                :key="sub.label"
+                class="mb-2 relative"
+                @mouseenter="handleSubHover(sub.label)"
+                @mouseleave="clearSubHover"
+              >
+                <template v-if="sub.children">
+                  <button
+                    class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
+                    :data-label="sub.label"
+                  >
+                    {{ sub.label }}
+                  </button>
+  
+                  <transition name="flyout">
+                    <teleport to="body">
+                      <ul
+                        v-if="hoveredSub === sub.label"
+                        @mouseenter="handleSubHover(sub.label)"
+                        @mouseleave="clearSubHover"
+                        :class="['sub-sub-menu absolute z-20 w-64 p-4 rounded-lg', sub.label.toLowerCase()]"
+                        :style="teleportStyles(sub)"
+                      >
+                        <li v-for="link in sub.children" :key="link.anchor">
+                          <router-link
+                            :to="`${sub.basePath || ''}#${link.anchor}`"
+                            @click.prevent="handleAnchor(sub.basePath, link.anchor)"
+                            class="text-black hover:text-blue-500 transition"
+                          >
+                            {{ link.label }}
+                          </router-link>
+                        </li>
+                      </ul>
+                    </teleport>
+                  </transition>
+                </template>
+  
+                <template v-else>
+                  <router-link
+                    :to="`${sub.basePath || ''}`"
+                    class="text-black hover:text-blue-600 transition block mt-1"
+                  >
+                    {{ sub.label }}
+                  </router-link>
+                </template>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </nav>
   </template>
   
-  
-  
   <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, watch, nextTick } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { navigationLinks } from '../data/navigation'
+  
+  const submenuPos = ref({ top: 0, left: 0 })
+  
+  function teleportStyles(_sub: any) {
+    return {
+      position: 'absolute',
+      top: submenuPos.value.top + 'px',
+      left: submenuPos.value.left + 'px',
+      minWidth: '240px',
+      background: 'white', // ensure visible background
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+      borderRadius: '0.5rem',
+      zIndex: 9999,
+    }
+  }
+  
+  function updateSubmenuPosition(label: string) {
+    nextTick(() => {
+      const buttonEl = document.querySelector(`button[data-label="${label}"]`)
+      console.log('submenu button element:', buttonEl)
+      if (buttonEl) {
+        const rect = buttonEl.getBoundingClientRect()
+        submenuPos.value = {
+          top: rect.top + window.scrollY,
+          left: rect.right + window.scrollX + 10, // 10px spacing
+        }
+      }
+    })
+  }
+  
   const hoveredSub = ref<string | null>(null)
-let hoverTimeout: ReturnType<typeof setTimeout> | null = null
-
-
-    let closeTimeout: ReturnType<typeof setTimeout> | null = null;
-
-
-
-function handleMouseEnter() {
-  if (closeTimeout) clearTimeout(closeTimeout);
-}
-
-
-    function handleSubHover(label: string) {
-  if (hoverTimeout) clearTimeout(hoverTimeout)
-  hoverTimeout = setTimeout(() => {
-    hoveredSub.value = label
-  }, 150)
-}
-
-function clearSubHover() {
-  if (hoverTimeout) clearTimeout(hoverTimeout)
-  hoverTimeout = setTimeout(() => {
-    hoveredSub.value = null
-  }, 150)
-}
-
-
+  let hoverTimeout: ReturnType<typeof setTimeout> | null = null
+  let closeTimeout: ReturnType<typeof setTimeout> | null = null
+  
+  function handleMouseEnter() {
+    if (closeTimeout) clearTimeout(closeTimeout)
+  }
+  
+  function handleSubHover(label: string) {
+    if (hoverTimeout) clearTimeout(hoverTimeout)
+    hoverTimeout = setTimeout(() => {
+      hoveredSub.value = label
+    }, 150)
+  }
+  
+  function clearSubHover() {
+    if (hoverTimeout) clearTimeout(hoverTimeout)
+    hoverTimeout = setTimeout(() => {
+      hoveredSub.value = null
+    }, 150)
+  }
+  
+  watch(() => hoveredSub.value, (newLabel) => {
+    if (newLabel) {
+      updateSubmenuPosition(newLabel)
+    }
+  })
+  
   const router = useRouter()
   const route = useRoute()
   
@@ -123,16 +149,16 @@ function clearSubHover() {
     openLabel.value = null
     activeSub.value = null
   }
-
-  function handleMouseLeave() {
-  if (closeTimeout) clearTimeout(closeTimeout);
-  closeTimeout = setTimeout(() => {
-    openLabel.value = null;
-    activeSub.value = null;
-  }, 300); // 300ms delay before closing
-}
-  </script>
   
+  function handleMouseLeave() {
+    if (closeTimeout) clearTimeout(closeTimeout)
+    closeTimeout = setTimeout(() => {
+      openLabel.value = null
+      activeSub.value = null
+    }, 300) // 300ms delay before closing
+  }
+  </script>
+
   <style scoped>
  .nav-list {
   display: flex;
