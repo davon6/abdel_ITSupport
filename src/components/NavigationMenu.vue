@@ -17,42 +17,47 @@
                 v-for="sub in item.children"
                 :key="sub.label"
                 class="mb-2 relative"
-                @mouseenter="handleSubHover(sub.label)"
+                @mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
                 @mouseleave="clearSubHover"
               >
                 <template v-if="sub.children">
                     <button
   class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
-  :data-label="sub.label"
-  @click="isMobile ? toggleSub(sub.label) : undefined"
-  @mouseenter="!isMobile && handleSubHover(sub.label)"
-  @mouseleave="!isMobile && clearSubHover"
+  :ref="el => {
+  if (isHTMLElement(el)) {
+    submenuButtons.set(`${item.label}__${sub.label}`, el)
+  } else {
+    submenuButtons.delete(`${item.label}__${sub.label}`)
+  }
+}"
+
+
+@click="isMobile ? toggleSub(`${item.label}__${sub.label}`) : undefined"
+@mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
 >
   {{ sub.label }}
 </button>
 
 <transition name="flyout">
-  <component :is="isMobile ? 'div' : 'teleport'" :to="isMobile ? undefined : 'body'">
     <div
-      v-if="hoveredSub === sub.label"
-      @mouseenter="!isMobile && handleSubHover(sub.label)"
-      @mouseleave="!isMobile && clearSubHover"
-      :style="teleportStyles(sub)"
-      class="sub-sub-menu z-20"
-    >
-      <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
-        <li v-for="link in sub.children" :key="link.anchor">
-          <router-link
-            :to="`${sub.basePath || ''}#${link.anchor}`"
-            @click.prevent="handleAnchor(sub.basePath, link.anchor)"
-            class="text-black hover:text-blue-500 transition"
-          >
-            {{ link.label }}
-          </router-link>
-        </li>
-      </ul>
-    </div>
-  </component>
+  v-if="hoveredSub === `${item.label}__${sub.label}`"
+  @mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
+  @mouseleave="!isMobile && clearSubHover"
+  class="sub-sub-menu"
+>
+  <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
+    <li v-for="link in sub.children" :key="link.anchor">
+      <router-link
+        :to="`${sub.basePath || ''}#${link.anchor}`"
+        @click.prevent="handleAnchor(sub.basePath, link.anchor)"
+        class="text-black hover:text-blue-500 transition"
+      >
+        {{ link.label }}
+      </router-link>
+    </li>
+  </ul>
+</div>
+
 </transition>
 
 
@@ -76,70 +81,46 @@
   
   <script setup lang="ts">
   import { ref, watch, nextTick } from 'vue'
-  import type { CSSProperties } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { navigationLinks } from '../data/navigation'
   
   const submenuPos = ref({ top: 0, left: 0 })
 
-  
-  
-  function teleportStyles(_sub: any): CSSProperties {
-  const isMobile = window.innerWidth <= 768
-
-  if (isMobile) {
-  return {
-    position: 'static',
-    width: '100%',
-    background: 'white',
-    zIndex: 9999,
-    padding: '1rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-  }
-}
-
-
-  return {
-    position: 'absolute',
-    top: submenuPos.value.top + 'px',
-    left: submenuPos.value.left + 'px',
-    minWidth: '240px',
-    background: 'white',
-    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-    borderRadius: '0.5rem',
-    zIndex: 9999,
-  }
-}
+  const submenuButtons = new Map<string, HTMLElement>()
 
 
   
-  function updateSubmenuPosition(label: string) {
-    nextTick(() => {
-      const buttonEl = document.querySelector(`button[data-label="${label}"]`)
-      console.log('submenu button element:', buttonEl)
-      if (buttonEl) {
-        const rect = buttonEl.getBoundingClientRect()
-        submenuPos.value = {
-          top: rect.top + window.scrollY,
-          left: rect.right + window.scrollX + 10, // 10px spacing
-        }
+function updateSubmenuPosition(label: string) {
+  nextTick(() => {
+    const el = submenuButtons.get(label)
+    if (el) {
+      const rect = el.getBoundingClientRect()
+      submenuPos.value = {
+        top: rect.top + window.scrollY,
+        left: rect.right + window.scrollX + 10,
       }
-    })
-  }
-  
+    }
+  })
+}
+
+
+function isHTMLElement(el: unknown): el is HTMLElement {
+  return el instanceof HTMLElement
+}
+
   const hoveredSub = ref<string | null>(null)
   let hoverTimeout: ReturnType<typeof setTimeout> | null = null
   let closeTimeout: ReturnType<typeof setTimeout> | null = null
   
 
   
-  function handleSubHover(label: string) {
-    if (hoverTimeout) clearTimeout(hoverTimeout)
-    hoverTimeout = setTimeout(() => {
-      hoveredSub.value = label
-    }, 150)
-  }
+    function handleSubHover(label: string) {
+  if (hoverTimeout) clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => {
+    hoveredSub.value = label // ✅ Use passed-in label directly
+  }, 150)
+}
+
   
   function clearSubHover() {
     if (hoverTimeout) clearTimeout(hoverTimeout)
@@ -149,11 +130,12 @@
   }
   
   watch(() => hoveredSub.value, (newLabel) => {
-    if (newLabel) {
-      updateSubmenuPosition(newLabel)
-    }
-  })
-  
+  if (newLabel && !isMobile.value) {
+    updateSubmenuPosition(newLabel)
+  }
+})
+
+
   const router = useRouter()
   const route = useRoute()
   
@@ -250,9 +232,12 @@ function toggleSub(label: string) {
 }
 
 .sub-sub-menu {
-  transform-origin: top left;
-  
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 0.5rem;
 }
+
 
 
 /* Color-specific submenu styles */
