@@ -389,14 +389,28 @@ transform: none;
     max-width: 100vw !important;
     box-sizing: border-box;
     overflow: visible;
-  }
+    overflow-x: hidden;
+    }
   .sub-sub-menu {
     position: static !important;
+    left: auto !important;
+    top: auto !important;
     width: 100% !important;
-    max-width: 100vw !important;
-    box-sizing: border-box;
     margin-left: 0 !important;
+    background: white;
+    z-index: 9999;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box !important;
+    overflow-x: hidden;
   }
+
+  nav {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+
   .sub-sub-menu ul {
     width: 100%;
     padding: 0.5rem 1rem;
@@ -414,6 +428,7 @@ transform: none;
   nav, .nav-list {
     overflow: visible !important;
   }
+
 }
 
 
