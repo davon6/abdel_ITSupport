@@ -35,6 +35,7 @@ onUnmounted(() => {
 </template>
 
 <style>
+
 body {
   background-color: #e6f0ff; /* light blue */
   overflow-x: hidden;
@@ -44,6 +45,11 @@ body {
 html{
   overflow-x: hidden;
   max-width: 100vw;
+}
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
 }
 
 
