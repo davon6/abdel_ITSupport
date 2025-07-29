@@ -31,14 +31,14 @@
   {{ sub.label }}
 </button>
 
-                  <transition name="flyout">
-  <teleport to="body">
+<transition name="flyout">
+  <component :is="isMobile ? 'div' : 'teleport'" :to="isMobile ? undefined : 'body'">
     <div
       v-if="hoveredSub === sub.label"
-      @mouseenter="handleSubHover(sub.label)"
-      @mouseleave="clearSubHover"
+      @mouseenter="!isMobile && handleSubHover(sub.label)"
+      @mouseleave="!isMobile && clearSubHover"
       :style="teleportStyles(sub)"
-      class="sub-sub-menu absolute z-20"
+      class="sub-sub-menu z-20"
     >
       <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
         <li v-for="link in sub.children" :key="link.anchor">
@@ -52,8 +52,9 @@
         </li>
       </ul>
     </div>
-  </teleport>
+  </component>
 </transition>
+
 
                 </template>
   
