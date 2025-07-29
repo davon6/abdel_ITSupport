@@ -87,7 +87,8 @@
   const submenuPos = ref({ top: 0, left: 0 })
 
   const submenuButtons = new Map<string, HTMLElement>()
-
+    const isMobile = ref(window.innerWidth <= 768)
+  const offset = isMobile ? 0 : 10;
 
   
 function updateSubmenuPosition(label: string) {
@@ -97,7 +98,7 @@ function updateSubmenuPosition(label: string) {
       const rect = el.getBoundingClientRect()
       submenuPos.value = {
         top: rect.top + window.scrollY,
-        left: rect.right + window.scrollX + 10,
+        left: rect.right + window.scrollX + offset
       }
     }
   })
@@ -165,7 +166,7 @@ function isHTMLElement(el: unknown): el is HTMLElement {
     }, 300) // 300ms delay before closing
   }
 
-  const isMobile = ref(window.innerWidth <= 768)
+
   
   function toggleMain(label: string) {
   openLabel.value = openLabel.value === label ? null : label
