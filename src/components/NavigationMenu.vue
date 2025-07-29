@@ -382,31 +382,23 @@ transform: none;
   width: 100%;
 }
 @media (max-width: 768px) {
-    .sub-sub-menu {
+    .dropdown-menu {
     position: static !important;
-    left: auto !important;
-    top: auto !important;
     width: 100% !important;
-    margin-left: 0 !important;
-    background: white;
-    z-index: 9999;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+    overflow: visible;
   }
-
+  .sub-sub-menu {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+    margin-left: 0 !important;
+  }
   .sub-sub-menu ul {
     width: 100%;
     padding: 0.5rem 1rem;
-  }
-  .dropdown-menu {
-    width: 95vw !important;
-    max-width: 95vw !important;
-    min-width: 0 !important;
-    padding: 1rem;
-    box-sizing: border-box !important;
-    position: static !important;
-    margin: auto;
   }
 
   .nav-list {
