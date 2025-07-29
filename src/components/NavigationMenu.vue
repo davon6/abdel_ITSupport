@@ -5,12 +5,12 @@
           v-for="item in navigationLinks"
           :key="item.label"
           class="relative group"
-          @mouseenter="openLabel = item.label; handleMouseEnter()"
-          @mouseleave="handleMouseLeave"
+       @mouseenter="!isMobile && (openLabel = item.label)"
+  @mouseleave="!isMobile && handleMouseLeave()"
         >
-          <button class="nav-button">
-            {{ item.label }}
-          </button>
+        <button class="nav-button" @click="isMobile && toggleMain(item.label)">
+    {{ item.label }}
+  </button>
           <div v-if="item.children && openLabel === item.label" class="dropdown-menu flex gap-2">
             <ul>
               <li
@@ -21,12 +21,16 @@
                 @mouseleave="clearSubHover"
               >
                 <template v-if="sub.children">
-                  <button
-                    class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
-                    :data-label="sub.label"
-                  >
-                    {{ sub.label }}
-                  </button>
+                    <button
+  class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
+  :data-label="sub.label"
+  @click="isMobile ? toggleSub(sub.label) : undefined"
+  @mouseenter="!isMobile && handleSubHover(sub.label)"
+  @mouseleave="!isMobile && clearSubHover"
+>
+  {{ sub.label }}
+</button>
+
                   <transition name="flyout">
   <teleport to="body">
     <div
@@ -76,23 +80,24 @@
   import { navigationLinks } from '../data/navigation'
   
   const submenuPos = ref({ top: 0, left: 0 })
+
+  
   
   function teleportStyles(_sub: any): CSSProperties {
   const isMobile = window.innerWidth <= 768
 
   if (isMobile) {
-    return {
-      position: 'absolute',
-      top: submenuPos.value.top + 'px',
-      left: '10px', // pinned with margin
-      right: '10px', // ensure it doesn't go beyond screen
-      minWidth: 'calc(100vw - 20px)',
-      background: 'white',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-      borderRadius: '0.5rem',
-      zIndex: 9999,
-    }
+  return {
+    position: 'static',
+    width: '100%',
+    background: 'white',
+    zIndex: 9999,
+    padding: '1rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
   }
+}
+
 
   return {
     position: 'absolute',
@@ -178,6 +183,20 @@
       activeSub.value = null
     }, 300) // 300ms delay before closing
   }
+
+  const isMobile = ref(window.innerWidth <= 768)
+  
+  function toggleMain(label: string) {
+  openLabel.value = openLabel.value === label ? null : label
+}
+window.addEventListener('resize', () => {
+  isMobile.value = window.innerWidth <= 768
+})
+
+function toggleSub(label: string) {
+  hoveredSub.value = hoveredSub.value === label ? null : label
+}
+
   </script>
 
   <style scoped>
