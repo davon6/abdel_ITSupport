@@ -131,9 +131,7 @@
   let hoverTimeout: ReturnType<typeof setTimeout> | null = null
   let closeTimeout: ReturnType<typeof setTimeout> | null = null
   
-  function handleMouseEnter() {
-    if (closeTimeout) clearTimeout(closeTimeout)
-  }
+
   
   function handleSubHover(label: string) {
     if (hoverTimeout) clearTimeout(hoverTimeout)
