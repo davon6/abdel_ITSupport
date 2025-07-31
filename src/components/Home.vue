@@ -566,7 +566,34 @@ html {
     padding: 1rem;
     font-size: 0.90rem;
   }
+  
+  
+  		.bg-parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  background-image: url('/world-wide-web.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+} 
+
+
+.section-parallax {
+  position: relative;
+  overflow: hidden;						  
+  padding: 120px 20px;
+  color: #fff;					
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+}
+
 
 
 </style>
