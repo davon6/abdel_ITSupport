@@ -578,7 +578,23 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%; /* ← This fixes the half-width issue */
   left: 0;   
+  
 }
+
+/*Beautiful but breaks 
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background: #81a1e8; 
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px);
+}
+*/
 
   </style>
   

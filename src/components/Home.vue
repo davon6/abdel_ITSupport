@@ -592,6 +592,8 @@ html {
   flex-direction: column;
   justify-content: center;
 }
+
+
 }
 
 
