@@ -503,8 +503,8 @@ transform: none;
 }
 
 .burger svg {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   stroke: white; /* or your brand color */
   transition: stroke 0.2s ease;
 }
@@ -570,6 +570,15 @@ transform: none;
   opacity: 0;
 }
 
+nav {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  background-color: #81a1e8; /* Tailwind gray-900 or your brand color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* ← This fixes the half-width issue */
+  left: 0;   
+}
 
   </style>
   

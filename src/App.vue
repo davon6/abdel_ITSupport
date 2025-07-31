@@ -25,9 +25,9 @@ onUnmounted(() => {
 
 
 <template>
-  <!-- Optional: global logo or header visible on every page -->
+  <!-- Optional: global logo or header visible on every page
   <img class="logo" src="/business.jpg" alt="ShoTech logo" />
-
+ -->
   <!-- Route views -->
   <AppHeader />
   <router-view />
@@ -40,6 +40,7 @@ body {
   background-color: #e6f0ff; /* light blue */
   overflow-x: hidden;
   max-width: 100vw;
+  padding-top: 4rem;
 }
 
 html{
