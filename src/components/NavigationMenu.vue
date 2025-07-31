@@ -153,9 +153,6 @@ function updateSubmenuPosition(label: string) {
 }
 
 
-function isHTMLElement(el: unknown): el is HTMLElement {
-  return el instanceof HTMLElement
-}
 
   const hoveredSub = ref<string | null>(null)
   let hoverTimeout: ReturnType<typeof setTimeout> | null = null
