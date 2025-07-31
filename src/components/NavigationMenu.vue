@@ -1,7 +1,14 @@
 <template>
     <nav class="relative overflow-x-hidden">
       <!-- ✅ Burger Icon -->
-      <button v-if="isMobile" class="burger" @click="toggleBurger">☰</button>
+      <button v-if="isMobile" class="burger" @click="toggleBurger" aria-label="Open menu">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <line x1="3" y1="12" x2="21" y2="12"/>
+    <line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
+</button>
+
   
       <!-- ✅ Desktop Nav -->
       <ul v-if="!isMobile" class="nav-list">
@@ -486,10 +493,24 @@ transform: none;
   top: 1rem;
   left: 1rem;
   z-index: 1000;
-  font-size: 2rem;
-  color: white;
   background: none;
   border: none;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.burger svg {
+  width: 36px;
+  height: 36px;
+  stroke: white; /* or your brand color */
+  transition: stroke 0.2s ease;
+}
+
+.burger:hover svg {
+  stroke: #60a5fa; /* Tailwind blue-400 on hover */
 }
 
 .mobile-drawer {
