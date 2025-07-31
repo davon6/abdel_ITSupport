@@ -555,5 +555,15 @@ html {
   transform: translateY(-6px);
   background: rgba(255, 255, 255, 0.1);
 }
+@media (max-width: 768px) {
+  .section-parallax {
+    background-size: 140%; /* ← Zoomed out feel */
+    padding: 4rem 1rem;
+  }
 
+  .service-card {
+    padding: 1rem;
+    font-size: 0.90rem;
+  }
+}
 </style>
