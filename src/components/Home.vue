@@ -500,17 +500,25 @@ html {
 }
 .section-parallax {
   position: relative;
-  overflow: hidden;
+  background-image: url('/world-wide-web.jpg'); /* Or another IT/tech background you like */
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   padding: 120px 20px;
   color: #fff;
-  z-index: 1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.section-parallax .overlay,
+.section-parallax .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.7);
+  z-index: 1;
+}
+
 .section-parallax .container {
   position: relative;
   z-index: 2;
@@ -558,18 +566,6 @@ html {
     padding: 1rem;
     font-size: 0.90rem;
   }
-}
-
-.bg-parallax {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 130%;
-  background-image: url('/world-wide-web.jpg');
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
 }
 
 
