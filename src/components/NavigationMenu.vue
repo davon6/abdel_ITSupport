@@ -1,71 +1,64 @@
 <template>
     <nav class="relative overflow-x-hidden">
-      <ul class="nav-list">
+      <!-- ✅ Burger Icon -->
+      <button v-if="isMobile" class="burger" @click="toggleBurger">☰</button>
+  
+      <!-- ✅ Desktop Nav -->
+      <ul v-if="!isMobile" class="nav-list">
         <li
           v-for="item in navigationLinks"
           :key="item.label"
           class="relative group"
-       @mouseenter="!isMobile && (openLabel = item.label)"
-  @mouseleave="!isMobile && handleMouseLeave()"
+          @mouseenter="openLabel = item.label"
+          @mouseleave="handleMouseLeave"
         >
-        <button class="nav-button" @click="isMobile && toggleMain(item.label)">
-    {{ item.label }}
-  </button>
-          <div v-if="item.children && openLabel === item.label" class="dropdown-menu flex gap-2">
+          <button class="nav-button">{{ item.label }}</button>
+  
+          <div
+            v-if="item.children && openLabel === item.label"
+            class="dropdown-menu flex gap-2"
+          >
             <ul>
               <li
                 v-for="sub in item.children"
                 :key="sub.label"
                 class="mb-2 relative"
-                @mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
+                @mouseenter="handleSubHover(`${item.label}__${sub.label}`)"
                 @mouseleave="clearSubHover"
               >
                 <template v-if="sub.children">
-                    <button
-  class="text-black font-semibold hover:text-blue-600 transition-transform transform hover:scale-105 duration-300"
-  :ref="el => {
-  if (isHTMLElement(el)) {
-    submenuButtons.set(`${item.label}__${sub.label}`, el)
-  } else {
-    submenuButtons.delete(`${item.label}__${sub.label}`)
-  }
-}"
-
-
-@click="isMobile ? toggleSub(`${item.label}__${sub.label}`) : undefined"
-@mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
->
-  {{ sub.label }}
-</button>
-
-<transition name="flyout">
-    <div
-  v-if="hoveredSub === `${item.label}__${sub.label}`"
-  @mouseenter="!isMobile && handleSubHover(`${item.label}__${sub.label}`)"
-  @mouseleave="!isMobile && clearSubHover"
-  class="sub-sub-menu"
->
-  <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
-    <li v-for="link in sub.children" :key="link.anchor">
-      <router-link
-        :to="`${sub.basePath || ''}#${link.anchor}`"
-        @click.prevent="handleAnchor(sub.basePath, link.anchor)"
-        class="text-black hover:text-blue-500 transition"
-      >
-        {{ link.label }}
-      </router-link>
-    </li>
-  </ul>
-</div>
-
-</transition>
-
-
+                  <button
+                    class="text-black font-semibold hover:text-blue-600"
+                    @mouseenter="handleSubHover(`${item.label}__${sub.label}`)"
+                  >
+                    {{ sub.label }}
+                  </button>
+  
+                  <transition name="flyout">
+                    <div
+                      v-if="hoveredSub === `${item.label}__${sub.label}`"
+                      @mouseenter="handleSubHover(`${item.label}__${sub.label}`)"
+                      @mouseleave="clearSubHover"
+                      class="sub-sub-menu"
+                    >
+                      <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
+                        <li v-for="link in sub.children" :key="link.anchor">
+                          <router-link
+                            :to="`${sub.basePath || ''}#${link.anchor}`"
+                            @click.prevent="handleAnchor(sub.basePath, link.anchor)"
+                            class="text-black hover:text-blue-500 transition"
+                          >
+                            {{ link.label }}
+                          </router-link>
+                        </li>
+                      </ul>
+                    </div>
+                  </transition>
                 </template>
   
                 <template v-else>
                   <router-link
-                    :to="`${sub.basePath || ''}`"
+                    :to="sub.basePath || ''"
                     class="text-black hover:text-blue-600 transition block mt-1"
                   >
                     {{ sub.label }}
@@ -76,8 +69,63 @@
           </div>
         </li>
       </ul>
+  
+      <!-- ✅ Mobile Drawer (burgerOpen) -->
+      <transition name="slide">
+        <div v-if="burgerOpen && isMobile" class="mobile-drawer">
+          <button class="close-btn" @click="toggleBurger">✕</button>
+          <ul class="mobile-nav-list">
+            <li v-for="item in navigationLinks" :key="item.label">
+              <button class="mobile-main-link" @click="toggleMain(item.label)">
+                {{ item.label }}
+              </button>
+  
+              <!-- Submenu -->
+              <ul v-if="openLabel === item.label && item.children">
+                <li v-for="sub in item.children" :key="sub.label">
+                  <template v-if="sub.children">
+                    <button
+                      class="mobile-sub-link"
+                      @click="toggleSub(`${item.label}__${sub.label}`)"
+                    >
+                      {{ sub.label }}
+                    </button>
+  
+                    <!-- Sub-submenu -->
+                    <ul
+                      v-if="hoveredSub === `${item.label}__${sub.label}`"
+                      class="ml-4"
+                    >
+                      <li v-for="link in sub.children" :key="link.anchor">
+                        <router-link
+                          :to="`${sub.basePath || ''}#${link.anchor}`"
+                          class="mobile-sub-sub-link"
+                          @click.prevent="() => { handleAnchor(sub.basePath, link.anchor); toggleBurger(); }"
+                        >
+                          {{ link.label }}
+                        </router-link>
+                      </li>
+                    </ul>
+                  </template>
+  
+                  <template v-else>
+                    <router-link
+                      :to="sub.basePath || ''"
+                      class="mobile-sub-link"
+                      @click="toggleBurger"
+                    >
+                      {{ sub.label }}
+                    </router-link>
+                  </template>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </transition>
     </nav>
   </template>
+  
   
   <script setup lang="ts">
   import { ref, watch, nextTick } from 'vue'
@@ -178,6 +226,12 @@ window.addEventListener('resize', () => {
 function toggleSub(label: string) {
   hoveredSub.value = hoveredSub.value === label ? null : label
 }
+
+const burgerOpen = ref(false)
+const toggleBurger = () => {
+  burgerOpen.value = !burgerOpen.value
+}
+
 
   </script>
 
@@ -429,6 +483,73 @@ transform: none;
     overflow: visible !important;
   }
 
+}
+.burger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: white;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+}
+
+.close-btn {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: black;
+}
+
+.mobile-nav-list,
+.mobile-nav-list ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.mobile-main-link,
+.mobile-sub-link,
+.mobile-sub-sub-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #1f2937; /* gray-800 */
+  transition: background 0.2s ease;
+}
+
+.mobile-main-link:hover,
+.mobile-sub-link:hover,
+.mobile-sub-sub-link:hover {
+  background: #f3f4f6; /* gray-100 */
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.slide-enter-from, .slide-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 
