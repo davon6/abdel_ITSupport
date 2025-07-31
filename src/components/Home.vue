@@ -86,6 +86,7 @@ onMounted(() => {
 
 <!-- Services Section -->
 <section id="services" class="section-parallax">
+  <div class="rellax bg-parallax" data-rellax-speed="-3"></div> <!-- Parallax Background -->
   <div class="overlay"></div>
   <div class="container">
     <h2 class="section-title text-white" data-aos="fade-right">Nos services</h2>
@@ -499,25 +500,17 @@ html {
 }
 .section-parallax {
   position: relative;
-  background-image: url('/world-wide-web.jpg'); /* Or another IT/tech background you like */
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
   padding: 120px 20px;
   color: #fff;
-  overflow: hidden;
-}
-
-.section-parallax .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.7);
   z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+.section-parallax .overlay,
 .section-parallax .container {
   position: relative;
   z-index: 2;
@@ -566,4 +559,18 @@ html {
     font-size: 0.90rem;
   }
 }
+
+.bg-parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  background-image: url('/world-wide-web.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+
 </style>
