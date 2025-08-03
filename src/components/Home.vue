@@ -579,6 +579,8 @@ html {
   background-size: cover;
   background-position: center;
   z-index: 0;
+  max-width: 100vw;
+  overflow: hidden;
 } 
 
 
@@ -593,6 +595,17 @@ html {
   flex-direction: column;
   justify-content: center;
 }
+
+
+html, body {
+  overflow-x: hidden;
+}
+
+.rellax{
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 
 
 }
