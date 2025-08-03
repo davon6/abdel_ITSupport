@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import ContactForm from './ContactForm.vue'
 
 onMounted(() => {
   AOS.init({ duration: 800, once: true })
@@ -71,6 +72,8 @@ onMounted(() => {
         <li>Confidentialité garantie des données</li>
       </ul>
     </article>
+
+    <ContactForm />
   </main>
 </template>
 
