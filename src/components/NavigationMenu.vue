@@ -524,6 +524,7 @@ transform: none;
   z-index: 999;
   overflow-y: auto;
   padding: 2rem 1.5rem;
+  width: 80vw;
 }
 
 .close-btn {
@@ -541,6 +542,8 @@ transform: none;
   list-style: none;
   padding-left: 0;
   margin: 1rem 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .mobile-main-link,
