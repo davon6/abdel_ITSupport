@@ -1,7 +1,7 @@
 <template>
     <nav class="relative overflow-x-hidden">
       <!-- ✅ Burger Icon -->
-      <button v-if="isMobile" class="burger" @click="toggleBurger" aria-label="Open menu">
+      <button v-if="isMobile && !burgerOpen" class="burger" @click="toggleBurger" aria-label="Open menu">
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="3" y1="6" x2="21" y2="6"/>
     <line x1="3" y1="12" x2="21" y2="12"/>
@@ -519,7 +519,6 @@ transform: none;
   right: 0; /* ✅ instead of left: 0 */
   left: auto;
   height: 100vh;
-  width: 100vw;
   background: white;
   z-index: 999;
   overflow-y: auto;
