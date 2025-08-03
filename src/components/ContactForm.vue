@@ -86,13 +86,7 @@ const submitForm = () => {
 
 
 
-  // Success - do something with the form
-  alert(`Formulaire envoyé !\n\n${JSON.stringify(form, null, 2)}`)
-
-  // Optionally clear form
-   Object.keys(form).forEach((key) => form[key] = '')
-  
-
+ 
   </script>
   
   <style scoped>
