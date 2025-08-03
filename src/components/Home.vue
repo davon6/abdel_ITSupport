@@ -4,6 +4,7 @@ import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useRouter, useRoute } from 'vue-router'
+import ContactForm from './ContactForm.vue'
 
 
 
@@ -134,7 +135,7 @@ onMounted(() => {
     <h2>Prêt à booster votre infrastructure informatique ?</h2>
     <p>Contactez-nous dès aujourd’hui pour un diagnostic gratuit et personnalisé.</p>
 
-   <!-- <ContactForm />-->
+    <ContactForm />
 
 
   </div>

@@ -1,123 +1,219 @@
 <template>
-    <section class="contact-section">
-      <h2>Contactez-nous</h2>
-      <form @submit.prevent="submitForm" novalidate>
-        <label for="name">Nom</label>
-        <input id="name" v-model="name" type="text" />
-        <p v-if="errors.name" class="error">{{ errors.name }}</p>
+    <div class="contact-form-container">
+      <h2 class="title">Saisissez vos informations</h2>
+      <p v-if="error" class="error">{{ error }}</p>
+      <form @submit.prevent="submitForm" class="form">
+        <div class="input-row">
+  <div class="input-group">
+    <input type="text" v-model="form.nom" placeholder="Prenom" />
+  </div>
+
+  <div class="input-group">
+    <input
+      type="email"
+      v-model="form.email"
+      placeholder="Email"
+      :class="{ invalid: form.email && !isValidEmail(form.email) }"
+    />
+  </div>
+
+  <div class="input-group">
+    <input type="tel" v-model="form.tel" placeholder="Téléphone" />
+  </div>
+</div>
+
   
-        <label for="email">Email</label>
-        <input id="email" v-model="email" type="email" />
-        <p v-if="errors.email" class="error">{{ errors.email }}</p>
+        <div class="input-group">
+          <textarea v-model="form.message" placeholder="Écrivez votre message"></textarea>
+        </div>
   
-        <label for="message">Message</label>
-        <textarea id="message" v-model="message"></textarea>
-        <p v-if="errors.message" class="error">{{ errors.message }}</p>
-  
-        <button type="submit">Envoyer</button>
+        <button
+  type="submit"
+  class="submit-btn"
+  :disabled="!isFormValid"
+>
+  Envoyer
+</button>
+
       </form>
-    </section>
+    </div>
   </template>
   
-  <script setup>
-  import { ref } from 'vue'
-  
-  const name = ref('')
-  const email = ref('')
-  const message = ref('')
-  const errors = ref({})
-  
-  function validate() {
-    errors.value = {}
-    if (!name.value.trim()) errors.value.name = 'Le nom est requis.'
-    if (!email.value.trim()) {
-      errors.value.email = 'L’email est requis.'
-    } else if (!/\S+@\S+\.\S+/.test(email.value)) {
-      errors.value.email = 'L’email est invalide.'
-    }
-    if (!message.value.trim()) errors.value.message = 'Le message est requis.'
-    return Object.keys(errors.value).length === 0
+  <script lang="ts" setup>
+import { reactive, ref, computed } from 'vue'
+
+const form = reactive({
+  nom: '',
+  email: '',
+  tel: '',
+  message: ''
+})
+
+const error = ref('')
+
+const isValidEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+// Live computed validation
+const isFormValid = computed(() => {
+  return (
+    form.nom.trim() !== '' &&
+    form.email.trim() !== '' &&
+    isValidEmail(form.email) &&
+    form.tel.trim() !== '' &&
+    form.message.trim() !== ''
+  )
+})
+
+const submitForm = () => {
+  if (!isFormValid.value) {
+    error.value = 'Veuillez corriger les champs du formulaire.'
+    return
   }
+
+  error.value = ''
+  alert(`Formulaire envoyé !\n\n${JSON.stringify(form, null, 2)}`)
+
+  // Clear the form
+  Object.keys(form).forEach((key) => {
+    form[key as keyof typeof form] = ''
+  })
+}
+
+
+
+
+
+  // Success - do something with the form
+  alert(`Formulaire envoyé !\n\n${JSON.stringify(form, null, 2)}`)
+
+  // Optionally clear form
+   Object.keys(form).forEach((key) => form[key] = '')
   
-  function submitForm() {
-    if (!validate()) return
-    alert(`Merci, ${name.value}! Votre message a été envoyé.`)
-    name.value = ''
-    email.value = ''
-    message.value = ''
-  }
+
   </script>
   
   <style scoped>
-  .contact-section {
-    max-width: 480px;
-    margin: 3rem auto;
+  .contact-form-container {
     padding: 2rem;
-    background: #f9faff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-    font-family: 'Open Sans', sans-serif;
+    max-width: 900px;
+    margin: auto;
+    background-color: transparent;
+    font-family: sans-serif;
   }
   
-  .contact-section h2 {
-    text-align: center;
+  .title {
+    font-size: 1.8rem;
+    font-weight: 500;
     margin-bottom: 1.5rem;
-    color: #003366;
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .input-row {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   
   label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-    color: #003366;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: #333;
   }
   
   input,
   textarea {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    margin-bottom: 1rem;
-    border: 1.8px solid #d0d7e0;
-    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0.4rem 0;
     font-size: 1rem;
-    font-family: inherit;
     transition: border-color 0.3s;
+   
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(0, 0, 0, 0.3);
   }
   
   input:focus,
   textarea:focus {
-    border-color: #005bbb;
-    outline: none;
-    box-shadow: 0 0 5px #005bbb66;
+    border-bottom-color: rgba(0, 0, 0, 0.6);
   }
   
   textarea {
-    min-height: 120px;
+    min-height: 100px;
     resize: vertical;
   }
   
-  .error {
-    color: #d93025;
-    font-size: 0.875rem;
-    margin-top: -0.8rem;
-    margin-bottom: 1rem;
-  }
+  .submit-btn {
+  align-self: center;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
   
-  button {
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
     width: 100%;
-    padding: 1rem;
-    background-color: #005bbb;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
   }
   
-  button:hover {
-    background-color: #004299;
-  }
+/* Hover effect */
+.submit-btn:hover {
+  color: #c0392b; /* reddish */
+}
+  
+.submit-btn:hover::after {
+  background-color: rgba(192, 57, 43, 0.7); /* darker red line */
+}
+  .error {
+  color: red;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.invalid {
+  border-bottom-color: rgba(255, 0, 0, 0.6) !important;
+}
+.submit-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  color: rgba(0, 0, 0, 0.3);
+
+}
+
   </style>
   
