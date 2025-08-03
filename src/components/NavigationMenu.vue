@@ -80,7 +80,23 @@
       <!-- ✅ Mobile Drawer (burgerOpen) -->
       <transition name="slide">
         <div v-if="burgerOpen && isMobile" class="mobile-drawer">
-          <button class="close-btn" @click="toggleBurger">✕</button>
+            <button class="close-btn" @click="toggleBurger" aria-label="Close menu">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="black"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
+
           <ul class="mobile-nav-list">
             <li v-for="item in navigationLinks" :key="item.label">
               <button class="mobile-main-link" @click="toggleMain(item.label)">
@@ -527,14 +543,29 @@ transform: none;
 }
 
 .close-btn {
-  font-size: 2rem;
-  background: none;
-  border: none;
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.close-btn svg {
+  width: 52px;
+  height: 52px;
+  stroke: black;
+  transition: stroke 0.2s ease;
+}
+
+.close-btn:hover svg {
+  stroke: #60a5fa; /* Tailwind blue-400 on hover */
+}
+
 
 .mobile-nav-list,
 .mobile-nav-list ul {
