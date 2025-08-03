@@ -579,7 +579,7 @@ html {
   background-size: cover;
   background-position: center;
   z-index: 0;
-  max-width: 100vw;
+  max-width: 200vw;
   overflow: hidden;
 } 
 
@@ -602,17 +602,10 @@ html, body {
 }
 
 .rellax{
-  max-width: 100vw;
+  max-width: 200vw;
   overflow: hidden;
 }
 
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  box-sizing: border-box;
-}
 
 
 }
