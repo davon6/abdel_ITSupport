@@ -491,7 +491,7 @@ transform: none;
 .burger {
   position: fixed;
   top: 1rem;
-  left: 1rem;
+  right: 1rem;
   z-index: 1000;
   background: none;
   border: none;
@@ -516,7 +516,8 @@ transform: none;
 .mobile-drawer {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0; /* ✅ instead of left: 0 */
+  left: auto;
   height: 100vh;
   width: 100vw;
   background: white;
@@ -562,11 +563,12 @@ transform: none;
   background: #f3f4f6; /* gray-100 */
 }
 
+
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.3s ease, opacity 0.2s ease;
 }
 .slide-enter-from, .slide-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(100%);
   opacity: 0;
 }
 
