@@ -120,8 +120,14 @@ const submitForm = () => {
     flex: 1;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
   }
-  
+  /* Add this breakpoint */
+@media (max-width: 768px) {
+  .input-row {
+    flex-direction: column;
+  }
+}
   label {
     font-size: 0.9rem;
     margin-bottom: 0.3rem;
