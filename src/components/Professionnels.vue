@@ -12,9 +12,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header>
-
-  </header>
+  <header></header>
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
@@ -25,89 +23,282 @@ onMounted(() => {
     </div>
   </section>
 
-  <main class="container" id="services" data-aos="fade-up">
-    <article class="section">
-      <h2>Support & Maintenance</h2>
-      <ul>
-        <li>Contrats mensuels ou à la demande</li>
-        <li>Téléassistance rapide (TeamViewer, AnyDesk…)</li>
-        <li>Réparation express & diagnostic matériel/logiciel</li>
-        <li>Mise en réseau sécurisée (LAN, Wi-Fi pro)</li>
-      </ul>
-    </article>
 
-    <article class="section" data-aos="fade-up" data-aos-delay="100">
-      <h2>Sécurité Informatique</h2>
-      <ul>
-        <li>Antivirus professionnels & pare-feu</li>
-        <li>Maintenance préventive & sauvegardes automatiques</li>
-        <li>Sensibilisation aux risques cyber</li>
-      </ul>
-    </article>
 
-    <article class="section" data-aos="fade-up" data-aos-delay="200">
-      <h2>Installation & Déploiement</h2>
-      <ul>
-        <li>Configuration de parc informatique complet</li>
-        <li>Installation d’outils collaboratifs (Google Workspace, Office 365)</li>
-        <li>Mise en place de serveurs NAS</li>
-      </ul>
-    </article>
 
-    <article class="section" data-aos="fade-up" data-aos-delay="300">
-      <h2>Services Web & Support Logiciel</h2>
-      <ul>
-        <li>Création de sites vitrines simples (WordPress, Wix)</li>
-        <li>Conseils hébergement, nom de domaine & référencement local</li>
-        <li>Aide à l’utilisation et migration de logiciels métier</li>
-      </ul>
-    </article>
 
-    <article class="section" data-aos="fade-up" data-aos-delay="400">
-      <h2>Avantages ShoTech</h2>
-      <ul>
-        <li>Réactivité : assistance sous 24h</li>
-        <li>Expertise claire et pédagogique</li>
-        <li>Interventions flexibles : à distance, domicile ou entreprise</li>
-        <li>Confidentialité garantie des données</li>
-      </ul>
-    </article>
+  <main class="container" id="services">
+
+    <div class="background-path" :style="{ height: pathHeight }">
+  <svg viewBox="0 0 500 2500" preserveAspectRatio="none">
+    <path d="
+  M250,0 
+  C450,200 50,400 450,600
+  C50,800 450,1000 50,1200
+  C450,1400 100,1600 400,1800
+  C100,2000 450,2200 150,2400
+" 
+fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasharray="10 10"/>
+</svg>
+</div>
+
+
+
+
+
+    <article
+  v-for="(section, i) in sections"
+  :key="i"
+  class="section-card"
+  :class="i % 2 === 0 ? 'layout-left' : 'layout-right'"
+  :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+  :data-aos-delay="i * 100"
+>
+  <div class="text-block">
+    <h2 class="shine-title">{{ section.title }}</h2>
+    <ul>
+      <li v-for="(item, idx) in section.items" :key="idx">{{ item }}</li>
+    </ul>
+  </div>
+
+  <div class="image-block">
+    <div class="image-frame">
+      <img src="/istockphoto.jpg" alt="Business IT Solutions" />
+    </div>
+  </div>
+</article>
+
+
+
 
     <ContactForm />
+
   </main>
+
 </template>
 
+<script lang="ts">
+import {  ref } from 'vue'
+
+const pathHeight = ref('2500px')
+
+onMounted(() => {
+  const container = document.querySelector('main.container')
+  if (container) {
+    pathHeight.value = container.scrollHeight + 'px'
+  }
+})
+
+export default {
+  data() {
+    return {
+      sections: [
+        {
+          title: 'Support & Maintenance',
+          items: [
+            'Contrats mensuels ou à la demande',
+            'Téléassistance rapide (TeamViewer, AnyDesk…)',
+            'Réparation express & diagnostic matériel/logiciel',
+            'Mise en réseau sécurisée (LAN, Wi-Fi pro)'
+          ]
+        },
+        {
+          title: 'Sécurité Informatique',
+          items: [
+            'Antivirus professionnels & pare-feu',
+            'Maintenance préventive & sauvegardes automatiques',
+            'Sensibilisation aux risques cyber'
+          ]
+        },
+        {
+          title: 'Installation & Déploiement',
+          items: [
+            'Configuration de parc informatique complet',
+            'Installation d’outils collaboratifs (Google Workspace, Office 365)',
+            'Mise en place de serveurs NAS'
+          ]
+        },
+        {
+          title: 'Services Web & Support Logiciel',
+          items: [
+            'Création de sites vitrines simples (WordPress, Wix)',
+            'Conseils hébergement, nom de domaine & référencement local',
+            'Aide à l’utilisation et migration de logiciels métier'
+          ]
+        },
+        {
+          title: 'Installation Réseau & Baies',
+          items: [
+            'Installation de baies de brassage professionnelles',
+            'Câblage réseau structuré (RJ45, fibre optique)',
+            'Configuration switchs & routeurs pro',
+            'Optimisation du réseau pour performances & sécurité'
+          ]
+        }
+      ]
+    }
+  }
+}
+</script>
+
 <style scoped>
-/* Basic reset and container */
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 2em auto;
   padding: 0 1em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #2c3e50;
 }
 
-/* Header nav */
-nav {
-  background: #fff;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-  padding: 1em 0;
+/* Alternating layout */
+.section-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3em;
+  background: white;
+  border-radius: 12px;
+  padding: 2em;
+  margin-bottom: 4em;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 8s infinite ease-in-out;
 }
-.nav-links {
-  list-style: none;
+.layout-left .text-block {
+  order: 1;
+}
+.layout-left .image-block {
+  order: 2;
+}
+.layout-right .text-block {
+  order: 2;
+}
+.layout-right .image-block {
+  order: 1;
+}
+
+/* Text narrow column */
+.text-block {
+  flex: 1;
+  max-width: 450px;
+}
+.text-block ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  color: #555;
+}
+.text-block li {
+  margin-bottom: 0.6em;
+  line-height: 1.4;
+}
+
+/* Image out of frame effect */
+.image-block {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 2em;
+  position: relative;
+  perspective: 1000px; /* gives the 3D depth */
 }
-.nav-links li a {
-  color: #34495e;
-  text-decoration: none;
-  font-weight: 600;
+
+.whyus-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  transform: translateY(-10px) translateX(20px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
-.nav-links li a.active {
-  color: #007BFF;
-  border-bottom: 2px solid #007BFF;
-  padding-bottom: 0.2em;
+.section-card:hover .whyus-image {
+  transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.whyus-image::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #ccc; /* fallback if no image color sampling */
+  filter: brightness(85%);
+  border-radius: 0 0 10px 10px;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  z-index: -1;
+}
+
+.whyus-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 8px;
+  height: 100%;
+  background: #bbb; /* fallback shade */
+  filter: brightness(80%);
+  border-radius: 0 10px 10px 0;
+  transform: rotateY(90deg);
+  transform-origin: left;
+  z-index: -1;
+}
+
+/* Title with animated glowing underline */
+.shine-title {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.3em;
+}
+
+/* Static underline */
+.shine-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #007BFF;
+  border-radius: 2px;
+}
+
+.shine-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -60%;
+  width: 60%; /* was 50% */
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.9),
+    transparent
+  );
+  border-radius: 2px;
+  animation: underlineShine 2.5s infinite ease-in-out;
+}
+
+@keyframes underlineShine {
+  0% { left: -60%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+
+
+
+/* Card glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+  50% { box-shadow: 0 8px 25px rgba(0,123,255,0.15); }
 }
 
 /* Parallax hero */
@@ -127,7 +318,6 @@ nav {
   position: absolute;
   inset: 0;
   background-color: rgba(0,0,0,0.5);
-  z-index: 0;
 }
 .hero-content {
   position: relative;
@@ -157,51 +347,109 @@ nav {
   background-color: #0056b3;
 }
 
-/* Section styling */
-.section {
-  margin-bottom: 3em;
-}
-.section h2 {
-  color: #34495e;
-  font-weight: 700;
-  margin-bottom: 0.75em;
-  border-bottom: 2px solid #007BFF;
-  padding-bottom: 0.3em;
-}
-.section ul {
-  list-style-type: disc;
-  padding-left: 1.5em;
-  color: #555;
-}
-.section ul li {
-  margin-bottom: 0.6em;
-  line-height: 1.3;
+.image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  transform: translateY(-10px) translateX(20px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
 
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #0077cc;
-  padding: 15px 30px;
-  color: white;
+/* hover tilt */
+.section-card:hover .image-frame {
+  transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-nav .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.image-frame::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: linear-gradient(to bottom, #ccc, #999);
+  border-radius: 0 0 10px 10px;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  z-index: -1;
 }
 
-nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
+.image-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -15px;
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(to right, #bbb, #888);
+  border-radius: 0 10px 10px 0;
+  transform: rotateY(90deg);
+  transform-origin: left;
+  z-index: -1;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+/* Extra soft shadow to sell the depth */
+.image-frame {
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
 }
+
+.container {
+  position: relative;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  background-size: 100% 20px;
+  transform: translateX(-10%);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.layout-left {
+  margin-left: -40px;
+}
+.layout-right {
+  margin-right: -40px;
+}
+.container {
+  max-width: 1250px; /* was 1100px */
+  margin: 2em auto;
+  padding: 0 2em; /* was 1em */
+}
+
+.section-card {
+  gap: 2em; /* was 3em — tighter */
+}
+
+.text-block {
+  flex: 1;
+  max-width: 500px; /* was 450px — give more space */
+}
+main.container {
+  position: relative; /* container for absolute children */
+  min-height: 3000px; /* or higher if needed, to match content */
+  overflow: visible; /* prevent clipping */
+}
+
+.background-path {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 500px;
+  height: 3000px; /* explicitly match or exceed main content height */
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 </style>

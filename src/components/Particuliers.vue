@@ -53,16 +53,6 @@ onMounted(() => {
 
 <template>
 
-    <header>
-    <nav>
-     
-      <ul class="nav-links">
-        <li> <router-link to="/">Acceuil</router-link></li>
-        <li><router-link to="/professionnels">Professionels</router-link></li>
-        <li><a href="#Apropos">A propos</a></li>
-      </ul>
-    </nav>
-  </header>
   <div :style="{ opacity: opacity }" id="page-content">
     <!-- Hero Banner -->
     <section class="parallax-hero rellax" data-rellax-speed="-3"  >

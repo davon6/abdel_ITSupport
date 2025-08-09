@@ -19,8 +19,13 @@
           @mouseenter="openLabel = item.label"
           @mouseleave="handleMouseLeave"
         >
-          <button class="nav-button">{{ item.label }}</button>
-  
+          <router-link
+      :to="item.basePath || item.to || '/'"
+      class="nav-button"
+      @click.native="openLabel = null"
+    >
+      {{ item.label }}
+    </router-link>
           <div
             v-if="item.children && openLabel === item.label"
             class="dropdown-menu flex gap-2"
@@ -262,6 +267,7 @@ const toggleBurger = () => {
   list-style: none;
   padding: 0;
   margin: 0;
+  height:30px;
 }
 
 .nav-button {
@@ -274,6 +280,7 @@ const toggleBurger = () => {
   transition: color 0.3s ease;
   padding: 0.5rem 1rem; /* tight but comfy */
   line-height: 1.2;
+
 }
 
 

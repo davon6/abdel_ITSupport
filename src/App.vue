@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onUnmounted } from 'vue';
 import AppHeader from '@/components/AppHeader.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
 const isSupportModalOpen = ref(false);
 
 const openSupportModal = () => {
@@ -31,7 +32,7 @@ onUnmounted(() => {
   <!-- Route views -->
   <AppHeader />
   <router-view />
-
+  <FooterComponent />
 </template>
 
 <style>

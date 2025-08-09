@@ -180,9 +180,6 @@ onMounted(() => {
 
   </main>
 
-  <footer>
-    <p>© 2025 IT Support Hub. All rights reserved.</p>
-  </footer>
 </template>
 
 
@@ -327,13 +324,6 @@ nav a {
   border: none;
   border-radius: 5px;
   margin-left: 10px;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #0077cc;
-  color: white;
 }
 
 html {
