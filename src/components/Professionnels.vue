@@ -478,13 +478,35 @@ main.container {
     padding-right: 1.5em;
   }
 
-  .parallax-hero {
-    height: auto;            /* let height grow with content */
-    min-height: 280px;       /* maintain a minimum size */
-    padding: 3em 1.5em;      /* add vertical and horizontal padding */
-    background-position: center center;
-    background-size: cover;
-  }
+/* Fix container padding & width on mobile */
+.container {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 1.5em !important;  /* or 1em, just keep some side padding */
+  padding-right: 1.5em !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure parallax hero doesn't overflow */
+.parallax-hero {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 1.5em !important;
+  padding-right: 1.5em !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* Also keep your section-card tweak */
+.section-card {
+  max-width: 90% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
 
   .hero-content h1 {
     font-size: 1.8rem;
@@ -501,12 +523,6 @@ main.container {
     font-size: 1rem;
   }
 
-  .section-card {
-  max-width: 90% !important;   /* limit width to 90% of viewport */
-  margin-left: auto !important; /* center horizontally */
-  margin-right: auto !important;
-  box-sizing: border-box;       /* include padding in width */
-}
 
 }
 
