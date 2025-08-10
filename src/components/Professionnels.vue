@@ -499,17 +499,17 @@ main.container {
     padding: 0.8em 2em;
     font-size: 1rem;
   }
-
   .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding-left: 1em !important;  /* minimal padding */
-    padding-right: 1em !important;
-    margin: 0 auto !important;
+    padding-left: 0.5em !important;  /* minimal side padding */
+    padding-right: 0.5em !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
-    border: 2px solid red; /* debug: shows container boundary */
   }
+
 
   /* Section card clamp and reset margin/padding */
   .section-card {
@@ -520,7 +520,7 @@ main.container {
     padding-right: 1em !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
-    border: 2px solid blue; /* debug: shows card boundary */
+ /* debug: shows card boundary */
   }
 
 }
