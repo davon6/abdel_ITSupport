@@ -159,6 +159,19 @@ export default {
   will-change: transform;
   backface-visibility: hidden; 
 }
+@media (max-width: 768px) {
+  .image-frame {
+    max-width: 100% !important;  /* allow full width */
+    transform: none !important;  /* remove translate and rotate */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  .image-frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
 
 
 /*
