@@ -369,7 +369,7 @@ export default {
 
 */
 
-/* hover tilt */
+/* 
 .section-card:hover .image-frame {
   transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -403,7 +403,7 @@ export default {
   z-index: -1;
 }
 
-/* Extra soft shadow to sell the depth */
+
 .image-frame {
   box-shadow: 0 20px 45px rgba(0,0,0,0.35);
 }
@@ -432,23 +432,23 @@ export default {
   margin-right: -40px;
 }
 .container {
-  max-width: 1250px; /* was 1100px */
+  max-width: 1250px; 
   margin: 2em auto;
-  padding: 0 2em; /* was 1em */
+  padding: 0 2em; 
 }
 
 .section-card {
-  gap: 2em; /* was 3em — tighter */
+  gap: 2em; 
 }
 
 .text-block {
   flex: 1;
-  max-width: 500px; /* was 450px — give more space */
+  max-width: 500px; 
 }
 main.container {
-  position: relative; /* container for absolute children */
-  min-height: 3000px; /* or higher if needed, to match content */
-  overflow: visible; /* prevent clipping */
+  position: relative; 
+  min-height: 3000px;
+  overflow: visible; 
 }
 
 .background-path {
@@ -456,12 +456,12 @@ main.container {
   top: 0;
   left: 50%;
   width: 500px;
-  height: 3000px; /* explicitly match or exceed main content height */
+  height: 3000px; 
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
 }
-
+*/
 /* 
 @media (max-width: 768px) {
   .section-card {
