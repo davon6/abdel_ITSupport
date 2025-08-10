@@ -44,7 +44,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </div>
 
 
-
+<!--
 
 
     <article
@@ -69,7 +69,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
   </div>
 </article>
 
-
+-->
 
 
     <ContactForm />
