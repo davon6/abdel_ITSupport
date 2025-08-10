@@ -151,65 +151,17 @@ export default {
 
 <style scoped>
 
-@media (max-width: 768px) {
-  .image-frame {
-    max-width: 100% !important;  /* allow full width */
-    transform: none !important;  /* remove translate and rotate */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  }
+/* === Desktop and default styles === */
 
-  .image-frame img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-
-  main.container {
-    padding-right: 1.5em !important;
-    padding-left: 1.5em !important; /* balance left side too */
-  }
-
-  /* Or if it’s specifically the right content inside the sections */
-  .layout-right .image-block,
-  .layout-right .text-block {
-    padding-right: 1.5em;
-  }
-
-  .parallax-hero {
-    height: auto;            /* let height grow with content */
-    min-height: 280px;       /* maintain a minimum size */
-    padding: 3em 1.5em;      /* add vertical and horizontal padding */
-    background-position: center center;
-    background-size: cover;
-  }
-
-  .hero-content h1 {
-    font-size: 1.8rem;
-    line-height: 1.2;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-    margin-bottom: 1.5em;
-  }
-
-  .btn-main {
-    padding: 0.8em 2em;
-    font-size: 1rem;
-  }
-}
-
-
-/*
 .container {
   max-width: 1100px;
   margin: 2em auto;
   padding: 0 1em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #2c3e50;
+  position: relative;
 }
 
- Alternating layout 
 .section-card {
   display: flex;
   align-items: center;
@@ -224,34 +176,38 @@ export default {
   overflow: hidden;
   animation: glowPulse 8s infinite ease-in-out;
 }
+
 .layout-left .text-block {
   order: 1;
 }
+
 .layout-left .image-block {
   order: 2;
 }
+
 .layout-right .text-block {
   order: 2;
 }
+
 .layout-right .image-block {
   order: 1;
 }
-
 
 .text-block {
   flex: 1;
   max-width: 450px;
 }
+
 .text-block ul {
   list-style-type: disc;
   padding-left: 1.5em;
   color: #555;
 }
+
 .text-block li {
   margin-bottom: 0.6em;
   line-height: 1.4;
 }
-
 
 .image-block {
   flex: 1;
@@ -261,51 +217,50 @@ export default {
   perspective: 1000px;
 }
 
-.whyus-image {
+.image-frame {
+  position: relative;
   width: 100%;
   max-width: 400px;
   border-radius: 10px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  overflow: hidden;
   transform: translateY(-10px) translateX(20px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
   z-index: 2;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
-.section-card:hover .whyus-image {
+
+.section-card:hover .image-frame {
   transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-.whyus-image::after {
+.image-frame::after {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: -15px;
   left: 0;
   width: 100%;
-  height: 8px;
-  background: #ccc;
-  filter: brightness(85%);
+  height: 15px;
+  background: linear-gradient(to bottom, #ccc, #999);
   border-radius: 0 0 10px 10px;
   transform: rotateX(90deg);
   transform-origin: top;
   z-index: -1;
 }
 
-.whyus-image::before {
+.image-frame::before {
   content: "";
   position: absolute;
   top: 0;
-  right: -8px;
-  width: 8px;
+  right: -15px;
+  width: 15px;
   height: 100%;
-  background: #bbb; 
-  filter: brightness(80%);
+  background: linear-gradient(to right, #bbb, #888);
   border-radius: 0 10px 10px 0;
   transform: rotateY(90deg);
   transform-origin: left;
   z-index: -1;
 }
-
 
 .shine-title {
   position: relative;
@@ -315,7 +270,6 @@ export default {
   margin-bottom: 0.75em;
   padding-bottom: 0.3em;
 }
-
 
 .shine-title::before {
   content: "";
@@ -351,15 +305,10 @@ export default {
   100% { left: 100%; }
 }
 
-
-
-
-
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
   50% { box-shadow: 0 8px 25px rgba(0,123,255,0.15); }
 }
-
 
 .parallax-hero {
   position: relative;
@@ -373,26 +322,31 @@ export default {
   overflow: hidden;
   margin-bottom: 3em;
 }
+
 .overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0,0,0,0.5);
 }
+
 .hero-content {
   position: relative;
   z-index: 1;
   max-width: 600px;
 }
+
 .hero-content h1 {
   font-size: 2.8rem;
   margin-bottom: 0.5em;
   font-weight: 700;
 }
+
 .hero-content p {
   font-size: 1.2rem;
   margin-bottom: 1.5em;
   line-height: 1.4;
 }
+
 .btn-main {
   background-color: #007BFF;
   color: white;
@@ -402,158 +356,80 @@ export default {
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
+
 .btn-main:hover {
   background-color: #0056b3;
 }
 
-.image-frame {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 10px;
-  overflow: hidden;
-  transform: translateY(-10px) translateX(20px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 2;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-}
-
-*/
-
-/* 
-.section-card:hover .image-frame {
-  transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.image-frame::after {
-  content: "";
-  position: absolute;
-  bottom: -15px;
-  left: 0;
-  width: 100%;
-  height: 15px;
-  background: linear-gradient(to bottom, #ccc, #999);
-  border-radius: 0 0 10px 10px;
-  transform: rotateX(90deg);
-  transform-origin: top;
-  z-index: -1;
-}
-
-.image-frame::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -15px;
-  width: 15px;
-  height: 100%;
-  background: linear-gradient(to right, #bbb, #888);
-  border-radius: 0 10px 10px 0;
-  transform: rotateY(90deg);
-  transform-origin: left;
-  z-index: -1;
-}
-
-
-.image-frame {
-  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
-}
-
-.container {
-  position: relative;
-}
-
-.container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 6px;
-  background-size: 100% 20px;
-  transform: translateX(-10%);
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-.layout-left {
-  margin-left: -40px;
-}
-.layout-right {
-  margin-right: -40px;
-}
-.container {
-  max-width: 1250px; 
-  margin: 2em auto;
-  padding: 0 2em; 
-}
-
-.section-card {
-  gap: 2em; 
-}
-
-.text-block {
-  flex: 1;
-  max-width: 500px; 
-}
-main.container {
-  position: relative; 
-  min-height: 3000px;
-  overflow: visible; 
-}
-
-.background-path {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 500px;
-  height: 3000px; 
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 0;
-}
-*/
-/* 
+/* === Mobile Styles === */
 @media (max-width: 768px) {
+  main.container {
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
+  }
+
   .section-card {
     flex-direction: column;
-    overflow: visible; 
+    overflow: visible;
     gap: 1.5em;
     padding: 1.5em;
+    margin-bottom: 3em;
   }
 
   .layout-left,
   .layout-right {
-    margin: 0; 
+    margin: 0;
   }
 
-  .text-block, .image-block {
+  .text-block,
+  .image-block {
     max-width: 100%;
+    flex: none;
   }
+
+  /* Restore image-frame shadows but remove transforms for clarity on mobile */
   .image-frame {
+    max-width: 100% !important;
+    width: 100%;
     transform: none !important;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow: hidden;
   }
 
+  .image-frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+  }
+
+  /* Adjust parallax hero */
   .parallax-hero {
     height: auto;
-    padding: 4em 1em;
+    min-height: 280px;
+    padding: 3em 1.5em;
+    background-position: center center;
+    background-size: cover;
   }
+
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
   }
+
   .hero-content p {
     font-size: 1rem;
+    margin-bottom: 1.5em;
   }
 
-
-  * {
-  transform: none !important;
-  height: auto !important;
-  min-height: auto !important;
-  overflow: visible !important;
+  .btn-main {
+    padding: 0.8em 2em;
+    font-size: 1rem;
+  }
 }
 
-}*/
+
+
 
 </style>
