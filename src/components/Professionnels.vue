@@ -14,7 +14,7 @@ onMounted(() => {
 <template>
  
  
-
+<!--
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
     <div class="container text-center hero-content">
@@ -23,7 +23,7 @@ onMounted(() => {
       <router-link to="#services" class="btn-main">Découvrir nos services</router-link>
     </div>
   </section>
-
+-->
 
 
 
@@ -46,7 +46,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 
 
-<!--
+
     <article
   v-for="(section, i) in sections"
   :key="i"
@@ -70,7 +70,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </article>
 
 
--->
+
 
     <ContactForm />
 
