@@ -15,7 +15,7 @@ onMounted(() => {
 
  
  
- <!--
+ 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
     <div class="container text-center hero-content">
@@ -24,7 +24,7 @@ onMounted(() => {
       <router-link to="#services" class="btn-main">Découvrir nos services</router-link>
     </div>
   </section>
--->
+
 
 
 
@@ -183,6 +183,29 @@ export default {
   .layout-right .image-block,
   .layout-right .text-block {
     padding-right: 1.5em;
+  }
+
+  .parallax-hero {
+    height: auto;            /* let height grow with content */
+    min-height: 280px;       /* maintain a minimum size */
+    padding: 3em 1.5em;      /* add vertical and horizontal padding */
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5em;
+  }
+
+  .btn-main {
+    padding: 0.8em 2em;
+    font-size: 1rem;
   }
 }
 
