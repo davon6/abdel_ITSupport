@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Rellax from 'rellax'
-import AOS from 'aos'
+/*import Rellax from 'rellax'
+import AOS from 'aos'*/
 import 'aos/dist/aos.css'
 import ContactForm from './ContactForm.vue'
-
+ /*
 onMounted(() => {
-  AOS.init({ duration: 800, once: true })
+ AOS.init({ duration: 800, once: true })
   new Rellax('.rellax')
-})
+})*/
 </script>
 
 <template>
@@ -148,6 +148,17 @@ export default {
 </script>
 
 <style scoped>
+
+
+.section-card {
+  width: 90%;        /* or fixed px width */
+  max-width: 700px;  /* experiment with narrowing */
+  margin-left: auto;
+  margin-right: auto;
+  will-change: transform;
+  backface-visibility: hidden; 
+}
+
 
 /*
 .container {
