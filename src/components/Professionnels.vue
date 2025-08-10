@@ -44,7 +44,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 
 
-<!--
+
 
     <article
   v-for="(section, i) in sections"
@@ -69,7 +69,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </article>
 
 
--->
+
 
     <ContactForm />
 
@@ -460,21 +460,19 @@ main.container {
 @media (max-width: 768px) {
   .section-card {
     flex-direction: column;
-    text-align: center;
+    overflow: visible; /* let it grow */
     gap: 1.5em;
     padding: 1.5em;
   }
 
   .layout-left,
   .layout-right {
-    margin: 0; /* remove the side offsets */
+    margin: 0; /* no pushing content off-screen */
   }
 
-  .text-block,
-  .image-block {
+  .text-block, .image-block {
     max-width: 100%;
   }
-
   .image-frame {
     transform: none !important;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
