@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import ContactForm from './ContactForm.vue'
 
 onMounted(() => {
   AOS.init({ duration: 800, once: true })
@@ -70,7 +71,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 
 
-   
+    <ContactForm />
 
   </main>
 
@@ -491,18 +492,11 @@ main.container {
   }
 
 
-  html, body {
+  * {
+  transform: none !important;
   height: auto !important;
-  overflow-x: hidden;
-}
-
-main.container {
   min-height: auto !important;
-  height: auto !important;
-}
-
-.background-path {
-  height: auto !important;
+  overflow: visible !important;
 }
 
 }
