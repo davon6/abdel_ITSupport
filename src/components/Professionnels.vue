@@ -28,7 +28,7 @@ onMounted(() => {
 
 
   <main class="container" id="services">
-<!--
+
     <div class="background-path" :style="{ height: pathHeight }">
   <svg viewBox="0 0 500 2500" preserveAspectRatio="none">
     <path d="
@@ -42,9 +42,9 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </svg>
 </div>
 
--->
 
 
+<!--
 
     <article
   v-for="(section, i) in sections"
@@ -69,7 +69,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </article>
 
 
-
+-->
 
     <ContactForm />
 
