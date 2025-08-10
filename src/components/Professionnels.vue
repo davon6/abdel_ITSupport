@@ -86,12 +86,13 @@ onMounted(() => {
   const updateHeight = () => {
     const container = document.querySelector('main.container')
     if (container) {
-      pathHeight.value = container.scrollHeight + 'px'
+      pathHeight.value = (container as HTMLElement).offsetHeight + 'px'
     }
   }
   updateHeight()
   window.addEventListener('resize', updateHeight)
 })
+
 
 
 export default {
@@ -489,6 +490,22 @@ main.container {
   .hero-content p {
     font-size: 1rem;
   }
+
+
+  html, body {
+  height: auto !important;
+  overflow-x: hidden;
+}
+
+main.container {
+  min-height: auto !important;
+  height: auto !important;
+}
+
+.background-path {
+  height: auto !important;
+}
+
 }
 
 </style>
