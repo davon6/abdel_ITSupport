@@ -4,18 +4,16 @@ import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ContactForm from './ContactForm.vue'
- 
+
 onMounted(() => {
- AOS.init({ duration: 800, once: true })
+  AOS.init({ duration: 800, once: true })
   new Rellax('.rellax')
 })
 </script>
 
 <template>
+  <header></header>
 
- 
- 
- 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
     <div class="container text-center hero-content">
@@ -85,17 +83,11 @@ import {  ref } from 'vue'
 const pathHeight = ref('2500px')
 
 onMounted(() => {
-  const updateHeight = () => {
-    const container = document.querySelector('main.container')
-    if (container) {
-      pathHeight.value = (container as HTMLElement).offsetHeight + 'px'
-    }
+  const container = document.querySelector('main.container')
+  if (container) {
+    pathHeight.value = container.scrollHeight + 'px'
   }
-  updateHeight()
-  window.addEventListener('resize', updateHeight)
 })
-
-
 
 export default {
   data() {
@@ -150,18 +142,15 @@ export default {
 </script>
 
 <style scoped>
-
-/* === Desktop and default styles === */
-
 .container {
   max-width: 1100px;
   margin: 2em auto;
   padding: 0 1em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #2c3e50;
-  position: relative;
 }
 
+/* Alternating layout */
 .section-card {
   display: flex;
   align-items: center;
@@ -176,45 +165,186 @@ export default {
   overflow: hidden;
   animation: glowPulse 8s infinite ease-in-out;
 }
-
 .layout-left .text-block {
   order: 1;
 }
-
 .layout-left .image-block {
   order: 2;
 }
-
 .layout-right .text-block {
   order: 2;
 }
-
 .layout-right .image-block {
   order: 1;
 }
 
+/* Text narrow column */
 .text-block {
   flex: 1;
   max-width: 450px;
 }
-
 .text-block ul {
   list-style-type: disc;
   padding-left: 1.5em;
   color: #555;
 }
-
 .text-block li {
   margin-bottom: 0.6em;
   line-height: 1.4;
 }
 
+/* Image out of frame effect */
 .image-block {
   flex: 1;
   display: flex;
   justify-content: center;
   position: relative;
-  perspective: 1000px;
+  perspective: 1000px; /* gives the 3D depth */
+}
+
+.whyus-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  transform: translateY(-10px) translateX(20px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+.section-card:hover .whyus-image {
+  transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.whyus-image::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #ccc; /* fallback if no image color sampling */
+  filter: brightness(85%);
+  border-radius: 0 0 10px 10px;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  z-index: -1;
+}
+
+.whyus-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 8px;
+  height: 100%;
+  background: #bbb; /* fallback shade */
+  filter: brightness(80%);
+  border-radius: 0 10px 10px 0;
+  transform: rotateY(90deg);
+  transform-origin: left;
+  z-index: -1;
+}
+
+/* Title with animated glowing underline */
+.shine-title {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.3em;
+}
+
+/* Static underline */
+.shine-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #007BFF;
+  border-radius: 2px;
+}
+
+.shine-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -60%;
+  width: 60%; /* was 50% */
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.9),
+    transparent
+  );
+  border-radius: 2px;
+  animation: underlineShine 2.5s infinite ease-in-out;
+}
+
+@keyframes underlineShine {
+  0% { left: -60%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+
+
+
+/* Card glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+  50% { box-shadow: 0 8px 25px rgba(0,123,255,0.15); }
+}
+
+/* Parallax hero */
+.parallax-hero {
+  position: relative;
+  height: 320px;
+  background: url('/professional-hero.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 3em;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5em;
+  line-height: 1.4;
+}
+.btn-main {
+  background-color: #007BFF;
+  color: white;
+  padding: 0.8em 1.8em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.btn-main:hover {
+  background-color: #0056b3;
 }
 
 .image-frame {
@@ -229,6 +359,7 @@ export default {
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
 
+/* hover tilt */
 .section-card:hover .image-frame {
   transform: translateY(-15px) translateX(25px) scale(1.02) rotateY(3deg);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
@@ -262,153 +393,93 @@ export default {
   z-index: -1;
 }
 
-.shine-title {
-  position: relative;
-  display: inline-block;
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 0.75em;
-  padding-bottom: 0.3em;
+/* Extra soft shadow to sell the depth */
+.image-frame {
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
 }
 
-.shine-title::before {
+.container {
+  position: relative;
+}
+
+.container::before {
   content: "";
   position: absolute;
-  left: 0;
+  top: 0;
   bottom: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #007BFF;
-  border-radius: 2px;
+  left: 50%;
+  width: 6px;
+  background-size: 100% 20px;
+  transform: translateX(-10%);
+  opacity: 0.15;
+  pointer-events: none;
 }
 
-.shine-title::after {
-  content: "";
+.layout-left {
+  margin-left: -40px;
+}
+.layout-right {
+  margin-right: -40px;
+}
+.container {
+  max-width: 1250px; /* was 1100px */
+  margin: 2em auto;
+  padding: 0 2em; /* was 1em */
+}
+
+.section-card {
+  gap: 2em; /* was 3em — tighter */
+}
+
+.text-block {
+  flex: 1;
+  max-width: 500px; /* was 450px — give more space */
+}
+main.container {
+  position: relative; /* container for absolute children */
+  min-height: 3000px; /* or higher if needed, to match content */
+  overflow: visible; /* prevent clipping */
+}
+
+.background-path {
   position: absolute;
-  bottom: 0;
-  left: -60%;
-  width: 60%; 
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.9),
-    transparent
-  );
-  border-radius: 2px;
-  animation: underlineShine 2.5s infinite ease-in-out;
+  top: 0;
+  left: 50%;
+  width: 500px;
+  height: 3000px; /* explicitly match or exceed main content height */
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-@keyframes underlineShine {
-  0% { left: -60%; }
-  50% { left: 100%; }
-  100% { left: 100%; }
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-  50% { box-shadow: 0 8px 25px rgba(0,123,255,0.15); }
-}
-
-.parallax-hero {
-  position: relative;
-  height: 320px;
-  background: url('/professional-hero.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-  overflow: hidden;
-  margin-bottom: 3em;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0,0,0,0.5);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-}
-
-.hero-content h1 {
-  font-size: 2.8rem;
-  margin-bottom: 0.5em;
-  font-weight: 700;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5em;
-  line-height: 1.4;
-}
-
-.btn-main {
-  background-color: #007BFF;
-  color: white;
-  padding: 0.8em 1.8em;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.btn-main:hover {
-  background-color: #0056b3;
-}
-
-/* === Mobile Styles === */
 @media (max-width: 768px) {
-  main.container {
-    padding-left: 1.5em !important;
-    padding-right: 1.5em !important;
-  }
-
-  .section-card {
-    flex-direction: column;
-    overflow: visible;
-    gap: 1.5em;
-    padding: 1.5em;
-    margin-bottom: 3em;
-  }
-
-  .layout-left,
-  .layout-right {
-    margin: 0;
-  }
-
-  .text-block,
-  .image-block {
-    max-width: 100%;
-    flex: none;
-  }
-
-  /* Restore image-frame shadows but remove transforms for clarity on mobile */
   .image-frame {
-    max-width: 100% !important;
-    width: 100%;
-    transform: none !important;
+    max-width: 100% !important;  /* allow full width */
+    transform: none !important;  /* remove translate and rotate */
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    overflow: hidden;
   }
 
   .image-frame img {
     width: 100%;
     height: auto;
     border-radius: 10px;
-    display: block;
   }
 
-  /* Adjust parallax hero */
+  main.container {
+    padding-right: 1.5em !important;
+    padding-left: 1.5em !important; /* balance left side too */
+  }
+
+  /* Or if it’s specifically the right content inside the sections */
+  .layout-right .image-block,
+  .layout-right .text-block {
+    padding-right: 1.5em;
+  }
+
   .parallax-hero {
-    height: auto;
-    min-height: 280px;
-    padding: 3em 1.5em;
+    height: auto;            /* let height grow with content */
+    min-height: 280px;       /* maintain a minimum size */
+    padding: 3em 1.5em;      /* add vertical and horizontal padding */
     background-position: center center;
     background-size: cover;
   }
@@ -428,8 +499,5 @@ export default {
     font-size: 1rem;
   }
 }
-
-
-
 
 </style>
