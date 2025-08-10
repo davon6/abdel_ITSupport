@@ -12,6 +12,8 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <!--
   <header></header>
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
@@ -22,13 +24,13 @@ onMounted(() => {
       <router-link to="#services" class="btn-main">Découvrir nos services</router-link>
     </div>
   </section>
-
+-->
 
 
 
 
   <main class="container" id="services">
-
+<!--
     <div class="background-path" :style="{ height: pathHeight }">
   <svg viewBox="0 0 500 2500" preserveAspectRatio="none">
     <path d="
@@ -41,7 +43,7 @@ onMounted(() => {
 fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasharray="10 10"/>
 </svg>
 </div>
-
+-->
 
 
 
