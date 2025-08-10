@@ -13,8 +13,7 @@ onMounted(() => {
 
 <template>
  
-
- <!--
+ 
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
@@ -25,7 +24,8 @@ onMounted(() => {
     </div>
   </section>
 
--->
+
+
 
 
   <main class="container" id="services">
@@ -415,14 +415,14 @@ export default {
   opacity: 0.15;
   pointer-events: none;
 }
-/*
+
 .layout-left {
   margin-left: -40px;
 }
 .layout-right {
   margin-right: -40px;
 }
-*/
+
 .container {
   max-width: 1250px; /* was 1100px */
   margin: 2em auto;
@@ -500,6 +500,14 @@ main.container {
     padding: 0.8em 2em;
     font-size: 1rem;
   }
+
+  .section-card {
+  max-width: 90% !important;   /* limit width to 90% of viewport */
+  margin-left: auto !important; /* center horizontally */
+  margin-right: auto !important;
+  box-sizing: border-box;       /* include padding in width */
+}
+
 }
 
 </style>
