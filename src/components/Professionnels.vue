@@ -156,7 +156,7 @@ export default {
   color: #2c3e50;
 }
 
-/* Alternating layout */
+/* Alternating layout 
 .section-card {
   display: flex;
   align-items: center;
@@ -170,7 +170,7 @@ export default {
   position: relative;
   overflow: hidden;
   animation: glowPulse 8s infinite ease-in-out;
-}
+}*/
 .layout-left .text-block {
   order: 1;
 }
