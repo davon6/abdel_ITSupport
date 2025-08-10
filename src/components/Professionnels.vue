@@ -185,8 +185,8 @@ export default {
 .layout-right .image-block {
   order: 1;
 }
-*/
-/* Text narrow column */
+
+
 .text-block {
   flex: 1;
   max-width: 450px;
@@ -201,13 +201,13 @@ export default {
   line-height: 1.4;
 }
 
-/* Image out of frame effect */
+
 .image-block {
   flex: 1;
   display: flex;
   justify-content: center;
   position: relative;
-  perspective: 1000px; /* gives the 3D depth */
+  perspective: 1000px;
 }
 
 .whyus-image {
@@ -232,7 +232,7 @@ export default {
   left: 0;
   width: 100%;
   height: 8px;
-  background: #ccc; /* fallback if no image color sampling */
+  background: #ccc;
   filter: brightness(85%);
   border-radius: 0 0 10px 10px;
   transform: rotateX(90deg);
@@ -247,7 +247,7 @@ export default {
   right: -8px;
   width: 8px;
   height: 100%;
-  background: #bbb; /* fallback shade */
+  background: #bbb; 
   filter: brightness(80%);
   border-radius: 0 10px 10px 0;
   transform: rotateY(90deg);
@@ -255,7 +255,7 @@ export default {
   z-index: -1;
 }
 
-/* Title with animated glowing underline */
+
 .shine-title {
   position: relative;
   display: inline-block;
@@ -265,7 +265,7 @@ export default {
   padding-bottom: 0.3em;
 }
 
-/* Static underline */
+
 .shine-title::before {
   content: "";
   position: absolute;
@@ -282,7 +282,7 @@ export default {
   position: absolute;
   bottom: 0;
   left: -60%;
-  width: 60%; /* was 50% */
+  width: 60%; 
   height: 3px;
   background: linear-gradient(
     90deg,
@@ -303,13 +303,13 @@ export default {
 
 
 
-/* Card glow pulse */
+
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
   50% { box-shadow: 0 8px 25px rgba(0,123,255,0.15); }
 }
 
-/* Parallax hero */
+
 .parallax-hero {
   position: relative;
   height: 320px;
@@ -366,6 +366,8 @@ export default {
   z-index: 2;
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
+
+*/
 
 /* hover tilt */
 .section-card:hover .image-frame {
