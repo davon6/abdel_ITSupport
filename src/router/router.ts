@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
@@ -25,7 +25,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior, // use the properly typed function
 });

@@ -148,6 +148,8 @@ export default {
 </script>
 
 <style scoped>
+
+/*
 .container {
   max-width: 1100px;
   margin: 2em auto;
@@ -156,7 +158,7 @@ export default {
   color: #2c3e50;
 }
 
-/* Alternating layout 
+ Alternating layout 
 .section-card {
   display: flex;
   align-items: center;
@@ -170,7 +172,7 @@ export default {
   position: relative;
   overflow: hidden;
   animation: glowPulse 8s infinite ease-in-out;
-}*/
+}
 .layout-left .text-block {
   order: 1;
 }
@@ -183,7 +185,7 @@ export default {
 .layout-right .image-block {
   order: 1;
 }
-
+*/
 /* Text narrow column */
 .text-block {
   flex: 1;
@@ -457,17 +459,19 @@ main.container {
   pointer-events: none;
   z-index: 0;
 }
+
+/* 
 @media (max-width: 768px) {
   .section-card {
     flex-direction: column;
-    overflow: visible; /* let it grow */
+    overflow: visible; 
     gap: 1.5em;
     padding: 1.5em;
   }
 
   .layout-left,
   .layout-right {
-    margin: 0; /* no pushing content off-screen */
+    margin: 0; 
   }
 
   .text-block, .image-block {
@@ -497,6 +501,6 @@ main.container {
   overflow: visible !important;
 }
 
-}
+}*/
 
 </style>
