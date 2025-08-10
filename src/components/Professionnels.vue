@@ -151,16 +151,6 @@ export default {
 
 <style scoped>
 
-
-.section-card {
-  width: 90%;        /* or fixed px width */
-  max-width: 100px;
-  margin: 0 auto 3em;  /* experiment with narrowing */
-  margin-left: auto;
-  margin-right: auto;
-  will-change: transform;
-  backface-visibility: hidden; 
-}
 @media (max-width: 768px) {
   .image-frame {
     max-width: 100% !important;  /* allow full width */
