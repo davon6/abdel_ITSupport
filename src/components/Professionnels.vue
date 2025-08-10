@@ -83,11 +83,16 @@ import {  ref } from 'vue'
 const pathHeight = ref('2500px')
 
 onMounted(() => {
-  const container = document.querySelector('main.container')
-  if (container) {
-    pathHeight.value = container.scrollHeight + 'px'
+  const updateHeight = () => {
+    const container = document.querySelector('main.container')
+    if (container) {
+      pathHeight.value = container.scrollHeight + 'px'
+    }
   }
+  updateHeight()
+  window.addEventListener('resize', updateHeight)
 })
+
 
 export default {
   data() {
@@ -450,6 +455,40 @@ main.container {
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
+}
+@media (max-width: 768px) {
+  .section-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5em;
+    padding: 1.5em;
+  }
+
+  .layout-left,
+  .layout-right {
+    margin: 0; /* remove the side offsets */
+  }
+
+  .text-block,
+  .image-block {
+    max-width: 100%;
+  }
+
+  .image-frame {
+    transform: none !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  .parallax-hero {
+    height: auto;
+    padding: 4em 1em;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
 }
 
 </style>
