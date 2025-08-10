@@ -45,7 +45,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 
 
-
+<!--
     <article
   v-for="(section, i) in sections"
   :key="i"
@@ -67,7 +67,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
     </div>
   </div>
 </article>
-
+-->
 
 
 
