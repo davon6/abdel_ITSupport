@@ -414,13 +414,14 @@ export default {
   opacity: 0.15;
   pointer-events: none;
 }
-
+/*
 .layout-left {
   margin-left: -40px;
 }
 .layout-right {
   margin-right: -40px;
 }
+*/
 .container {
   max-width: 1250px; /* was 1100px */
   margin: 2em auto;
