@@ -13,9 +13,9 @@ onMounted(() => {
 
 <template>
 
-  <!--
-  <header></header>
-
+ 
+ 
+ <!--
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
     <div class="container text-center hero-content">
