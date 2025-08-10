@@ -45,7 +45,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 
 
-<!--
+
     <article
   v-for="(section, i) in sections"
   :key="i"
@@ -67,7 +67,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
     </div>
   </div>
 </article>
--->
+
 
 
 
@@ -152,7 +152,8 @@ export default {
 
 .section-card {
   width: 90%;        /* or fixed px width */
-  max-width: 700px;  /* experiment with narrowing */
+  max-width: 100px;
+  margin: 0 auto 3em;  /* experiment with narrowing */
   margin-left: auto;
   margin-right: auto;
   will-change: transform;
