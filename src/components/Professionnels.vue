@@ -171,6 +171,17 @@ export default {
     height: auto;
     border-radius: 10px;
   }
+
+  main.container {
+    padding-right: 1.5em !important;
+    padding-left: 1.5em !important; /* balance left side too */
+  }
+
+  /* Or if it’s specifically the right content inside the sections */
+  .layout-right .image-block,
+  .layout-right .text-block {
+    padding-right: 1.5em;
+  }
 }
 
 
