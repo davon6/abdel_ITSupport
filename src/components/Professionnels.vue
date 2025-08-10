@@ -473,17 +473,7 @@ main.container {
     padding-right: 1.5em;
   }
 
-/* Fix container padding & width on mobile */
-.container {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-left: 1.5em !important;  /* or 1em, just keep some side padding */
-  padding-right: 1.5em !important;
-  box-sizing: border-box !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  overflow-x: hidden !important;
-}
+
 
 /* Ensure parallax hero doesn't overflow */
 .parallax-hero {
@@ -493,14 +483,6 @@ main.container {
   padding-right: 1.5em !important;
   box-sizing: border-box !important;
   overflow-x: hidden !important;
-}
-
-/* Also keep your section-card tweak */
-.section-card {
-  max-width: 90% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  box-sizing: border-box !important;
 }
 
   .hero-content h1 {
@@ -518,6 +500,28 @@ main.container {
     font-size: 1rem;
   }
 
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 1em !important;  /* minimal padding */
+    padding-right: 1em !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    border: 2px solid red; /* debug: shows container boundary */
+  }
+
+  /* Section card clamp and reset margin/padding */
+  .section-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    border: 2px solid blue; /* debug: shows card boundary */
+  }
 
 }
 
