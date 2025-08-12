@@ -1,13 +1,31 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ContactForm from './ContactForm.vue'
 
+const isMobile = ref(false)
+const pathHeight = ref('2500px')
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
 onMounted(() => {
+  // Init animations
   AOS.init({ duration: 800, once: true })
   new Rellax('.rellax')
+
+  // Path height calc
+  const container = document.querySelector('main.container')
+  if (container) {
+    pathHeight.value = container.scrollHeight + 'px'
+  }
+
+  // Mobile detection
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
 })
 </script>
 
@@ -80,23 +98,6 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 </template>
 
 <script lang="ts">
-import {  ref } from 'vue'
-const isMobile = ref(false)
-const pathHeight = ref('2500px')
-
-
-
-onMounted(() => {
-  const container = document.querySelector('main.container')
-  if (container) {
-    pathHeight.value = container.scrollHeight + 'px'
-  }
-  const checkMobile = () => {
-    isMobile.value = window.innerWidth <= 768
-  }
-  checkMobile()
-  window.addEventListener('resize', checkMobile)
-})
 
 
 const supportIcon  =  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
