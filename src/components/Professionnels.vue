@@ -84,6 +84,8 @@ import {  ref } from 'vue'
 const isMobile = ref(false)
 const pathHeight = ref('2500px')
 
+
+
 onMounted(() => {
   const container = document.querySelector('main.container')
   if (container) {
