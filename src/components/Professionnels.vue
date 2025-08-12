@@ -61,10 +61,16 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
   </div>
 
   <div class="image-block">
-    <div class="image-frame">
-      <img src="/istockphoto.jpg" alt="Business IT Solutions" />
-    </div>
+  <div class="image-frame">
+    <img
+      v-if="!isMobile"
+      src="/istockphoto.jpg"
+      alt="Business IT Solutions"
+    />
+    <div v-else v-html="section.svgIcon" class="mobile-svg"></div>
   </div>
+</div>
+
 </article>
 
     <ContactForm />
@@ -75,7 +81,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
 
 <script lang="ts">
 import {  ref } from 'vue'
-
+const isMobile = ref(false)
 const pathHeight = ref('2500px')
 
 onMounted(() => {
@@ -83,7 +89,44 @@ onMounted(() => {
   if (container) {
     pathHeight.value = container.scrollHeight + 'px'
   }
+  const checkMobile = () => {
+    isMobile.value = window.innerWidth <= 768
+  }
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
 })
+
+
+const supportIcon  =  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M14 42l10-10 12 12-10 10a6 6 0 01-8.49 0 6 6 0 010-8.49z"/>
+  <path d="M45 19l-6-6a4 4 0 00-5.66 0l-4 4"/>
+</svg> `
+
+
+const securityIcon = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M32 2 L12 12v20c0 13 20 28 20 28s20-15 20-28V12L32 2z"/>
+  <path d="M32 22v18" />
+</svg>`
+
+const installationIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="32" cy="32" r="10" />
+  <path d="M32 2v8M32 54v8M2 32h8M54 32h8M12 12l5.5 5.5M46.5 46.5l5.5 5.5M12 52l5.5-5.5M46.5 17.5l5.5-5.5"/>
+</svg>`
+
+const servicesIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="32" cy="32" r="30"/>
+  <path d="M2 32h60M32 2a58 58 0 010 60"/>
+  <path d="M12 12c8 8 8 32 0 40M52 12c-8 8-8 32 0 40"/>
+</svg> `
+
+const reseauIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="12" cy="32" r="6"/>
+  <circle cx="32" cy="32" r="6"/>
+  <circle cx="52" cy="32" r="6"/>
+  <path d="M18 32h8M38 32h8"/>
+</svg>`
+
 
 export default {
   data() {
@@ -96,7 +139,8 @@ export default {
             'Téléassistance rapide (TeamViewer, AnyDesk…)',
             'Réparation express & diagnostic matériel/logiciel',
             'Mise en réseau sécurisée (LAN, Wi-Fi pro)'
-          ]
+          ],
+          svgIcon: supportIcon
         },
         {
           title: 'Sécurité Informatique',
@@ -104,7 +148,8 @@ export default {
             'Antivirus professionnels & pare-feu',
             'Maintenance préventive & sauvegardes automatiques',
             'Sensibilisation aux risques cyber'
-          ]
+          ],
+          svgIcon: securityIcon
         },
         {
           title: 'Installation & Déploiement',
@@ -112,7 +157,8 @@ export default {
             'Configuration de parc informatique complet',
             'Installation d’outils collaboratifs (Google Workspace, Office 365)',
             'Mise en place de serveurs NAS'
-          ]
+          ],
+          svgIcon: installationIcon
         },
         {
           title: 'Services Web & Support Logiciel',
@@ -120,7 +166,8 @@ export default {
             'Création de sites vitrines simples (WordPress, Wix)',
             'Conseils hébergement, nom de domaine & référencement local',
             'Aide à l’utilisation et migration de logiciels métier'
-          ]
+          ],
+          svgIcon: servicesIcon
         },
         {
           title: 'Installation Réseau & Baies',
@@ -129,7 +176,8 @@ export default {
             'Câblage réseau structuré (RJ45, fibre optique)',
             'Configuration switchs & routeurs pro',
             'Optimisation du réseau pour performances & sécurité'
-          ]
+          ],
+          svgIcon: reseauIcon
         }
       ]
     }
@@ -448,6 +496,18 @@ main.container {
   pointer-events: none;
   z-index: 0;
 }
+.desktop-image {
+  display: block;
+}
+
+.mobile-svg {
+  width: 180px;
+  height: 180px;
+  color: #007BFF;      /* your blue */
+  opacity: 0.15;       /* subtle */
+  margin: 1.5em auto;
+  display: block;
+}
 
 @media (max-width: 768px) {
   .image-frame {
@@ -522,7 +582,12 @@ main.container {
     overflow-x: hidden !important;
  /* debug: shows card boundary */
   }
-
+  .desktop-image {
+    display: none;
+  }
+  .mobile-svg {
+    display: block;
+  }
 }
 
 </style>
