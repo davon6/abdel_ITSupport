@@ -610,6 +610,14 @@ main.container {
     flex: 0 0 auto; /* shrink to fit icon */
     margin-bottom: 0.3em !important;
   }
+
+  .section-card h3 {
+    font-size: 1.1em !important; /* was around 1.25em */
+  }
+  .section-card p {
+    font-size: 0.95em !important; /* just a tad smaller */
+    line-height: 1.4em !important;
+  }
 }
 
 </style>
