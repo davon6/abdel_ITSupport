@@ -31,7 +31,7 @@ onMounted(() => {
 
 <template>
  
- 
+ <!--
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
@@ -42,7 +42,7 @@ onMounted(() => {
     </div>
   </section>
 
-
+-->
 
 
 
