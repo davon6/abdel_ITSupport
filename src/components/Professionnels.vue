@@ -515,8 +515,8 @@ main.container {
 @media (max-width: 768px) {
   .image-frame {
     max-width: 100% !important;  /* allow full width */
-    transform: none !important;  /* remove translate and rotate */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transform: none !important;
+    box-shadow: none !important; 
   }
 
   .image-frame img {
@@ -573,19 +573,15 @@ main.container {
     overflow-x: hidden !important;
   }
 
-
-  /* Section card clamp and reset margin/padding */
+  /* Section cards – lighter style */
   .section-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    padding-left: 1em !important;
-    padding-right: 1em !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-    padding: 1.2em 1em !important;
-    gap: 1.2em !important;
+    padding: 1em !important; /* was 2em */
+    gap: 1em !important;
+    box-shadow: none !important; /* kill shadow */
+    border: 1px solid rgba(0, 123, 255, 0.25) !important; /* subtle blue */
+    border-radius: 10px;
   }
+
  /* debug: shows card boundary */
   
   .desktop-image {
@@ -602,7 +598,7 @@ main.container {
   }
 
   .background-path {
-    width: 100% !important; /* prevent SVG from sticking out */
+    width: 100% !important;
     left: 0 !important;
     transform: none !important;
   }
