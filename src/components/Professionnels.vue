@@ -619,6 +619,16 @@ main.container {
     font-size: 0.95em !important; /* tad smaller */
     line-height: 1.4em !important;
   }
+  .section-card .text-block {
+    order: 1; /* Title and items first */
+  }
+
+  .section-card .image-block {
+    order: 2; /* SVG after title */
+    margin-top: 0.5em !important; /* small gap after title */
+    margin-bottom: 0.5em !important; /* small gap before items */
+  }
+  
 }
 
 </style>
