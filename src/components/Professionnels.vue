@@ -576,7 +576,7 @@ main.container {
   /* Section cards – lighter style */
   .section-card {
     padding: 0.8em 0.8em !important; /* much tighter */
-    gap: 0.8em !important; /* less space between image and text */
+    gap: 0.2em !important; /* less space between image and text */
     box-shadow: none !important;
     border: 1px solid rgba(0, 123, 255, 0.6) !important; /* stronger blue */
     border-radius: 8px !important;
@@ -608,6 +608,7 @@ main.container {
 
   .image-block {
     flex: 0 0 auto; /* shrink to fit icon */
+    margin-bottom: 0.3em !important;
   }
 }
 
