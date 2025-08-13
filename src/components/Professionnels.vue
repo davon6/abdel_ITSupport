@@ -31,7 +31,7 @@ onMounted(() => {
 
 <template>
  
- <!--
+ 
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
     <div class="overlay"></div>
@@ -42,7 +42,7 @@ onMounted(() => {
     </div>
   </section>
 
--->
+
 
 
 
@@ -578,8 +578,17 @@ main.container {
   .background-path {
     width: 100% !important;
     left: 0 !important;
-    transform: none !important;
+     transform: none !important;
   }
+
+  .parallax-hero {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 1.5em !important;
+  padding-right: 1.5em !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
 }
 
 
