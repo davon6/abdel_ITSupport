@@ -611,11 +611,12 @@ main.container {
     margin-bottom: 0.3em !important;
   }
 
-  .section-card h3 {
-    font-size: 1.1em !important; /* was around 1.25em */
+  /* Smaller title and list text */
+  .section-card .shine-title {
+    font-size: 1.1em !important; /* slightly smaller */
   }
-  .section-card p {
-    font-size: 0.95em !important; /* just a tad smaller */
+  .section-card .text-block li {
+    font-size: 0.95em !important; /* tad smaller */
     line-height: 1.4em !important;
   }
 }
