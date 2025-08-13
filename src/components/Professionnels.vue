@@ -526,8 +526,8 @@ main.container {
   }
 
   main.container {
-    padding-right: 1.5em !important;
-    padding-left: 1.5em !important; /* balance left side too */
+  padding-left: 0.25em !important; /* minimal */
+    padding-right: 0.25em !important;
   }
 
   /* Or if it’s specifically the right content inside the sections */
@@ -565,8 +565,8 @@ main.container {
   .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding-left: 0.1em !important;  /* minimal side padding */
-    padding-right: 0.1em !important;
+    padding-left: 0.25em !important; /* minimal */
+    padding-right: 0.25em !important;
     margin-left: auto !important;
     margin-right: auto !important;
     box-sizing: border-box !important;
@@ -575,11 +575,11 @@ main.container {
 
   /* Section cards – lighter style */
   .section-card {
-    padding: 1em !important; /* was 2em */
-    gap: 1em !important;
-    box-shadow: none !important; /* kill shadow */
-    border: 1px solid rgba(0, 123, 255, 0.25) !important; /* subtle blue */
-    border-radius: 10px;
+    padding: 0.8em 0.8em !important; /* much tighter */
+    gap: 0.8em !important; /* less space between image and text */
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 123, 255, 0.6) !important; /* stronger blue */
+    border-radius: 8px !important;
   }
 
  /* debug: shows card boundary */
@@ -589,6 +589,9 @@ main.container {
   }
   .mobile-svg {
     display: block;
+    width: 150px !important;  /* keep icon nice size */
+    height: 150px !important;
+    margin: 0 auto 0.5em auto !important; /* small gap under icon */
   }
 
   .layout-left,
@@ -601,6 +604,10 @@ main.container {
     width: 100% !important;
     left: 0 !important;
     transform: none !important;
+  }
+
+  .image-block {
+    flex: 0 0 auto; /* shrink to fit icon */
   }
 }
 
