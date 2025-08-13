@@ -565,8 +565,8 @@ main.container {
   .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding-left: 0.5em !important;  /* minimal side padding */
-    padding-right: 0.5em !important;
+    padding-left: 0.1em !important;  /* minimal side padding */
+    padding-right: 0.1em !important;
     margin-left: auto !important;
     margin-right: auto !important;
     box-sizing: border-box !important;
@@ -583,13 +583,28 @@ main.container {
     padding-right: 1em !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
- /* debug: shows card boundary */
+    padding: 1.2em 1em !important;
+    gap: 1.2em !important;
   }
+ /* debug: shows card boundary */
+  
   .desktop-image {
     display: none;
   }
   .mobile-svg {
     display: block;
+  }
+
+  .layout-left,
+  .layout-right {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .background-path {
+    width: 100% !important; /* prevent SVG from sticking out */
+    left: 0 !important;
+    transform: none !important;
   }
 }
 
