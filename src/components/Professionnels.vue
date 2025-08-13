@@ -528,6 +528,7 @@ main.container {
 
   /* Service cards */
   .section-card {
+    max-width: 85% !important; 
     padding: 0.8em !important;
     gap: 0.5em !important;
     box-shadow: none !important;
