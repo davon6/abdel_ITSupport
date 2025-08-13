@@ -513,122 +513,73 @@ main.container {
 }
 
 @media (max-width: 768px) {
-  .image-frame {
-    max-width: 100% !important;  /* allow full width */
-    transform: none !important;
-    box-shadow: none !important; 
-  }
-
-  .image-frame img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-
-  main.container {
-  padding-left: 0.25em !important; /* minimal */
-    padding-right: 0.25em !important;
-  }
-
-  /* Or if it’s specifically the right content inside the sections */
-  .layout-right .image-block,
-  .layout-right .text-block {
-    padding-right: 1.5em;
-  }
-
-
-
-/* Ensure parallax hero doesn't overflow */
-.parallax-hero {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-left: 1.5em !important;
-  padding-right: 1.5em !important;
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-}
-
-  .hero-content h1 {
-    font-size: 1.8rem;
-    line-height: 1.2;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-    margin-bottom: 1.5em;
-  }
-
-  .btn-main {
-    padding: 0.8em 2em;
-    font-size: 1rem;
-  }
-  .container {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: 0.25em !important; /* minimal */
-    padding-right: 0.25em !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-  }
-
-  /* Section cards – lighter style */
-  .section-card {
-    padding: 0.8em 0.8em !important; /* much tighter */
-    gap: 0.2em !important; /* less space between image and text */
-    box-shadow: none !important;
-    border: 1px solid rgba(0, 123, 255, 0.6) !important; /* stronger blue */
-    border-radius: 8px !important;
-  }
-
- /* debug: shows card boundary */
-  
-  .desktop-image {
-    display: none;
-  }
-  .mobile-svg {
-    display: block;
-    width: 150px !important;  /* keep icon nice size */
-    height: 150px !important;
-    margin: 0 auto 0.5em auto !important; /* small gap under icon */
-  }
-
+  /* Remove zigzag margins */
   .layout-left,
   .layout-right {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
 
+  /* Tighten container edges */
+  .container {
+    padding-left: 0.25em !important;
+    padding-right: 0.25em !important;
+  }
+
+  /* Service cards */
+  .section-card {
+    padding: 0.8em !important;
+    gap: 0.5em !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 123, 255, 0.6) !important;
+    border-radius: 8px !important;
+    margin-bottom: 0.8em !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Title above SVG */
+  .section-card .text-block {
+    order: 1;
+  }
+  .section-card .image-block {
+    order: 2;
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+    flex: 0 0 auto;
+  }
+
+  /* Font size tweaks */
+  .section-card .shine-title {
+    font-size: 1.1em !important;
+    margin-bottom: 0.3em !important; /* tighter under title */
+  }
+  .section-card .text-block li {
+    font-size: 0.95em !important;
+    line-height: 1.4em !important;
+  }
+
+  /* SVG size */
+  .mobile-svg {
+    display: block;
+    width: 150px !important;
+    height: 150px !important;
+    margin: 0 auto !important;
+  }
+
+  /* No image shadow */
+  .image-frame {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Background path fits screen */
   .background-path {
     width: 100% !important;
     left: 0 !important;
     transform: none !important;
   }
-
-  .image-block {
-    flex: 0 0 auto; /* shrink to fit icon */
-    margin-bottom: 0.3em !important;
-  }
-
-  /* Smaller title and list text */
-  .section-card .shine-title {
-    font-size: 1.1em !important; /* slightly smaller */
-  }
-  .section-card .text-block li {
-    font-size: 0.95em !important; /* tad smaller */
-    line-height: 1.4em !important;
-  }
-  .section-card .text-block {
-    order: 1; /* Title and items first */
-  }
-
-  .section-card .image-block {
-    order: 2; /* SVG after title */
-    margin-top: 0.5em !important; /* small gap after title */
-    margin-bottom: 0.5em !important; /* small gap before items */
-  }
-  
 }
+
 
 </style>
