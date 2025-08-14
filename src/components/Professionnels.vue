@@ -326,7 +326,7 @@ export default {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255,255,255,0.9),
+    rgba(200,230,255,0.9),
     transparent
   );
   border-radius: 2px;
