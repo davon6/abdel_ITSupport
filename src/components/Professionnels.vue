@@ -632,7 +632,7 @@ main.container {
     90deg,
     rgba(137, 181, 228, 0.71) 0%,
     rgba(0,123,255,0.9) 50%,
-    rgba(0,123,255,0) 100%
+    rgba(113, 160, 210, 0.806) 100%
   );
   background-size: 200% 100%;
   animation: mobileShine 2.2s linear infinite;
