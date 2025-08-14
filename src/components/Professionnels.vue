@@ -582,39 +582,68 @@ main.container {
   }
 
   .parallax-hero {
-  width: 80% !important;
-  max-width: 80% !important;
-  padding-left: 1.5em !important;
-  padding-right: 1.5em !important;
+  width: 70% !important;
+  max-width: 70% !important;
+  padding-left: 0.1em !important;
+  padding-right: 0.1em !important;
   box-sizing: border-box !important;
   overflow-x: hidden !important;
 }
 
-.section-card .shine-title {
-    position: relative;
-    display: inline-block; /* shrink underline to title width */
-  }
+/* 1) Remove title underline/shine on mobile to avoid duplicate line */
+.section-card .shine-title::before,
+.section-card .shine-title::after {
+  display: none !important;
+}
 
-  .section-card .shine-title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.4em; /* distance below text */
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(
-      90deg,
-      rgba(0, 123, 255, 0) 0%,
-      rgba(0, 123, 255, 0.8) 50%,
-      rgba(0, 123, 255, 0) 100%
-    );
-    animation: shine-move 2s infinite linear;
-  }
+/* 2) Shining line under the SVG (mobile only) */
+.mobile-svg {
+  position: relative; /* anchor for the pseudo element */
+  display: block;
+}
+.mobile-svg::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -6px;               /* sits just under the icon box */
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(0,123,255,0) 0%,
+    rgba(0,123,255,0.9) 50%,
+    rgba(0,123,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: mobileShine 2.2s linear infinite;
+  pointer-events: none;
+}
+@keyframes mobileShine {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
 
-  @keyframes shine-move {
-    0% { background-position: 0 0; }
-    100% { background-position: 200% 0; }
-  }
+/* 3) (Optional) subtle sweep along the SVG stroke itself.
+   Because styles are scoped, use :deep(...) to reach into v-html SVG. */
+:deep(.mobile-svg svg *) {
+  stroke: #007BFF !important; /* keep your blue */
+}
+:deep(.mobile-svg svg path),
+:deep(.mobile-svg svg circle),
+:deep(.mobile-svg svg line),
+:deep(.mobile-svg svg polyline),
+:deep(.mobile-svg svg polygon) {
+  stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
+  stroke-dashoffset: 0;
+  animation: strokeSweep 3s ease-in-out infinite;
+}
+@keyframes strokeSweep {
+  0%   { stroke-dashoffset: 220; opacity: 0.95; }
+  50%  { stroke-dashoffset:   0; opacity: 1; }
+  100% { stroke-dashoffset: -220; opacity: 0.95; }
+}
+
 }
 
 
