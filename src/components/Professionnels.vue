@@ -648,10 +648,7 @@ main.container {
 :deep(.mobile-svg svg *) {
   stroke: #007BFF; /* keep your blue */
 }
-:deep(.mobile-svg) {
-  color: #007BFF;
-  animation: colorPulse 3s ease-in-out infinite;
-}
+
 :deep(.mobile-svg svg path),
 :deep(.mobile-svg svg circle),
 :deep(.mobile-svg svg line),
@@ -660,7 +657,7 @@ main.container {
   stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
   stroke: #007BFF;
-   animation: strokeSweep 3s ease-in-out infinite, strokeColorPulse 3s ease-in-out infinite;
+   animation: strokeSweep 3s ease-in-out infinite, strokeColorPulse 30s ease-in-out infinite;
 }
 @keyframes strokeSweep {
   0%   { stroke-dashoffset: 40; opacity: 1; }
@@ -670,7 +667,7 @@ main.container {
 
 @keyframes strokeColorPulse {
   0%, 100% { stroke: #007BFF; }
-  50%      { stroke:  #007BFF; }
+  50%      { stroke: #c8e6ff; }
 }
 
 }
