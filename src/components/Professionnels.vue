@@ -582,13 +582,13 @@ main.container {
   }
 
   .parallax-hero {
-  width: 70% !important;
-  max-width: 70% !important;
-  padding-left: 0.1em !important;
-  padding-right: 0.1em !important;
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-}
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 0.5em !important;
+    overflow-x: hidden !important;
+    transform: none !important; /* stop shifting image on mobile */
+    background-attachment: scroll !important; /* disable parallax if using background */
+  }
 
 /* 1) Remove title underline/shine on mobile to avoid duplicate line */
 .section-card .shine-title::before,
@@ -639,9 +639,9 @@ main.container {
   animation: strokeSweep 3s ease-in-out infinite;
 }
 @keyframes strokeSweep {
-  0%   { stroke-dashoffset: 220; opacity: 0.95; }
+  0%   { stroke-dashoffset: 40; opacity: 1; }
   50%  { stroke-dashoffset:   0; opacity: 1; }
-  100% { stroke-dashoffset: -220; opacity: 0.95; }
+  100% { stroke-dashoffset: -40; opacity: 1; }
 }
 
 }
