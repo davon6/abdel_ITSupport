@@ -646,7 +646,11 @@ main.container {
 /* 3) (Optional) subtle sweep along the SVG stroke itself.
    Because styles are scoped, use :deep(...) to reach into v-html SVG. */
 :deep(.mobile-svg svg *) {
-  stroke: #007BFF !important; /* keep your blue */
+  stroke: #007BFF; /* keep your blue */
+}
+:deep(.mobile-svg) {
+  color: #007BFF;
+  animation: colorPulse 3s ease-in-out infinite;
 }
 :deep(.mobile-svg svg path),
 :deep(.mobile-svg svg circle),
