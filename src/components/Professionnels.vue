@@ -656,7 +656,7 @@ main.container {
   stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
   stroke: #007BFF !important;
-  animation: strokeSweep 3s ease-in-out infinite;
+   animation: strokeSweep 3s ease-in-out infinite, strokeColorPulse 3s ease-in-out infinite;
 }
 @keyframes strokeSweep {
   0%   { stroke-dashoffset: 40; opacity: 1; }
