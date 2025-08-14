@@ -653,14 +653,16 @@ main.container {
 :deep(.mobile-svg svg line),
 :deep(.mobile-svg svg polyline),
 :deep(.mobile-svg svg polygon) {
-  stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
+  stroke: #007BFF !important; /* base stroke color */
+  stroke-dasharray: 80 140;
   stroke-dashoffset: 0;
   animation: strokeSweep 3s ease-in-out infinite;
 }
+
 @keyframes strokeSweep {
-  0%   { stroke-dashoffset: 40; opacity: 1; }
-  50%  { stroke-dashoffset:   0; opacity: 1; }
-  100% { stroke-dashoffset: -40; opacity: 1; }
+  0%   { stroke: #007BFF; }
+  50%  { stroke: #6cb6ff; } /* bright but not pure white */
+  100% { stroke: #007BFF; }
 }
 
 }
