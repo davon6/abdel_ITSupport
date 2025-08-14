@@ -619,7 +619,8 @@ main.container {
 .mobile-svg {
   position: relative; /* anchor for the pseudo element */
   display: block;
-}.mobile-svg::after {
+}
+.mobile-svg::after {
   content: "";
   position: absolute;
   left: 12%;
@@ -637,17 +638,20 @@ main.container {
   animation: mobileShine 2.2s linear infinite;
   pointer-events: none;
 }
-
 @keyframes mobileShine {
   0%   { background-position: 0% 0; }
   100% { background-position: 200% 0; }
 }
 
-/* Keep SVG blue stroke, optional sweep */
+/* 3) (Optional) subtle sweep along the SVG stroke itself.
+   Because styles are scoped, use :deep(...) to reach into v-html SVG. */
 :deep(.mobile-svg svg *) {
-  stroke: #007BFF;
+  stroke: #007BFF; /* keep your blue */
 }
-
+:deep(.mobile-svg) {
+  color: #007BFF;
+  animation: colorPulse 3s ease-in-out infinite;
+}
 :deep(.mobile-svg svg path),
 :deep(.mobile-svg svg circle),
 :deep(.mobile-svg svg line),
@@ -656,14 +660,14 @@ main.container {
   stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
   stroke: #007BFF;
-  animation: strokeSweep 3s ease-in-out infinite;
+   animation: strokeSweep 3s ease-in-out infinite;
 }
-
 @keyframes strokeSweep {
   0%   { stroke-dashoffset: 40; opacity: 1; }
   50%  { stroke-dashoffset:   0; opacity: 1; }
   100% { stroke-dashoffset: -40; opacity: 1; }
 }
+
 
 }
 
