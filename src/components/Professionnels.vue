@@ -670,7 +670,7 @@ main.container {
 
 @keyframes strokeColorPulse {
   0%, 100% { stroke: #007BFF; }
-  50%      { stroke: #c8e6ff; }
+  50%      { stroke:  #007BFF; }
 }
 
 }
