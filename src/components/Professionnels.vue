@@ -632,7 +632,7 @@ main.container {
     90deg,
     rgba(137, 181, 228, 0.71) 0%,
     rgba(0,123,255,0.9) 50%,
-    rgba(113, 160, 210, 0.806) 100%
+    rgba(110, 138, 167, 0.806) 100%
   );
   background-size: 200% 100%;
   animation: mobileShine 2.2s linear infinite;
@@ -653,16 +653,14 @@ main.container {
 :deep(.mobile-svg svg line),
 :deep(.mobile-svg svg polyline),
 :deep(.mobile-svg svg polygon) {
-  stroke: #007BFF !important; /* base stroke color */
-  stroke-dasharray: 80 140;
+  stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
   animation: strokeSweep 3s ease-in-out infinite;
 }
-
 @keyframes strokeSweep {
-  0%   { stroke: #007BFF; }
-  50%  { stroke: #6cb6ff; } /* bright but not pure white */
-  100% { stroke: #007BFF; }
+  0%   { stroke-dashoffset: 40; opacity: 1; }
+  50%  { stroke-dashoffset:   0; opacity: 1; }
+  100% { stroke-dashoffset: -40; opacity: 1; }
 }
 
 }
