@@ -582,13 +582,39 @@ main.container {
   }
 
   .parallax-hero {
-  width: 100% !important;
-  max-width: 100% !important;
+  width: 80% !important;
+  max-width: 80% !important;
   padding-left: 1.5em !important;
   padding-right: 1.5em !important;
   box-sizing: border-box !important;
   overflow-x: hidden !important;
 }
+
+.section-card .shine-title {
+    position: relative;
+    display: inline-block; /* shrink underline to title width */
+  }
+
+  .section-card .shine-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.4em; /* distance below text */
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 123, 255, 0) 0%,
+      rgba(0, 123, 255, 0.8) 50%,
+      rgba(0, 123, 255, 0) 100%
+    );
+    animation: shine-move 2s infinite linear;
+  }
+
+  @keyframes shine-move {
+    0% { background-position: 0 0; }
+    100% { background-position: 200% 0; }
+  }
 }
 
 
