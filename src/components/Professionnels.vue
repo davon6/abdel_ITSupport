@@ -590,6 +590,25 @@ main.container {
     background-attachment: scroll !important; /* disable parallax if using background */
   }
 
+    /* Hero text size tweaks */
+    .parallax-hero h1 {
+    font-size: 1.6rem !important; /* smaller heading */
+    line-height: 1.2 !important;
+  }
+
+  .parallax-hero p {
+    font-size: 0.95rem !important; /* smaller body text */
+    line-height: 1.4 !important;
+    margin-top: 0.5em !important;
+    margin-bottom: 1em !important;
+  }
+
+  /* Button spacing tweak */
+  .parallax-hero .btn-main {
+    padding: 0.5em 1em !important;
+    font-size: 0.9rem !important;
+  }
+
 /* 1) Remove title underline/shine on mobile to avoid duplicate line */
 .section-card .shine-title::before,
 .section-card .shine-title::after {
@@ -611,7 +630,7 @@ main.container {
   border-radius: 2px;
   background: linear-gradient(
     90deg,
-    rgba(0,123,255,0) 0%,
+    rgba(137, 181, 228, 0.71) 0%,
     rgba(0,123,255,0.9) 50%,
     rgba(0,123,255,0) 100%
   );
