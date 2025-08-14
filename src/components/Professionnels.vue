@@ -326,7 +326,7 @@ export default {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(200,230,255,0.9),
+    rgba(255,255,255,0.9),
     transparent
   );
   border-radius: 2px;
@@ -655,12 +655,18 @@ main.container {
 :deep(.mobile-svg svg polygon) {
   stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
+  stroke: #007BFF !important;
   animation: strokeSweep 3s ease-in-out infinite;
 }
 @keyframes strokeSweep {
   0%   { stroke-dashoffset: 40; opacity: 1; }
   50%  { stroke-dashoffset:   0; opacity: 1; }
   100% { stroke-dashoffset: -40; opacity: 1; }
+}
+
+@keyframes strokeColorPulse {
+  0%, 100% { stroke: #007BFF; }
+  50%      { stroke: rgba(200,230,255,0.95); }
 }
 
 }
