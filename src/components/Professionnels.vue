@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted  } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -26,11 +26,21 @@ onMounted(() => {
   // Mobile detection
   checkMobile()
   window.addEventListener('resize', checkMobile)
+
+  const oldColor = document.body.style.backgroundColor
+
+// override body background
+document.body.style.backgroundColor = '#0042a5'
+
+// restore on leave
+onUnmounted(() => {
+  document.body.style.backgroundColor = oldColor
+})
 })
 </script>
 
 <template>
- 
+  <div class="fullpage">
  
 
   <section class="parallax-hero rellax" data-rellax-speed="-3">
@@ -57,7 +67,7 @@ onMounted(() => {
   C450,1400 100,1600 400,1800
   C100,2000 450,2200 150,2400
 " 
-fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasharray="10 10"/>
+fill="none" stroke="#007BFF" stroke-width="6" stroke-dasharray="10 10"/>
 </svg>
 </div>
 
@@ -94,7 +104,7 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-opacity="0.15" stroke-dasha
     <ContactForm />
 
   </main>
-
+</div>
 </template>
 
 <script lang="ts">
@@ -458,7 +468,7 @@ export default {
   width: 6px;
   background-size: 100% 20px;
   transform: translateX(-10%);
-  opacity: 0.15;
+  /*opacity: 0.15;*/
   pointer-events: none;
 }
 
@@ -665,7 +675,19 @@ main.container {
   100% { stroke-dashoffset: -40; opacity: 0; }
 
 
-}}
+}
+.section-card {
+  background-color: #4b78bc99; 
+  }
+
+}
+
+
+
+.fullpage  {
+  background-color: #4b78bc24; 
+  
+}
 
 
 </style>
