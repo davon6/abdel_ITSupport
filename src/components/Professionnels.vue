@@ -665,7 +665,7 @@ main.container {
   100% { stroke-dashoffset: -40; opacity: 0; }
 
 
-}
+}}
 
 
 </style>
