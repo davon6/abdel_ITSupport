@@ -677,7 +677,7 @@ main.container {
 
 }
 .section-card {
-  background-color: #4b78bc; 
+  background-color: #d5e6ff; 
   }
 
 }
