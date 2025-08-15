@@ -42,15 +42,18 @@ onUnmounted(() => {
 <template>
   <div class="fullpage">
  
-
+   
   <section class="parallax-hero rellax" data-rellax-speed="-3">
+    <div class="icon-wrapper">
     <div class="overlay"></div>
     <div class="container text-center hero-content">
       <h1>Services pour les Professionnels</h1>
       <p>Solutions fiables, adaptées et sécurisées pour TPE, PME, indépendants et professions libérales.</p>
       <router-link to="#services" class="btn-main">Découvrir nos services</router-link>
     </div>
+  </div>
   </section>
+
 
 
 
@@ -89,14 +92,16 @@ fill="none" stroke="#007BFF" stroke-width="6" stroke-dasharray="10 10"/>
   </div>
 
   <div class="image-block">
-  <div class="image-frame">
-    <img
-      v-if="!isMobile"
-      src="/istockphoto.jpg"
-      alt="Business IT Solutions"
-    />
-    <div v-else v-html="section.svgIcon" class="mobile-svg"></div>
-  </div>
+    <div class="image-frame">
+  <img
+    v-if="!isMobile"
+    src="/istockphoto.jpg"
+    alt="Business IT Solutions"
+  />
+  
+  <div v-else v-html="section.svgIcon" class="mobile-svg pulse-stroke"></div>
+</div>
+
 </div>
 
 </article>
@@ -542,11 +547,12 @@ main.container {
     padding: 0.8em !important;
     gap: 0.5em !important;
     box-shadow: none !important;
-    border: 1px solid rgba(0, 123, 255, 0.6) !important;
+    border: 1px solid rgb(0, 123, 255) !important;
     border-radius: 8px !important;
     margin-bottom: 0.8em !important;
     display: flex !important;
     flex-direction: column !important;
+    z-index: 2;  
   }
 
   /* Title above SVG */
@@ -598,6 +604,8 @@ main.container {
     overflow-x: hidden !important;
     transform: none !important; /* stop shifting image on mobile */
     background-attachment: scroll !important; /* disable parallax if using background */
+    z-index:1;
+    position: relative;
   }
 
     /* Hero text size tweaks */
@@ -659,6 +667,48 @@ main.container {
   stroke: #007BFF; /* keep your blue */
 }
 
+.mobile-svg svg {
+  display: block;
+  width: 64px;
+  height: 64px;
+  stroke: #333; /* keep your preferred stroke color */
+  transition: filter 0.2s;
+}
+
+.pulse-stroke svg {
+  animation: pulse-bright 2s infinite;
+}
+
+@keyframes pulse-bright {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(2);
+  }
+}
+
+.pulse-stroke {
+  animation: pulse 2s infinite ease-in-out;
+  stroke-width: 3;
+  stroke: currentColor;
+  fill: none;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.95);
+  }
+}
 :deep(.mobile-svg svg path),
 :deep(.mobile-svg svg circle),
 :deep(.mobile-svg svg line),
@@ -666,13 +716,13 @@ main.container {
 :deep(.mobile-svg svg polygon) {
   stroke-dasharray: 80 140;       /* long dash + long gap = smooth sweep */
   stroke-dashoffset: 0;
-  stroke: #007BFF;
-   animation: strokeSweep 3s ease-in-out infinite;
+  stroke: #479df9;
+   animation: strokeSweep 6s ease-in-out infinite;
 }
 @keyframes strokeSweep {
-  0%   { stroke-dashoffset: 40; opacity: 1; }
-  50%  { stroke-dashoffset:   0; opacity: 1; }
-  100% { stroke-dashoffset: -40; opacity: 0; }
+  0%   { stroke-dashoffset: -140; opacity: 1; }
+  50%  { stroke-dashoffset:   0; opacity: 2; }
+  80% { stroke-dashoffset: 0; opacity: 1; }
 
 
 }
@@ -685,8 +735,49 @@ main.container {
 
 
 .fullpage  {
-  background-color: #4b78bc24; 
-  
+  background-color: #4c94ff; 
+  z-index: 5; 
+  position: relative;
+}
+
+.icon-wrapper {
+  position: relative;
+  display: block; /* section is block anyway */
+  overflow: hidden; /* hides gradient outside bounds */
+}
+
+.icon-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.05) 20%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0.05) 80%,
+    rgba(255,255,255,0) 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  animation: shine-once 3s linear ; /* run once */
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+@keyframes shine-once {
+  0%   { left: -100%; }   /* start fully offscreen */
+  50%  { left: 100%; }    /* move fully across */
+  100% { left: -100%; }   /* reset offscreen */
+}
+
+.parallax-hero {
+  position: relative; /* or absolute/fixed if needed */
+  z-index: 1;        /* higher than the background div */
+  background: rgba(255, 255, 255, 0.8);
 }
 
 
