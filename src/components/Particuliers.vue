@@ -30,17 +30,10 @@ const tarifs = ref([
 ]);
 
 // Sorting
-const sortColumn = ref("service");
+const sortColumn = ref<"category" | "service" | "detail" | "prix" | "unit" | "location">("service");
 const sortAsc = ref(true);
 
-function sortBy(column: string) {
-  if (sortColumn.value === column) {
-    sortAsc.value = !sortAsc.value;
-  } else {
-    sortColumn.value = column;
-    sortAsc.value = true;
-  }
-}
+
 
 // Computed sorted tarifs
 const sortedTarifs = computed(() => {
