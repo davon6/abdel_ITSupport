@@ -20,6 +20,7 @@ const scrollBehavior: RouterScrollBehavior = (to,  _from, savedPosition) => {
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
+  { path: '/', name: 'Acceuil', component: Home },
   { path: '/particuliers', name: 'Particuliers', component: Particuliers },
   { path: '/professionnels', name: 'Professionnels', component: Professionnels },
 ];

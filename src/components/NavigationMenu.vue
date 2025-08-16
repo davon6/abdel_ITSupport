@@ -101,54 +101,64 @@
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 </button>
+<ul class="mobile-nav-list">
+  <li v-for="item in navigationLinks" :key="item.label">
+    
+    <!-- Top-level link: button if has children, router-link if not -->
+    <template v-if="item.children && item.children.length">
+      <button class="mobile-main-link" @click="toggleMain(item.label)">
+        {{ item.label }}
+      </button>
+    </template>
+    <template v-else>
+      <router-link
+        :to="item.basePath || '/'"
+        class="mobile-main-link"
+        @click="toggleBurger"
+      >
+        {{ item.label }}
+      </router-link>
+    </template>
 
-          <ul class="mobile-nav-list">
-            <li v-for="item in navigationLinks" :key="item.label">
-              <button class="mobile-main-link" @click="toggleMain(item.label)">
-                {{ item.label }}
-              </button>
-  
-              <!-- Submenu -->
-              <ul v-if="openLabel === item.label && item.children">
-                <li v-for="sub in item.children" :key="sub.label">
-                  <template v-if="sub.children">
-                    <button
-                      class="mobile-sub-link"
-                      @click="toggleSub(`${item.label}__${sub.label}`)"
-                    >
-                      {{ sub.label }}
-                    </button>
-  
-                    <!-- Sub-submenu -->
-                    <ul
-                      v-if="hoveredSub === `${item.label}__${sub.label}`"
-                      class="ml-4"
-                    >
-                      <li v-for="link in sub.children" :key="link.anchor">
-                        <router-link
-                          :to="`${sub.basePath || ''}#${link.anchor}`"
-                          class="mobile-sub-sub-link"
-                          @click.prevent="() => { handleAnchor(sub.basePath, link.anchor); toggleBurger(); }"
-                        >
-                          {{ link.label }}
-                        </router-link>
-                      </li>
-                    </ul>
-                  </template>
-  
-                  <template v-else>
-                    <router-link
-                      :to="sub.basePath || ''"
-                      class="mobile-sub-link"
-                      @click="toggleBurger"
-                    >
-                      {{ sub.label }}
-                    </router-link>
-                  </template>
-                </li>
-              </ul>
+    <!-- Submenu -->
+    <ul v-if="openLabel === item.label && item.children">
+      <li v-for="sub in item.children" :key="sub.label">
+        <template v-if="sub.children && sub.children.length">
+          <button
+            class="mobile-sub-link"
+            @click="toggleSub(`${item.label}__${sub.label}`)"
+          >
+            {{ sub.label }}
+          </button>
+
+          <!-- Sub-submenu -->
+          <ul v-if="hoveredSub === `${item.label}__${sub.label}`" class="ml-4">
+            <li v-for="link in sub.children" :key="link.anchor">
+              <router-link
+                :to="`${sub.basePath || ''}#${link.anchor}`"
+                class="mobile-sub-sub-link"
+                @click.prevent="() => { handleAnchor(sub.basePath, link.anchor); toggleBurger(); }"
+              >
+                {{ link.label }}
+              </router-link>
             </li>
           </ul>
+        </template>
+
+        <template v-else>
+          <router-link
+            :to="sub.basePath || ''"
+            class="mobile-sub-link"
+            @click="toggleBurger"
+          >
+            {{ sub.label }}
+          </router-link>
+        </template>
+      </li>
+    </ul>
+  </li>
+</ul>
+
         </div>
       </transition>
     </nav>
