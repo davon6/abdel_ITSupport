@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
-import type { RouterScrollBehavior } from 'vue-router';
+/*import type { RouterScrollBehavior } from 'vue-router';
 
 // define scrollBehavior properly
 const scrollBehavior: RouterScrollBehavior = (to,  _from, savedPosition) => {
@@ -16,7 +16,7 @@ const scrollBehavior: RouterScrollBehavior = (to,  _from, savedPosition) => {
     return savedPosition;
   }
   return { top: 0 };
-};
+};*/
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
