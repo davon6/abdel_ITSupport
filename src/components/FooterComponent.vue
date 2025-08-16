@@ -47,6 +47,9 @@
     padding: 20px;
     flex-wrap: wrap;
     font-family: Arial, sans-serif;
+
+
+    
   }
   
   .footer-left {
@@ -101,6 +104,16 @@
     .footer {
       flex-direction: column;
       align-items: center;
+
+
+
+      position: relative; /* allows z-index if needed */
+  width: 100%;        /* full viewport width */
+  margin: 0;          /* remove extra margins */
+  padding: 20px 0;    /* your footer padding */
+  left: 0;            /* ensures left aligns with viewport */
+  box-sizing: border-box; /* include padding in width */
+  z-index: 1;         /* now works because positioned */
     }
   
     .footer-left {
@@ -110,12 +123,19 @@
     .footer-links {
       justify-content: center;
     }
+
   
     .footer-right {
       flex-direction: row;
       margin-top: 10px;
       gap: 20px;
     }
+
+
+    .footer-links a {
+    font-size: 0.6rem; /* very small on mobile */
   }
+  }
+  
   </style>
   

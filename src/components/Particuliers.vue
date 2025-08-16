@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed  } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -14,42 +14,83 @@ const sections = [
 ];
 
 const activeTab = ref(sections[0].id);
+const tarifVisible = ref(false);
+
+// Pricing table data
+const tarifs = ref([
+  { category: "Dépannage & assistance", service: "Nettoyage, virus, bugs, lenteurs", detail: "PC/Mac, box Internet, imprimante, logiciel", prix: 49, unit: "€/h", location: "Intervention à distance / domicile (Lyon)" },
+  { category: "Dépannage & assistance", service: "Dépannage express (dans la journée)", detail: "Intervention rapide", prix: 79, unit: "€/h", location: "Intervention à distance / domicile (Lyon)" },
+  { category: "Maintenance & sécurité", service: "Forfait sérénité", detail: "Nettoyage régulier, antivirus, MAJ", prix: 14, unit: "€/mois", location: "-" },
+  { category: "Maintenance & sécurité", service: "Sécurisation ordinateur", detail: "Antivirus, pare-feu, nettoyage", prix: 69, unit: "€", location: "-" },
+  { category: "Maintenance & sécurité", service: "Installation + configuration", detail: "-", prix: 59, unit: "€", location: "-" },
+  { category: "Maintenance & sécurité", service: "Sauvegarde Cloud (5 Go inclus)", detail: "-", prix: 0, unit: "-", location: "-" },
+  { category: "Services complémentaires", service: "Installation PC ou imprimante", detail: "À domicile, y compris configuration", prix: 59, unit: "€", location: "-" },
+  { category: "Services complémentaires", service: "Transfert de données", detail: "Migration de données (USB, disque dur, cloud)", prix: 49, unit: "€", location: "-" },
+  { category: "Services complémentaires", service: "Réinstallation complète (Windows/Mac)", detail: "Système, drivers, MAJ, antivirus", prix: 89, unit: "€", location: "-" },
+]);
+
+// Sorting
+const sortColumn = ref("service");
+const sortAsc = ref(true);
+
+function sortBy(column: string) {
+  if (sortColumn.value === column) {
+    sortAsc.value = !sortAsc.value;
+  } else {
+    sortColumn.value = column;
+    sortAsc.value = true;
+  }
+}
+
+// Computed sorted tarifs
+const sortedTarifs = computed(() => {
+  return [...tarifs.value].sort((a, b) => {
+    let valA = a[sortColumn.value];
+    let valB = b[sortColumn.value];
+    if (typeof valA === "string") valA = valA.toLowerCase();
+    if (typeof valB === "string") valB = valB.toLowerCase();
+    if (valA < valB) return sortAsc.value ? -1 : 1;
+    if (valA > valB) return sortAsc.value ? 1 : -1;
+    return 0;
+  });
+});
 
 function openTab(id: string) {
   activeTab.value = id;
   router.replace({ hash: `#${id}` });
 }
 
+function openTarif() {
+  tarifVisible.value = true;
+  nextTick(() => document.getElementById("tarif")?.scrollIntoView({ behavior: "smooth" }));
+}
+
+function closeTarif() {
+  tarifVisible.value = false;
+  document.getElementById("page-content")?.scrollIntoView({ behavior: "smooth" });
+}
+
 onMounted(() => {
   if (route.hash) {
     const id = route.hash.replace("#", "");
-    if (sections.some(s => s.id === id)) {
-      nextTick(() => {
-        activeTab.value = id;
-      });
-    }
+    if (sections.some(s => s.id === id)) nextTick(() => activeTab.value = id);
   }
 });
 </script>
 
 <template>
   <div id="page-content" class="min-h-screen bg-gray-100 flex flex-col">
-    <!-- Browser-like Tabs -->
+    <!-- Tabs -->
     <div class="tabs-container">
       <ul class="tabs-list">
-        <li
-          v-for="section in sections"
-          :key="section.id"
-          @click="openTab(section.id)"
-          :class="['tab-item', { active: activeTab === section.id }]"
-        >
+        <li v-for="section in sections" :key="section.id" @click="openTab(section.id)" :class="['tab-item', { active: activeTab === section.id }]">
           {{ section.label }}
         </li>
       </ul>
     </div>
 
-    <!-- Content area framed under tabs -->
-    <main class="tab-content">
+    <!-- Tab Content -->
+    <main class="tab-content relative">
       <section v-if="activeTab === 'depannage'" id="depannage">
         <h2>🔧 Dépannage informatique</h2>
         <ul>
@@ -59,7 +100,6 @@ onMounted(() => {
           <li>Réinstallation complète ou mise à jour OS</li>
         </ul>
       </section>
-
       <section v-if="activeTab === 'installation'" id="installation">
         <h2>📦 Installation & Configuration</h2>
         <ul>
@@ -68,7 +108,6 @@ onMounted(() => {
           <li>Mise en place du Wi-Fi</li>
         </ul>
       </section>
-
       <section v-if="activeTab === 'sauvegarde'" id="sauvegarde">
         <h2>☁️ Sauvegarde & Données</h2>
         <ul>
@@ -78,7 +117,6 @@ onMounted(() => {
           <li>Sécurisation navigation</li>
         </ul>
       </section>
-
       <section v-if="activeTab === 'assistance'" id="assistance">
         <h2>📱 Assistance Mobile</h2>
         <ul>
@@ -87,7 +125,6 @@ onMounted(() => {
           <li>Installation d’applications utiles</li>
         </ul>
       </section>
-
       <section v-if="activeTab === 'formation'" id="formation">
         <h2>🧓 Formation à domicile</h2>
         <ul>
@@ -96,12 +133,66 @@ onMounted(() => {
           <li>Sensibilisation sécurité numérique</li>
         </ul>
       </section>
+
+      <!-- Tiny Open Tarif Button -->
+      <svg @click="openTarif" xmlns="http://www.w3.org/2000/svg"
+     class="fixed bottom-2 right-2 cursor-pointer z-50"
+     style="width:8mm; height:8mm; stroke-width:1.2; color:#2563eb;"
+     fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+</svg>
+
+
     </main>
+
+    <!-- Tarif Section -->
+    <section v-show="tarifVisible" id="tarif" class="tab-content mt-4 relative">
+      <h2>💶 Tarif</h2>
+
+      <!-- Tiny Close Button -->
+      <svg @click="closeTarif" xmlns="http://www.w3.org/2000/svg"
+     class="absolute top-2 right-2 cursor-pointer z-50"
+     style="width:8mm; height:8mm; stroke-width:1.2; color:#dc2626;"
+     fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+
+<!-- Light Grid Pricing Table -->
+<div class="overflow-x-auto mt-4" id="test">
+  <table class="min-w-full border-collapse border-4 border-red-600 text-left">
+    <thead class="bg-yellow-200">
+      <tr>
+        <th class="px-3 py-2 border-4 border-blue-600 cursor-pointer">Catégorie</th>
+        <th class="px-3 py-2 border-4 border-blue-600 cursor-pointer">Service</th>
+        <th class="px-3 py-2 border-4 border-blue-600 cursor-pointer">Détail</th>
+        <th class="px-3 py-2 border-4 border-blue-600 cursor-pointer">Prix</th>
+        <th class="px-3 py-2 border-4 border-blue-600">Lieu</th>
+      </tr>
+    </thead>
+    <tbody class="bg-green-200">
+      <tr v-for="(item, index) in sortedTarifs" :key="index" class="hover:bg-pink-300">
+        <td class="px-3 py-2 border-4 border-purple-600">{{ item.category }}</td>
+        <td class="px-3 py-2 border-4 border-purple-600">{{ item.service }}</td>
+        <td class="px-3 py-2 border-4 border-purple-600">{{ item.detail }}</td>
+        <td class="px-3 py-2 border-4 border-purple-600">{{ item.prix }} {{ item.unit }}</td>
+        <td class="px-3 py-2 border-4 border-purple-600">{{ item.location }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+      </div>
+    </section>
   </div>
 </template>
 
 <style scoped>
 /* --- Tabs Styling (browser-like) --- */
+
+table { border-collapse: collapse; }
+th, td { border: 1px solid #cbd5e1; }
+
+
+
 .tabs-container {
   background: #e5e7eb; /* light gray bg */
   border-bottom: 1px solid #ccc;
@@ -221,8 +312,30 @@ onMounted(() => {
     .tab-content h2 {
     font-size: 1.2rem !important;
   }
+  #tarif table {
+    font-size: 0.7rem; /* very small on mobile */
+  }
 
-  
+  #tarif th, #tarif td {
+    padding: 0.25rem 0.5rem; /* shrink padding too */
+  }
+
+
+  #tarif table th,
+  #tarif table td,
+  #test {
+    padding: 0 !important; /* remove all padding on mobile */
+ left : 0 !important; 
+  }
+  #test #tarif .overflow-x-auto {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+ #test #tarif table {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 .tab-content {
