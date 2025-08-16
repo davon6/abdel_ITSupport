@@ -1,257 +1,260 @@
 <script setup lang="ts">
-import { onMounted, nextTick, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import Rellax from 'rellax'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import { ref, onMounted, nextTick } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const opacity = ref(1) // Define opacity as a reactive property
+const route = useRoute();
+const router = useRouter();
 
-function disableAOSScroll() {
-  // Remove scroll event listeners that AOS attached
-  window.removeEventListener('scroll', AOS.refresh)
-  window.removeEventListener('resize', AOS.refresh)
-  window.removeEventListener('load', AOS.refresh)
+const sections = [
+  { id: "depannage", label: "🔧 Dépannage" },
+  { id: "installation", label: "📦 Installation" },
+  { id: "sauvegarde", label: "☁️ Sauvegarde" },
+  { id: "assistance", label: "📱 Assistance" },
+  { id: "formation", label: "🧓 Formation" },
+];
 
-  // Add 'aos-animate' class to all AOS elements to keep them animated
-  document.querySelectorAll('[data-aos]').forEach(el => {
-    el.classList.add('aos-animate')
-  })
+const activeTab = ref(sections[0].id);
+
+function openTab(id: string) {
+  activeTab.value = id;
+  router.replace({ hash: `#${id}` });
 }
 
 onMounted(() => {
-  new Rellax('.rellax')
-
-  AOS.init({
-    duration: 800,
-    once: true,
-    disableMutationObserver: true,  // optional: less overhead
-  })
-
   if (route.hash) {
-    nextTick(() => {
-      const target = document.querySelector(route.hash)
-      if (target) {
-        // Jump instantly to the section
-        window.scrollTo({
-          top: target.getBoundingClientRect().top + window.scrollY - 80,
-          behavior: 'auto'
-        })
-
-        // Wait a moment and then disable further AOS animations on scroll
-        setTimeout(() => {
-          disableAOSScroll()
-        }, 200) // 200ms delay to let initial animation finish
-      }
-    })
+    const id = route.hash.replace("#", "");
+    if (sections.some(s => s.id === id)) {
+      nextTick(() => {
+        activeTab.value = id;
+      });
+    }
   }
-})
-
+});
 </script>
 
-
 <template>
+  <div id="page-content" class="min-h-screen bg-gray-100 flex flex-col">
+    <!-- Browser-like Tabs -->
+    <div class="tabs-container">
+      <ul class="tabs-list">
+        <li
+          v-for="section in sections"
+          :key="section.id"
+          @click="openTab(section.id)"
+          :class="['tab-item', { active: activeTab === section.id }]"
+        >
+          {{ section.label }}
+        </li>
+      </ul>
+    </div>
 
-  <div :style="{ opacity: opacity }" id="page-content">
-    <!-- Hero Banner -->
-    <section class="parallax-hero rellax" data-rellax-speed="-3"  >
-      <div class="overlay"></div>
-      <div class="container text-center">
-        <h1>Services Informatiques pour Particuliers</h1>
-        <p>Assistance, dépannage et conseils à domicile ou à distance</p>
-      </div>
-    </section>
-  
-    <main>
-  
-      <!-- Dépannage informatique -->
-      <section class="section-light" id="depannage">
-        <div class="container">
-          <h2 class="section-title" data-aos="fade-up">🔧 Dépannage informatique</h2>
-          <ul class="service-list" data-aos="fade-up" data-aos-delay="100">
-            <li>Réparation de PC / Mac (système lent, bugs, écran bleu, etc.)</li>
-            <li>Suppression de virus, malware, publicités</li>
-            <li>Nettoyage et optimisation des performances de votre ordinateur</li>
-            <li>Réinstallation complète ou mise à jour de Windows / macOS / Linux</li>
-          </ul>
-        </div>
+    <!-- Content area framed under tabs -->
+    <main class="tab-content">
+      <section v-if="activeTab === 'depannage'" id="depannage">
+        <h2>🔧 Dépannage informatique</h2>
+        <ul>
+          <li>Réparation de PC / Mac (système lent, bugs, écran bleu...)</li>
+          <li>Suppression de virus, malware, publicités</li>
+          <li>Optimisation des performances</li>
+          <li>Réinstallation complète ou mise à jour OS</li>
+        </ul>
       </section>
-  
-      <!-- Installation et configuration -->
-      <section class="section-dark">
-        <div class="container">
-          <h2 class="section-title text-white" data-aos="fade-up">📦 Installation & Configuration</h2>
-          <ul class="service-list" data-aos="fade-up" data-aos-delay="100">
-            <li>Installation et configuration : imprimante, périphériques, réseaux, Wi-Fi, box</li>
-            <li>Mise en place du Wi-Fi à domicile</li>
-            <li>Configuration de comptes : emails, cloud, antivirus</li>
-            <li>Installation de logiciels bureautique, messagerie et applications courantes</li>
-          </ul>
-        </div>
+
+      <section v-if="activeTab === 'installation'" id="installation">
+        <h2>📦 Installation & Configuration</h2>
+        <ul>
+          <li>Installation : imprimante, périphériques, réseaux, Wi-Fi</li>
+          <li>Configuration email, cloud, antivirus</li>
+          <li>Mise en place du Wi-Fi</li>
+        </ul>
       </section>
-  
-      <!-- Sauvegarde & données -->
-      <section class="section-light">
-        <div class="container">
-          <h2 class="section-title" data-aos="fade-up">☁️ Sauvegarde & Données</h2>
-          <ul class="service-list" data-aos="fade-up" data-aos-delay="100">
-            <li>Sauvegarde automatique sur disque dur externe ou cloud</li>
-            <li>Récupération de données perdues (photos, documents...) sur clé USB, disque ou smartphone</li>
-            <li>Clonage de disque dur ou transfert vers SSD</li>
-            <li>Sécurisation de la navigation : antivirus, pare-feu, contrôle parental</li>
-          </ul>
-        </div>
+
+      <section v-if="activeTab === 'sauvegarde'" id="sauvegarde">
+        <h2>☁️ Sauvegarde & Données</h2>
+        <ul>
+          <li>Sauvegarde sur disque dur ou cloud</li>
+          <li>Récupération de données perdues</li>
+          <li>Clonage de disque dur ou transfert SSD</li>
+          <li>Sécurisation navigation</li>
+        </ul>
       </section>
-  
-      <!-- Assistance mobile -->
-      <section class="section-dark">
-        <div class="container">
-          <h2 class="section-title text-white" data-aos="fade-up">📱 Assistance Mobile</h2>
-          <ul class="service-list" data-aos="fade-up" data-aos-delay="100">
-            <li>Aide à l'utilisation de smartphones et tablettes</li>
-            <li>Connexion téléphone ⇄ PC (sauvegarde, synchronisation)</li>
-            <li>Installation d'applications utiles et contrôle parental</li>
-          </ul>
-        </div>
+
+      <section v-if="activeTab === 'assistance'" id="assistance">
+        <h2>📱 Assistance Mobile</h2>
+        <ul>
+          <li>Aide smartphones et tablettes</li>
+          <li>Connexion téléphone ⇄ PC</li>
+          <li>Installation d’applications utiles</li>
+        </ul>
       </section>
-  
-      <!-- Formation à domicile -->
-      <section class="section-light section-dark"  id="formation">
-        <div class="container">
-          <h2 class="section-title" data-aos="fade-up">🧓 Formation à domicile</h2>
-          <ul class="service-list" data-aos="fade-up" data-aos-delay="100">
-            <li>Initiation à l'informatique : PC, emails, navigation Internet, Word</li>
-            <li>Séances personnalisées pour seniors et débutants</li>
-            <li>Sensibilisation sécurité numérique : éviter les arnaques et virus</li>
-          </ul>
-        </div>
+
+      <section v-if="activeTab === 'formation'" id="formation">
+        <h2>🧓 Formation à domicile</h2>
+        <ul>
+          <li>Initiation informatique : PC, emails, Internet</li>
+          <li>Séances personnalisées pour seniors</li>
+          <li>Sensibilisation sécurité numérique</li>
+        </ul>
       </section>
-  
     </main>
-  
-    <footer>
-      <p>© 2025 ShoTech. Assistance informatique particuliers.</p>
-    </footer>
   </div>
-  </template>
+</template>
+
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Open Sans', sans-serif;
-  background: #f4f4f9;
-}
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #0077cc;
-  padding: 15px 30px;
-  color: white;
-}
-
-nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Hero Banner */
-.parallax-hero {
-  position: relative;
-  background-image: url('/digitization.jpg');
-  background-size: cover;
-  background-position: center;
-  min-height: 80vh;
+/* --- Tabs Styling (browser-like) --- */
+.tabs-container {
+  background: #e5e7eb; /* light gray bg */
+  border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
-.parallax-hero .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.4);
-  z-index: 1;
-}
-
-.parallax-hero .container {
-  position: relative;
-  z-index: 2;
-  color: white;
-}
-
-/* Section Styling */
-.section-light {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-.section-dark {
-  padding: 60px 20px;
-  background: #3a3a3a;
-  color: white;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Titles */
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
-}
-
-/* Service List */
-.service-list {
+.tabs-list {
+  display: flex;
+  gap: 2px;
   list-style: none;
-  line-height: 2;
-  font-size: 1.1rem;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.service-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(200, 200, 200, 0.2);
+.tab-item {
+  padding: 10px 20px;
+  background: #d1d5db;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #444;
+  transition: background 0.2s;
+}
+
+.tab-item:hover {
+  background: #cbd5e1;
+}
+
+.tab-item.active {
+  background: #fff;
+  color: #1d4ed8; /* blue text */
+  font-weight: 600;
+  position: relative;
+  top: 1px; /* lift active tab slightly */
+  z-index: 10;
+}
+
+/* --- Content box under tabs --- */
+.tab-content {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0 8px 8px 8px;
+  padding: 20px;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 900px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tab-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 1.6;
 }
 
 /* Footer */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #0077cc;
+.footer {
+  background: #2563eb;
   color: white;
-  margin-top: 60px;
+  text-align: center;
+  padding: 15px;
+  margin-top: auto;
+  border-top: 1px solid #1e40af;
 }
 
-.page-enter {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+  .tabs-container {
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .tabs-list {
+    flex-wrap: wrap;         /* allow wrapping to new rows */
+    justify-content: flex-start;
+    gap: 4px;
+  }
+
+  .tab-item {
+    flex: 1 0 auto;          /* don't shrink too much */
+    min-width: 130px;        /* force wrapping when screen too small */
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background: #e5e7eb;
+    font-size: 0.9rem;
+  }
+
+  .tab-item.active {
+    background: #fff;
+    color: #1d4ed8;
+    font-weight: bold;
+    z-index: 10;
+  }
+
+  .tab-content {
+    border-radius: 0 0 2px 2px;
+    margin-top: 0;
+    width : 85% !important;
+  }
+
+    .tab-content h2 {
+    font-size: 1.2rem !important;
+  }
+
+  
 }
 
-.page-enter-active {
-  opacity: 1;
-  transform: translateY(0);
+.tab-content {
+  background: #fff;
+  border: 3px double #bbb;   /* double border frame */
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 900px;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
+.tab-content h2 {
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 700;
+  color: #1d4ed8; /* highlight blue */
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.tab-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.tab-content li {
+  margin-bottom: 8px;
+}
 </style>

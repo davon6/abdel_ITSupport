@@ -27,7 +27,13 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior, // use the properly typed function
+  scrollBehavior(to, _from, savedPosition) {
+    // Prevent auto-scroll when navigating to hash
+    if (to.hash) {
+      return false
+    }
+    return savedPosition || { top: 0 }
+  }, // use the properly typed function
 });
 
 export default router;
