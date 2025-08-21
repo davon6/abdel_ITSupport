@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../components/Home.vue'
 import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
+import Apropos from '../components/Apropos.vue' 
 /*import type { RouterScrollBehavior } from 'vue-router';
 
 // define scrollBehavior properly
@@ -23,6 +24,7 @@ const routes = [
   { path: '/', name: 'Acceuil', component: Home },
   { path: '/particuliers', name: 'Particuliers', component: Particuliers },
   { path: '/professionnels', name: 'Professionnels', component: Professionnels },
+  { path: '/apropos', name: 'Apropos', component: Apropos }
 ];
 
 const router = createRouter({
