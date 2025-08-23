@@ -20,7 +20,7 @@
           @mouseleave="handleMouseLeave"
         >
           <router-link
-      :to="item.basePath || item.to || '/'"
+      :to="item.basePath /*|| item.to*/ || '/'"
       class="nav-button"
       @click.native="openLabel = null"
     >
