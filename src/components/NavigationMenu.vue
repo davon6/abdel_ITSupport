@@ -106,19 +106,23 @@
     
     <!-- Top-level link: button if has children, router-link if not -->
     <template v-if="item.children && item.children.length">
-      <button class="mobile-main-link" @click="toggleMain(item.label)">
-        {{ item.label }}
-      </button>
+     <button class="mobile-main-link flex justify-between items-center" @click="toggleMain(item.label)">
+  {{ item.label }}
+  <span class="text-gray-400 text-sm">
+    {{ openLabel === item.label ? '−' : '+' }}
+  </span>
+</button>
     </template>
-    <template v-else>
-      <router-link
-        :to="item.basePath || '/'"
-        class="mobile-main-link"
-        @click="toggleBurger"
-      >
-        {{ item.label }}
-      </router-link>
-    </template>
+<template v-else>
+  <router-link
+    :to="item.basePath || '/'"
+    :class="['mobile-main-link', { 'text-blue-600 font-bold': route.path === item.basePath }]"
+    @click="toggleBurger"
+  >
+    {{ item.label }}
+  </router-link>
+</template>
+
 
     <!-- Submenu -->
     <ul v-if="openLabel === item.label && item.children">
@@ -647,6 +651,52 @@ nav {
   -webkit-backdrop-filter: blur(6px);
 }
 */
+/* Increase indent for sub and sub-sub items */
+.mobile-nav-list ul {
+  padding-left: 1.25rem;
+}
+
+.mobile-sub-link {
+  padding-left: 1.5rem;
+}
+
+.mobile-sub-sub-link {
+  padding-left: 2rem;
+}
+.mobile-main-link {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #111827; /* gray-900 */
+}
+
+.mobile-sub-link {
+  font-weight: 500;
+  color: #374151; /* gray-700 */
+}
+
+.mobile-sub-sub-link {
+  font-weight: 400;
+  color: #4b5563; /* gray-600 */
+}
+.mobile-nav-list ul {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+.mobile-main-link:hover,
+.mobile-sub-link:hover,
+.mobile-sub-sub-link:hover {
+  background-color: #e5e7eb; /* gray-200 */
+  color: #1d4ed8; /* blue-700 */
+}
+
+.mobile-main-link:active {
+  background-color: #dbeafe;
+}
+.mobile-nav-list > li {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
   </style>
   
