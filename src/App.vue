@@ -42,6 +42,8 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
   padding-top: 4rem;
+
+   color: #1f2937; /* Tailwind's text-gray-800 */
 }
 
 html{
