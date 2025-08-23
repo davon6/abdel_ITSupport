@@ -27,7 +27,7 @@ export const navigationLinks = [
     },
     {
       label: 'À propos',
-      to: '/apropos',
+      basePath: '/apropos',
     },
   ]
   
