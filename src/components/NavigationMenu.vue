@@ -210,12 +210,13 @@ function updateSubmenuPosition(label: string) {
 }
 
   
-  function clearSubHover() {
-    if (hoverTimeout) clearTimeout(hoverTimeout)
-    hoverTimeout = setTimeout(() => {
-      hoveredSub.value = null
-    }, 150)
-  }
+function clearSubHover() {
+  if (hoverTimeout) clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => {
+    hoveredSub.value = null
+  }, 300) // was 150 → increase slightly
+}
+
   
   watch(() => hoveredSub.value, (newLabel) => {
   if (newLabel && !isMobile.value) {
@@ -246,12 +247,19 @@ function updateSubmenuPosition(label: string) {
   }
   
   function handleMouseLeave() {
-    if (closeTimeout) clearTimeout(closeTimeout)
-    closeTimeout = setTimeout(() => {
-      openLabel.value = null
-      activeSub.value = null
-    }, 300) // 300ms delay before closing
-  }
+  if (closeTimeout) clearTimeout(closeTimeout)
+  closeTimeout = setTimeout(() => {
+    openLabel.value = null
+    activeSub.value = null
+    hoveredSub.value = null // 👈 reset sub-sub too
+  }, 300)
+}
+
+// Also add watcher
+watch(openLabel, (val) => {
+  if (!val) hoveredSub.value = null
+})
+
 
 
   
@@ -330,8 +338,9 @@ const toggleBurger = () => {
 .sub-sub-menu {
   position: absolute;
   top: 0;
-  left: 100%;
-  margin-left: 0.5rem;
+  left: 100%;  /* 👈 remove margin gap */
+  margin-left: 0; 
+  padding-left: 0.5rem; /* 👈 create internal spacing instead */
 }
 
 
@@ -697,6 +706,7 @@ nav {
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 
   </style>
   
