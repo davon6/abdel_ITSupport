@@ -1,6 +1,10 @@
 <template>
-  <div :style="{ minHeight: `${wrapperHeight}px` }">
-    <div class="perspective sticky top-0 h-screen flex items-start justify-center">
+  <div class="carousel-wrapper"  :style="{ minHeight: `${wrapperHeight}px` }">
+    <div class="vertical-bg">
+      
+    </div>
+    <div class="perspective sticky top-0  flex items-start justify-center">
+      
       <div class="carousel">
         <div
           v-for="(section, i) in sections"
@@ -18,9 +22,12 @@
       </div>
     </div>
   </div>
+
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted,defineExpose } from "vue";
+import {  } from 'vue';
+
 
 // Sections data
 const sections = [
@@ -28,7 +35,7 @@ const sections = [
   { id: "installation", label: "📦 Installation", content: ["Installation périphériques","Configuration email","Wi-Fi setup"] },
   { id: "sauvegarde", label: "☁️ Sauvegarde", content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"] },
   { id: "assistance", label: "📱 Assistance", content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"] },
-  { id: "formation", label: "🧓 Formation", content: ["Initiation informatique","Séances seniors","Sécurité numérique"] },
+  { id: "formation", label: "🧓 Formation", content: ["Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique"] },
 ];
 
 const total = sections.length;
@@ -51,6 +58,7 @@ onMounted(() => {
   updateWrapperHeight();
   window.addEventListener("scroll", handleScroll);
   window.addEventListener("resize", handleResize);
+  
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -66,7 +74,9 @@ function updateWrapperHeight() {
   const totalScroll = spacing * (total - 1);
 
   // sticky container must last all the scroll + one viewport so last card can center
-  wrapperHeight.value = spacing * (total - 1) + viewportHeight.value; 
+
+wrapperHeight.value = spacing * (total - 1) + viewportHeight.value;
+// good   wrapperHeight.value = spacing * (total - 1) + viewportHeight.value; 
 
 }
 
@@ -112,24 +122,49 @@ function getItemStyle(i: number) {
   };
 }
 
-
+defineExpose({ wrapperHeight });
 
 </script>
 
 
 <style scoped>
-.perspective {
-  position: fixed; /* sticky → fixed */
-  top: 50%; /* center vertically */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  perspective: 1200px;
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+.vertical-bg {
+  position: absolute; /* important */
+  top: -4rem; 
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  background:
+   linear-gradient(180deg, rgba(255,255,255,0.35), rgba(32, 89, 174, 0.635));
+  backdrop-filter: blur(10px);
+  z-index: 0; /* behind carousel */
+  pointer-events: none;
+
+}
+
+.perspective {
+  position: fixed;
+  left: 50%;              /* horizontally center */
+  transform: translateX(-50%); /* adjust by half width */
+  perspective: 1200px;
+  z-index: 1;
+  
+}
+
 .carousel {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  z-index: 0; 
 }
 
 .carousel-item {
