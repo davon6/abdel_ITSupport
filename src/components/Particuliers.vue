@@ -33,7 +33,7 @@
 
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted,defineExpose, watch, nextTick  } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick  } from "vue";
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
@@ -154,8 +154,7 @@ function handleScroll() {
 
 
 // Add these at the top of your script
-let lastScrollY = window.scrollY;
-let lastTime = performance.now();
+
 
 function handleScrollMobile() {
   scrollY.value = Math.round(window.scrollY);
