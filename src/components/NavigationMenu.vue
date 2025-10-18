@@ -13,12 +13,13 @@
       <!-- ✅ Desktop Nav -->
       <ul v-if="!isMobile" class="nav-list">
         <li
-          v-for="item in navigationLinks"
-          :key="item.label"
-          class="relative group"
-          @mouseenter="openLabel = item.label"
-          @mouseleave="handleMouseLeave"
-        >
+  v-for="item in navigationLinks"
+  :key="item.label"
+  class="relative dropdown-wrapper"
+  @mouseenter="openLabel = item.label"
+  @mouseleave="openLabel = null"
+>
+
           <router-link
       :to="item.basePath /*|| item.to*/ || '/'"
       class="nav-button"
@@ -30,6 +31,8 @@
             v-if="item.children && openLabel === item.label"
             class="dropdown-menu flex gap-2"
           >
+
+
             <ul>
               <li
                 v-for="sub in item.children"
@@ -48,11 +51,11 @@
   
                   <transition name="flyout">
                     <div
-                      v-if="hoveredSub === `${item.label}__${sub.label}`"
-                      @mouseenter="handleSubHover(`${item.label}__${sub.label}`)"
-                      @mouseleave="clearSubHover"
-                      class="sub-sub-menu"
-                    >
+  v-if="openSubMenu === `${item.label}__${sub.label}`"
+  @mouseenter="handleSubHover(`${item.label}__${sub.label}`)"
+  @mouseleave="handleSubHover(null)"
+  class="sub-sub-menu"
+>
                       <ul class="w-64 p-4 rounded-lg bg-white shadow-md">
                         <li v-for="link in sub.children" :key="link.anchor">
                           <router-link
@@ -179,8 +182,12 @@
   const submenuButtons = new Map<string, HTMLElement>()
     const isMobile = ref(window.innerWidth <= 768)
   const offset = isMobile ? 0 : 10;
+  const openSubMenu = ref<string | null>(null)
 
+function handleSubHover(label: string | null) {
   
+  openSubMenu.value = label
+}
 function updateSubmenuPosition(label: string) {
   nextTick(() => {
     const el = submenuButtons.get(label)
@@ -199,16 +206,20 @@ function updateSubmenuPosition(label: string) {
   const hoveredSub = ref<string | null>(null)
   let hoverTimeout: ReturnType<typeof setTimeout> | null = null
   let closeTimeout: ReturnType<typeof setTimeout> | null = null
-  
-
-  
+    const openLabel = ref<string | null>(null)
+    watch(openLabel, (newVal) => {
+  if (!newVal) {
+    openSubMenu.value = null
+  }
+})
+  /*
     function handleSubHover(label: string) {
   if (hoverTimeout) clearTimeout(hoverTimeout)
   hoverTimeout = setTimeout(() => {
     hoveredSub.value = label // ✅ Use passed-in label directly
   }, 150)
 }
-
+*/
   
 function clearSubHover() {
   if (hoverTimeout) clearTimeout(hoverTimeout)
@@ -228,7 +239,7 @@ function clearSubHover() {
   const router = useRouter()
   const route = useRoute()
   
-  const openLabel = ref<string | null>(null)
+  
   const activeSub = ref<string | null>(null)
   
   function handleAnchor(basePath: string | undefined, anchor: string) {
@@ -351,6 +362,8 @@ const toggleBurger = () => {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
+
+
 
 .sub-sub-menu.professionnel {
   background-color: #fef9c3;
@@ -707,6 +720,26 @@ nav {
   margin-bottom: 0.5rem;
 }
 
+.sub-sub-menu::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  bottom: -16px;
+  left: -16px;
+  right: -16px;
+  pointer-events: none; /* ✅ let clicks pass through */
+}
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block; /* wrap parent + sub-sub */
+  padding-bottom: 8px;   /* invisible buffer zone below parent */
+}
 
+.sub-sub-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 0; /* flush with parent */
+}
   </style>
   

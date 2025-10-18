@@ -14,6 +14,7 @@
         <div
           v-for="(section, i) in sections"
           :key="section.id"
+          :id="section.id"   
           class="carousel-item"
            
           :style="getItemStyle(i)"
@@ -32,16 +33,39 @@
 
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted,defineExpose } from "vue";
-import {  } from 'vue';
+import { ref, onMounted, onUnmounted,defineExpose, watch, nextTick  } from "vue";
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
+watch(
+  () => route.hash,
+  (newHash: string) => {
+    if (newHash) {
+      scrollToSection(newHash.substring(1))
+    }
+  },
+  { immediate: true } // also handle initial load
+)
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id)
+  if (el) {
+    // Find the section index by ID
+    const index = sections.findIndex((s) => s.id === id)
+    if (index >= 0) {
+      const spacing = spacingFactor * viewportHeight.value
+      const targetScroll = index * spacing
+      smoothScrollTo(targetScroll, 500) // 👈 use your existing function
+    }
+  }
+}
 
 // Sections data
 const sections = [
   { id: "depannage", label: "🔧 Dépannage", content: ["Réparation PC/Mac","Suppression virus","Optimisation","Réinstallation"] },
   { id: "installation", label: "📦 Installation", content: ["Installation périphériques","Configuration email","Wi-Fi setup"] },
   { id: "sauvegarde", label: "☁️ Sauvegarde", content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"] },
-  { id: "assistance", label: "📱 Assistance", content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"] },
+  { id: "assistance-mobile", label: "📱 Assistance", content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"] },
   { id: "formation", label: "🧓 Formation", content: ["Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique"] },
 ];
 
@@ -61,7 +85,8 @@ function handleResize() {
 }
 const isMobile = ref(window.innerWidth <= 600);
 // Lifecycle
-onMounted(() => {
+onMounted(async () => {
+  // ✅ Your existing setup
   updateWrapperHeight();
   window.addEventListener("wheel", handleWheel, { passive: false });
   if (isMobile.value) {
@@ -70,8 +95,15 @@ onMounted(() => {
     window.addEventListener("scroll", handleScroll);
   }
   window.addEventListener("resize", handleResize);
-  
+
+  // ✅ New hash-handling logic
+  if (route.hash) {
+    // Wait until the DOM is ready
+    await nextTick();
+    scrollToSection(route.hash.substring(1));
+  }
 });
+
 onUnmounted(() => {
   window.removeEventListener("wheel", handleWheel);
   if (isMobile.value) {
@@ -242,7 +274,6 @@ function getItemStyle(i: number) {
   };
 }
 
-defineExpose({ wrapperHeight });
 
 </script>
 
