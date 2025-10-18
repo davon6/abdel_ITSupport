@@ -1,76 +1,88 @@
 <script setup>
-import { ref, watch, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-const isSupportModalOpen = ref(false);
 
-const openSupportModal = () => {
-  isSupportModalOpen.value = true;
-};
+const isLoading = ref(true)
+const router = useRouter()
 
-const closeSupportModal = () => {
-  isSupportModalOpen.value = false;
-};
+// Initial load
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 800) // fake loading time, or tie to actual data fetching
+})
 
-watch(isSupportModalOpen, (newVal) => {
-  document.body.style.overflow = newVal ? 'hidden' : 'auto';
-});
+router.beforeEach((to, from, next) => {
+  if (to.path !== from.path) {
+    isLoading.value = true
+  }
+  next()
+})
 
-// Clean up on unmount
-onUnmounted(() => {
-  document.body.style.overflow = 'auto';
-});
+router.afterEach((to, from) => {
+  if (to.path !== from.path) {
+    setTimeout(() => {
+      isLoading.value = false
+    }, 1200)
+  }
+})
+
 </script>
 
-
-
-
 <template>
-  <!-- Optional: global logo or header visible on every page
-  <img class="logo" src="/business.jpg" alt="ShoTech logo" />
- -->
-  <!-- Route views -->
-  <AppHeader />
-  <router-view />
-  <FooterComponent />
+  <div>
+    <div>
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <Transition name="fade" mode="out-in">
+      <router-view v-if="!isLoading" />
+    </Transition>
+  </div>
+    <AppHeader />
+   
+    <FooterComponent />
+  </div>
 </template>
 
-<style>
-
-body {
-  background-color: #e6f0ff; /* light blue */
-  overflow-x: hidden;
-  max-width: 100vw;
-  padding-top: 4rem;
-
-   color: #1f2937; /* Tailwind's text-gray-800 */
+<style scoped>
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #e6f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
 }
 
-html{
-  overflow-x: hidden;
-  max-width: 100vw;
+.spinner {
+  border: 6px solid #cce0ff;      /* slightly thicker */
+  border-top: 6px solid #3b82f6;  /* same for top color */
+  border-radius: 50%;
+  width: 80px;                     /* bigger diameter */
+  height: 80px;
+  animation: spin 0.8s linear infinite;
 }
-@media (max-width: 768px) {
-  body {
-    overflow-x: hidden;
+
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-
-</style>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.6s ease;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-
 </style>
