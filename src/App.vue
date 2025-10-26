@@ -1,11 +1,36 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+import TarifModal from '@/components/TarifModal.vue'
 
-const isLoading = ref(true)
+const route = useRoute()
 const router = useRouter()
+const isLoading = ref(true)
+const showTarifModal = ref(false)
+
+const tarifs = ref([
+  { category: "Dépannage & assistance", service: "Nettoyage, virus, bugs, lenteurs", detail: "PC/Mac, box Internet, imprimante, logiciel", prix: 49, unit: "€/h", location: "Intervention à distance / domicile (Lyon)" },
+  { category: "Dépannage & assistance", service: "Dépannage express (dans la journée)", detail: "Intervention rapide", prix: 79, unit: "€/h", location: "Intervention à distance / domicile (Lyon)" },
+  { category: "Maintenance & sécurité", service: "Forfait sérénité", detail: "Nettoyage régulier, antivirus, MAJ", prix: 14, unit: "€/mois", location: "-" },
+  { category: "Maintenance & sécurité", service: "Sécurisation ordinateur", detail: "Antivirus, pare-feu, nettoyage", prix: 69, unit: "€", location: "-" },
+  { category: "Maintenance & sécurité", service: "Installation + configuration", detail: "-", prix: 59, unit: "€", location: "-" },
+  { category: "Maintenance & sécurité", service: "Sauvegarde Cloud (5 Go inclus)", detail: "-", prix: 0, unit: "-", location: "-" },
+  { category: "Services complémentaires", service: "Installation PC ou imprimante", detail: "À domicile, y compris configuration", prix: 59, unit: "€", location: "-" },
+  { category: "Services complémentaires", service: "Transfert de données", detail: "Migration de données (USB, disque dur, cloud)", prix: 49, unit: "€", location: "-" },
+  { category: "Services complémentaires", service: "Réinstallation complète (Windows/Mac)", detail: "Système, drivers, MAJ, antivirus", prix: 89, unit: "€", location: "-" },
+]);
+
+// ✅ Only show on this specific route
+const showTarifButton = computed(() => {
+  return route.name === 'Particuliers'
+})
+
+ // adjust route name
+function openTarif() { showTarifModal.value = true }
+function closeTarif() { showTarifModal.value = false }
+
 
 // Initial load
 onMounted(() => {
@@ -29,10 +54,14 @@ router.afterEach((to, from) => {
   }
 })
 
+
+
 </script>
 
 <template>
   <div>
+
+
     <div>
     <div v-if="isLoading" class="loading-overlay">
       <div class="spinner"></div>
@@ -45,10 +74,53 @@ router.afterEach((to, from) => {
     <AppHeader />
    
     <FooterComponent />
+    <teleport to="body">
+  <button
+    @click="openTarif"
+    class="tarif-btn"
+          v-if="showTarifButton && !showTarifModal && !isLoading"
+    :style="{
+      position: 'fixed',
+      top: '50%',
+      left: '2rem',
+      transform: 'translateY(-50%)',
+      zIndex: 999999,   // way above everything
+      pointerEvents: 'auto'
+    }"
+  >
+    💶 Voir tarifs
+  </button>
+
+  <TarifModal
+    :show="showTarifModal"
+    :tarifs="tarifs"
+    @close="closeTarif"
+       :style="{
+      position: 'fixed',
+      top: '50%',
+      left: '2rem',
+      transform: 'translateY(-50%)',
+      zIndex: 9999999,   // way above everything
+      pointerEvents: 'auto'
+    }"
+  />
+</teleport>
+
+
+
   </div>
 </template>
 
+<style>
+/*
+.modal-open *:not(.tarif-card) {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+}*/
+</style>
+
 <style scoped>
+
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -85,4 +157,17 @@ router.afterEach((to, from) => {
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
+
+
+.tarif-btn {
+  position: fixed;
+  z-index: 99999; 
+  pointer-events: auto;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
 </style>
