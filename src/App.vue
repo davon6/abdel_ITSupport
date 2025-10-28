@@ -53,8 +53,41 @@ router.afterEach((to, from) => {
     }, 1200)
   }
 })
+/*
 
+watch(showTarifModal, (val) => {
+  if (val) {
+    document.body.classList.add('modal-open')
+  } else {
+    document.body.classList.remove('modal-open')
+  }
+})
 
+*/
+
+watch(showTarifModal, (val) => {
+  // toggle blur class
+  document.body.classList.toggle('modal-open', val)
+
+  // lock scroll
+  if (val) {
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('wheel', preventScroll, { passive: false })
+    document.addEventListener('touchmove', preventScroll, { passive: false })
+  } else {
+    document.body.style.overflow = ''
+    document.removeEventListener('wheel', preventScroll)
+    document.removeEventListener('touchmove', preventScroll)
+  }
+
+  // optional: communicate to other components like your carousel
+  if (!window.__isModalOpen) window.__isModalOpen = { value: false }
+  window.__isModalOpen.value = val
+})
+
+function preventScroll(e) {
+  e.preventDefault()
+}
 
 </script>
 
@@ -74,14 +107,14 @@ router.afterEach((to, from) => {
     <AppHeader />
    
     <FooterComponent />
-    <teleport to="body">
+    <teleport to="body" :style="{ zIndex: 9999999 }">
   <button
     @click="openTarif"
     class="tarif-btn"
           v-if="showTarifButton && !showTarifModal && !isLoading"
     :style="{
       position: 'fixed',
-      top: '50%',
+      top: '80%',
       left: '2rem',
       transform: 'translateY(-50%)',
       zIndex: 999999,   // way above everything
@@ -117,6 +150,29 @@ router.afterEach((to, from) => {
   filter: blur(4px);
   transition: filter 0.3s ease;
 }*/
+
+body.modal-open #app {
+  filter: blur(6px);
+  transition: filter 0.3s ease;
+}
+
+.tarif-card,
+.tarif-card * {
+  filter: none !important;
+  z-index: 999999 !important;
+}
+
+body.modal-open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
+  z-index: 99998;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
 </style>
 
 <style scoped>

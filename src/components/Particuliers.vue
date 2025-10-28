@@ -1,4 +1,5 @@
 <template>
+
   <div class="carousel-wrapper"  :style="{ minHeight: `${wrapperHeight}px` }">
   
   
@@ -30,12 +31,23 @@
     </div>
 
   </div>
+  
 
 </template>
 <script setup lang="ts">
+
+// Extend the Window interface to include __isModalOpen
+declare global {
+  interface Window {
+    __isModalOpen?: { value: boolean };
+  }
+}
 import { ref, onMounted, onUnmounted, watch, nextTick  } from "vue";
 import { useRoute } from 'vue-router'
+
+
 const route = useRoute()
+
 
 watch(
   () => route.hash,
@@ -115,6 +127,7 @@ onUnmounted(() => {
 });
 
 function handleWheel(e: WheelEvent) {
+  if (window.__isModalOpen?.value) return 
   e.preventDefault();
   const base = 1.2;
   const boost = Math.min(Math.abs(e.deltaY) / 100, 1);
@@ -371,6 +384,15 @@ function getItemStyle(i: number) {
   box-shadow: 0 0 30px rgba(155, 193, 232, 0.164);
   transition: all 0.3s;
 }
-
-
+/*
+.tarif-btn {
+  z-index: 9999;
+  animation: floaty 3s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+  
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}*/
 </style>
