@@ -28,7 +28,34 @@
           </div>
         </div>
       </div>
+
     </div>
+  <!-- 👇 side info lives OUTSIDE the sticky -->
+  <transition name="fade-side" mode="out-in">
+    <div
+  v-if="sections[activeIndex]"
+  key="side-info"
+  class="side-info"
+  :style="{
+    top: `${getSideTop(activeIndex)}px`,
+    left: activeIndex % 2 === 0 ? `calc(50% - 350px - 20px)` : `calc(50% + 350px + 20px)`
+  }"
+>
+<transition-group name="fade-side" tag="div">
+  <div
+    v-for="(detail, j) in sections[activeIndex].details"
+    :key="`detail-${activeIndex}-${j}`"
+    class="side-info tiny"
+    :style="getTinyBoxStyle(activeIndex, j) as CSSProperties"
+  >
+    <div class="tiny-box">
+      {{ detail }}
+    </div>
+  </div>
+</transition-group>
+
+    </div>
+  </transition>
 
   </div>
   
@@ -42,13 +69,19 @@ declare global {
     __isModalOpen?: { value: boolean };
   }
 }
-import { ref, onMounted, onUnmounted, watch, nextTick  } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
+import type { CSSProperties } from "vue";
 import { useRoute } from 'vue-router'
 
 
 const route = useRoute()
 
+// 💡 Mobile detail toggle
+const showMobileDetails = ref(false);
 
+function toggleMobileDetails() {
+  showMobileDetails.value = !showMobileDetails.value;
+}
 watch(
   () => route.hash,
   (newHash: string) => {
@@ -74,12 +107,61 @@ function scrollToSection(id: string) {
 
 // Sections data
 const sections = [
-  { id: "depannage", label: "🔧 Dépannage", content: ["Réparation PC/Mac","Suppression virus","Optimisation","Réinstallation"] },
-  { id: "installation", label: "📦 Installation", content: ["Installation périphériques","Configuration email","Wi-Fi setup"] },
-  { id: "sauvegarde", label: "☁️ Sauvegarde", content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"] },
-  { id: "assistance-mobile", label: "📱 Assistance", content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"] },
-  { id: "formation", label: "🧓 Formation", content: ["Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique,Initiation informatique","Séances seniors","Sécurité numérique"] },
+  { 
+    id: "depannage", 
+    label: "🔧 Dépannage", 
+    content: ["Réparation PC/Mac","Suppression virus","Optimisation","Réinstallation"],
+    details: [
+      "Réparation de PC / Mac (système lent, bugs, écran bleu, etc.)",
+      "Suppression de virus, malware, publicités",
+      "Nettoyage et optimisation des performances",
+      "Réinstallation complète ou mise à jour du système d’exploitation"
+    ]
+  },
+  { 
+    id: "installation", 
+    label: "📦 Installation", 
+    content: ["Installation périphériques","Configuration email","Wi-Fi setup"],
+    details: [
+      "Installation d’imprimantes, réseaux, périphériques, box Internet",
+      "Mise en place du Wi-Fi à domicile",
+      "Configuration de comptes (emails, cloud, antivirus)",
+      "Installation de logiciels courants"
+    ]
+  },
+  { 
+    id: "sauvegarde", 
+    label: "☁️ Sauvegarde", 
+    content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"],
+    details: [
+      "Sauvegarde automatique sur disque ou cloud",
+      "Récupération de données perdues",
+      "Clonage ou migration vers SSD",
+      "Sécurisation (antivirus, pare-feu, contrôle parental)"
+    ]
+  },
+  { 
+    id: "assistance-mobile", 
+    label: "📱 Assistance", 
+    content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"],
+    details: [
+      "Aide à l’utilisation de smartphones / tablettes",
+      "Connexion téléphone–PC (sauvegarde, synchronisation)",
+      "Installation d’applications utiles ou contrôle parental"
+    ]
+  },
+  { 
+    id: "formation", 
+    label: "🧓 Formation", 
+    content: ["Initiation informatique","Séances seniors","Sécurité numérique"],
+    details: [
+      "Initiation à l’informatique (email, Internet, Word…)",
+      "Séances personnalisées pour seniors",
+      "Sécurité numérique : éviter les arnaques en ligne"
+    ]
+  },
 ];
+
 
 const total = sections.length;
 const angle = 360 / total;            // rotation per card
@@ -151,24 +233,26 @@ function updateWrapperHeight() {
 
 
 let scrollTimeout: number | null = null;
-
 function handleScroll() {
   const spacing = spacingFactor * viewportHeight.value;
   const maxScroll = spacing * (total - 1);
   scrollY.value = Math.min(window.scrollY, maxScroll);
 
-  // 👇 Detect end of scroll
+  // continuously update activeIndex
+  activeIndex.value = Math.round(scrollY.value / spacing);
+
+  // optional: keep snapping after scroll stops
   if (scrollTimeout) clearTimeout(scrollTimeout);
   scrollTimeout = window.setTimeout(() => {
     snapToClosest();
-  }, 250); // ms after scroll stops
+  }, 250);
 }
 
 
 
 // Add these at the top of your script
 
-
+/*
 function handleScrollMobile() {
   scrollY.value = Math.round(window.scrollY);
 
@@ -183,29 +267,22 @@ function handleScrollMobile() {
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
   }, 100); // slightly shorter delay
-}
+}*/
 
-
-/*
 function handleScrollMobile() {
-  scrollY.value = window.scrollY;
-
-  // Clear old timeout
+  scrollY.value = Math.round(window.scrollY);
+  activeIndex.value = Math.round(scrollY.value / (spacingFactor * viewportHeight.value));
+  
   if (scrollTimeout) clearTimeout(scrollTimeout);
-
-  // Snap AFTER scrolling stops
   scrollTimeout = window.setTimeout(() => {
     const spacing = spacingFactor * viewportHeight.value;
     const targetIndex = Math.round(scrollY.value / spacing);
     const targetScroll = targetIndex * spacing;
-
-    // Only scroll if really needed
-    if (Math.abs(window.scrollY - targetScroll) > 1) {
+    if (Math.abs(scrollY.value - targetScroll) > 1) {
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
-  }, 150); // 150ms after scroll stops
+  }, 100);
 }
-*/
 
 const activeIndex = ref(0);
 
@@ -283,6 +360,60 @@ function getItemStyle(i: number) {
     filter: `blur(${focusDist * 2}px) brightness(${brightness})`,
     transformOrigin: "center center",
     transition: "filter 0.3s, transform 0.3s, opacity 0.3s",
+  };
+}
+/*
+function getSidePosition(index: number) {
+  if (isMobile.value) return 'side-bottom'
+
+  const carouselHalf = 250; // half of max-width 500px
+  const margin = 20;
+
+  return index % 2 === 0
+    ? `left: calc(50% - ${carouselHalf + margin}px);`
+    : `left: calc(50% + ${carouselHalf + margin}px);`
+}
+*/
+
+function getSideTop(index: number) {
+  const spacing = spacingFactor * viewportHeight.value;
+  const translateY = index * spacing - scrollY.value + (viewportHeight.value / 2 - cardHeight.value / 2);
+  // clamp to top/bottom of viewport so it never goes outside
+  const minTop = 20;
+  const maxTop = viewportHeight.value - cardHeight.value - 20;
+  return Math.max(minTop, Math.min(translateY, maxTop));
+}
+
+function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
+  const spacing = spacingFactor * viewportHeight.value;
+  const baseTop =
+    sectionIndex * spacing -
+    scrollY.value +
+    (viewportHeight.value / 2 - cardHeight.value / 2);
+
+  const perDetailOffset = 70; // vertical spacing between boxes
+  const top = baseTop + detailIndex * perDetailOffset;
+
+  // Adjust horizontal positions
+  // Move both sides slightly toward the center for perfect visual balance
+  const left =
+    (sectionIndex + detailIndex) % 2 === 0
+      ? "calc(50% - 380px - 140px)" // 👈 shifted 30px further left
+      : "calc(50% + 340px - 50px)"; // 👈 pulled in 30px toward center
+
+  // Clamp within viewport height range
+  const minTop = 20;
+  const maxTop = viewportHeight.value - 60;
+  const clampedTop = Math.max(minTop, Math.min(top, maxTop));
+
+  return {
+    position: "fixed",
+    top: `${clampedTop}px`,
+    left,
+    opacity: 1,
+    zIndex: 5,
+    pointerEvents: "none",
+    transition: "top 0.3s ease, opacity 0.3s ease",
   };
 }
 
@@ -367,15 +498,6 @@ function getItemStyle(i: number) {
     font-size: 0.9rem;  /* 👈 slightly smaller text if needed */
     box-shadow: none; 
   }
-/*
-  .vertical-bg {
-    position:fixed;
-    backdrop-filter: none;
-    background: rgba(32, 89, 174, 0.3);
-  }
-  .vertical-bg {
-    display: none;
-  }*/
 
   
 }
@@ -384,15 +506,141 @@ function getItemStyle(i: number) {
   box-shadow: 0 0 30px rgba(155, 193, 232, 0.164);
   transition: all 0.3s;
 }
-/*
-.tarif-btn {
-  z-index: 9999;
-  animation: floaty 3s ease-in-out infinite;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
-  
+
+
+.side-info {
+  position: fixed; /* was absolute */
+  width: 340px;
+  z-index: 5;
+  pointer-events: none;
+  transition: top 0.3s ease, opacity 0.3s ease;
 }
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}*/
+
+.side-box {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  max-height: 75vh;
+  overflow-y: auto;
+}
+.side-left {
+  left: calc(50% - 350px - 20px); /* 50% center - half carousel - margin */
+}
+
+.side-right {
+  left: calc(50% + 350px + 20px); /* 50% center + half carousel + margin */
+}
+/* on small screens, move below */
+.side-bottom {
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 90%;
+}
+
+/* fade animation */
+.fade-side-enter-active,
+.fade-side-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-side-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fade-side-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+@media (max-width: 900px) {
+  .side-left,
+  .side-right {
+    display: none;
+  }
+}
+
+.tiny {
+  opacity: 0.95;
+}
+
+
+/* ✨ Base tiny-box styling */
+.tiny-box {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border-radius: 0.9rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;            /* 👈 slightly larger text */
+  font-family: "Inter", "Arial", sans-serif; /* 👈 clean modern font */
+  color: #1e3a8a;                /* blue-800 */
+  width: 240px;
+  box-shadow:
+    0 0 10px rgba(66, 133, 244, 0.2),
+    0 4px 20px rgba(0, 0, 0, 0.1); /* 👈 subtle glow + soft shadow */
+  border: 1px solid rgba(66, 133, 244, 0.25); /* 👈 light blue frame */
+  transition:
+    transform 0.3s ease,
+    opacity 0.4s ease,
+    filter 0.4s ease;
+  pointer-events: none;
+}
+
+/* 💨 Hover/focus aesthetic if you ever enable pointer-events */
+.tiny-box:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* ✨ Add slight breathing animation on entry */
+@keyframes tinyPop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* 🌬️ Fade / blur transitions when boxes appear/disappear */
+.fade-side-enter-active,
+.fade-side-leave-active {
+  transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease;
+}
+
+.fade-side-enter-from {
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  filter: blur(6px);
+}
+.fade-side-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  filter: blur(6px);
+}
+
+/* 👌 Optional: a very soft pulsing glow if you want it alive */
+@keyframes gentleGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(66, 133, 244, 0.2),
+      0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 16px rgba(66, 133, 244, 0.35),
+      0 6px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.tiny-box {
+  animation: tinyPop 0.4s ease forwards, gentleGlow 3s ease-in-out infinite;
+}
+
+
 </style>
