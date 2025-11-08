@@ -48,7 +48,9 @@
     class="side-info tiny"
     :style="getTinyBoxStyle(activeIndex, j) as CSSProperties"
   >
-    <div class="tiny-box">
+    <div class="tiny-box"
+     :class="`variant-${(activeIndex * 3 + j) % 4}`"
+    >
       {{ detail }}
     </div>
   </div>
@@ -390,35 +392,39 @@ function getSideTop(index: number) {
 function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
   const spacing = spacingFactor * viewportHeight.value;
   const baseTop =
-    sectionIndex * spacing -
-    scrollY.value +
-    (viewportHeight.value / 2 - cardHeight.value / 2);
+    sectionIndex * spacing - scrollY.value + (viewportHeight.value / 2 - cardHeight.value / 2);
 
-  const perDetailOffset = 70; // vertical spacing between boxes
+  const perDetailOffset = 70;
   const top = baseTop + detailIndex * perDetailOffset;
 
-  // Adjust horizontal positions
-  // Move both sides slightly toward the center for perfect visual balance
-  const left =
-    (sectionIndex + detailIndex) % 2 === 0
-      ? "calc(50% - 380px - 140px)" // 👈 shifted 30px further left
-      : "calc(50% + 340px - 50px)"; // 👈 pulled in 30px toward center
+  // introduce a stable pseudo-random offset based on indices
+  const randomOffset = ((sectionIndex * 13 + detailIndex * 7) % 20) - 30; // -10 to +10px
 
-  // Clamp within viewport height range
+  // alternate but not mirrored perfectly
+  const sideShift = ((sectionIndex + detailIndex) % 2 === 0)
+    ? `calc(50% - ${360 + randomOffset}px  - 180px)`  // left, but slightly varied
+    : `calc(50% + ${320 + randomOffset}px - 50px)`; // right, slightly varied
+
   const minTop = 20;
   const maxTop = viewportHeight.value - 60;
-  const clampedTop = Math.max(minTop, Math.min(top, maxTop));
+  const clampedTop = Math.max(minTop, Math.min(top + randomOffset, maxTop));
+
+
+  const variantIndex = (sectionIndex * 3 + detailIndex) % 4; // 0–3
+
 
   return {
     position: "fixed",
     top: `${clampedTop}px`,
-    left,
+    left: sideShift,
     opacity: 1,
     zIndex: 5,
     pointerEvents: "none",
-    transition: "top 0.3s ease, opacity 0.3s ease",
-  };
+    transition: "top 0.35s ease, opacity 0.35s ease, transform 0.35s ease",
+    "--variant": variantIndex,
+  } as CSSProperties;
 }
+
 
 
 </script>
@@ -588,6 +594,7 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
     opacity 0.4s ease,
     filter 0.4s ease;
   pointer-events: none;
+  animation: tinyPop 0.4s ease forwards, gentleGlow 3s ease-in-out infinite;
 }
 
 /* 💨 Hover/focus aesthetic if you ever enable pointer-events */
@@ -595,37 +602,52 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
-
-/* ✨ Add slight breathing animation on entry */
-@keyframes tinyPop {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.95);
-    filter: blur(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-/* 🌬️ Fade / blur transitions when boxes appear/disappear */
+/* 🫧 Tiny boxes pop animation (no sliding, just scale & opacity) */
 .fade-side-enter-active,
 .fade-side-leave-active {
-  transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.4s ease;
 }
 
 .fade-side-enter-from {
   opacity: 0;
-  transform: translateY(10px) scale(0.95);
-  filter: blur(6px);
+  transform: scale(0.7);
+}
+.fade-side-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fade-side-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 .fade-side-leave-to {
   opacity: 0;
-  transform: translateY(-10px) scale(0.95);
-  filter: blur(6px);
+  transform: scale(0.7);
 }
+
+/* 🫧 Give the tiny boxes a little “pop” on mount */
+.tiny-box {
+  animation: popIn 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 
 /* 👌 Optional: a very soft pulsing glow if you want it alive */
 @keyframes gentleGlow {
@@ -640,10 +662,40 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
       0 6px 25px rgba(0, 0, 0, 0.15);
   }
 }
-
-.tiny-box {
-  animation: tinyPop 0.4s ease forwards, gentleGlow 3s ease-in-out infinite;
+/* 💬 Font + border + background variations */
+.tiny-box.variant-0 {
+  font-family: "Inter", sans-serif;
+  background: rgba(235, 245, 255, 0.95);   /* very light blue */
+  border: 1px solid rgba(66, 133, 244, 0.35); /* bright blue */
+  box-shadow: 0 0 12px rgba(66, 133, 244, 0.25), 0 4px 20px rgba(0,0,0,0.1);
 }
+
+.tiny-box.variant-1 {
+  font-family: "Poppins", sans-serif;
+  background: rgba(240, 235, 255, 0.95);   /* subtle lavender */
+  border: 1px solid rgba(99, 102, 241, 0.35); /* indigo border */
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.tiny-box.variant-2 {
+  font-family: "Nunito", sans-serif;
+  background: rgba(230, 245, 255, 0.95);   /* soft cyan */
+  border: 1px solid rgba(59, 130, 246, 0.35); /* light blue */
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.tiny-box.variant-3 {
+  font-family: "Roboto Mono", monospace;
+  background: rgba(220, 235, 255, 0.95);   /* slightly deeper sky */
+  border: 1px solid rgba(147, 197, 253, 0.35); /* sky blue border */
+  box-shadow: 0 0 12px rgba(147, 197, 253, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* 🌬️ Add subtle rotation / scale jitter */
+.tiny-box.variant-0 { transform: rotate(-1.2deg) scale(1.00); }
+.tiny-box.variant-1 { transform: rotate(1deg) scale(0.98); }
+.tiny-box.variant-2 { transform: rotate(-0.8deg) scale(1.02); }
+.tiny-box.variant-3 { transform: rotate(0.5deg) scale(1.01); }
 
 
 </style>
