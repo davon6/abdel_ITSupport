@@ -336,10 +336,13 @@ function getItemStyle(i: number) {
   const scrollFactor = scrollY.value / totalScroll;
 
   const rotateY = -angle * i + scrollFactor * (angle * (total - 1));
-  const translateY =
+  const offsetY = 40; // tweak between 20–60px depending on how "low" you want it
+
+const translateY =
   i * spacing -
   (isMobile.value ? Math.round(scrollY.value) : scrollY.value) +
-  (viewportHeight.value / 2 - cardHeight.value / 2);
+  (viewportHeight.value / 2 - cardHeight.value / 2 + offsetY);
+
 
 
   // distance from current focus
