@@ -1,109 +1,42 @@
 <template>
+  <div class="carousel-wrapper" :style="{ minHeight: `${wrapperHeight}px` }">
+    <div class="vertical-bg"></div>
 
-  <div class="carousel-wrapper"  :style="{ minHeight: `${wrapperHeight}px` }">
-  
-  
-  
-    <div class="vertical-bg">
-      
-    </div>
-
- 
-    <div class="perspective sticky top-0  flex items-start justify-center">
-      
-      
-      <div class="carousel">
-        <div
-          v-for="(section, i) in sections"
-          :key="section.id"
-          :id="section.id"   
-          class="carousel-item"
-           
-          :style="getItemStyle(i)"
-        >
-          <div class="card">
-            <h2 class="text-xl font-bold text-blue-600 mb-4 flex items-center justify-center space-x-2">
-    <component :is="sectionIcons[section.id]" class="w-6 h-6" />
-    <span>{{ section.label }}</span>
-  </h2>
-            <ul class="text-gray-700 text-sm space-y-1 text-center">
-              <li v-for="(line, idx) in section.content" :key="idx">{{ line }}</li>
-            </ul>
-              <!-- mobile side details -->
-  <div v-if="isMobile" class="mobile-side-details">
-    <hr class="mobile-separator" />
-    <ul class="text-gray-600 text-sm space-y-1 mt-2">
-      <li v-for="(detail, idx) in section.details" :key="`mobile-detail-${idx}`">
-        {{ detail }}
-      </li>
-    </ul>
+    <component
+      :is="isMobile ? CarouselMobile : CarouselDesktop"
+      :sections="sections"
+      :scroll-y="scrollY"
+      :active-index="activeIndex"
+      :viewport-height="viewportHeight"
+      :card-height="cardHeight"
+    />
   </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  <!-- 👇 side info lives OUTSIDE the sticky -->
-  <transition name="fade-side" mode="out-in">
-    <div
-  v-if="sections[activeIndex]"
-  key="side-info"
-  class="side-info"
-  :style="{
-    top: `${getSideTop(activeIndex)}px`,
-    left: activeIndex % 2 === 0 ? `calc(50% - 350px - 20px)` : `calc(50% + 350px + 20px)`
-  }"
->
-<transition-group name="fade-side" tag="div">
-  <div
-    v-for="(detail, j) in sections[activeIndex].details"
-    :key="`detail-${activeIndex}-${j}`"
-    class="side-info tiny"
-    :style="getTinyBoxStyle(activeIndex, j) as CSSProperties"
-  >
-    <div class="tiny-box"
-     :class="`variant-${(activeIndex * 3 + j) % 4}`"
-    >
-      {{ detail }}
-    </div>
-  </div>
-</transition-group>
-
-    </div>
-  </transition>
-
-  </div>
-  
-
 </template>
-<script setup lang="ts">
 
+<script setup lang="ts">
 // Extend the Window interface to include __isModalOpen
 declare global {
   interface Window {
     __isModalOpen?: { value: boolean };
   }
 }
-import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
-import type { CSSProperties } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import WrenchIcon from '@/assets/icons/wrench.svg'
-import BoxIcon from '@/assets/icons/box.svg'
-import CloudIcon from '@/assets/icons/cloud.svg'
-import MobileIcon from '@/assets/icons/mobile.svg'
-import GraduationIcon from '@/assets/icons/graduation.svg'
+import type { CSSProperties } from "vue";
+import CarouselDesktop from '@/components/CarouselDesktop.vue'
+import CarouselMobile from '@/components/CarouselMobile.vue'
+import { sections } from '../data/sections'
 
-const sectionIcons = {
-  depannage: WrenchIcon,
-  installation: BoxIcon,
-  sauvegarde: CloudIcon,
-  'assistance-mobile': MobileIcon,
-  formation: GraduationIcon,
-}
-
-
+// --- reactive state
+const viewportHeight = ref(window.innerHeight)
+const scrollY = ref(0)
+const activeIndex = ref(0)
+const cardHeight = ref(viewportHeight.value * 0.6)
+const wrapperHeight = ref(0)
+const spacingFactor = 0.7
+const total = sections.length
 const route = useRoute()
-
+const isMobile = ref(window.innerWidth <= 600)
 // 💡 Mobile detail toggle
 const showMobileDetails = ref(false);
 
@@ -133,78 +66,11 @@ function scrollToSection(id: string) {
   }
 }
 
-// Sections data
-type SectionId = keyof typeof sectionIcons;
-
-const sections: Array<{
-  id: SectionId;
-  label: string;
-  content: string[];
-  details: string[];
-}> = [
-  { 
-    id: "depannage", 
-    label: " Dépannage", 
-    content: ["Réparation PC/Mac","Suppression virus","Optimisation","Réinstallation"],
-    details: [
-      "Réparation de PC / Mac (système lent, bugs, écran bleu, etc.)",
-      "Suppression de virus, malware, publicités",
-      "Nettoyage et optimisation des performances",
-      "Réinstallation complète ou mise à jour du système d’exploitation"
-    ]
-  },
-  { 
-    id: "installation", 
-    label: " Installation", 
-    content: ["Installation périphériques","Configuration email","Wi-Fi setup"],
-    details: [
-      "Installation d’imprimantes, réseaux, périphériques, box Internet",
-      "Mise en place du Wi-Fi à domicile",
-      "Configuration de comptes (emails, cloud, antivirus)",
-      "Installation de logiciels courants"
-    ]
-  },
-  { 
-    id: "sauvegarde", 
-    label: " Sauvegarde", 
-    content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"],
-    details: [
-      "Sauvegarde automatique sur disque ou cloud",
-      "Récupération de données perdues",
-      "Clonage ou migration vers SSD",
-      "Sécurisation (antivirus, pare-feu, contrôle parental)"
-    ]
-  },
-  { 
-    id: "assistance-mobile", 
-    label: " Assistance", 
-    content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"],
-    details: [
-      "Aide à l’utilisation de smartphones / tablettes",
-      "Connexion téléphone–PC (sauvegarde, synchronisation)",
-      "Installation d’applications utiles ou contrôle parental"
-    ]
-  },
-  { 
-    id: "formation", 
-    label: " Formation", 
-    content: ["Initiation informatique","Séances seniors","Sécurité numérique"],
-    details: [
-      "Initiation à l’informatique (email, Internet, Word…)",
-      "Séances personnalisées pour seniors",
-      "Sécurité numérique : éviter les arnaques en ligne"
-    ]
-  },
-];
 
 
-const total = sections.length;
 const angle = 360 / total;            // rotation per card
-const spacingFactor = 0.7;            // vertical spacing factor
-const viewportHeight = ref(window.innerHeight);
-const scrollY = ref(0);
 
-const wrapperHeight = ref(0);
+
 
 
 
@@ -212,7 +78,7 @@ function handleResize() {
   viewportHeight.value = window.innerHeight;
   updateWrapperHeight();
 }
-const isMobile = ref(window.innerWidth <= 600);
+
 // Lifecycle
 onMounted(async () => {
   // ✅ Your existing setup
@@ -252,10 +118,6 @@ function handleWheel(e: WheelEvent) {
   const target = window.scrollY + e.deltaY * factor;
   smoothScrollTo(target, 300); // 👈 reuse your smooth scroll here too
 }
-
-
-// Card dimensions
-const cardHeight = ref(viewportHeight.value * 0.6);
 
 
 function updateWrapperHeight() {
@@ -319,7 +181,7 @@ function handleScrollMobile() {
   }, 100);
 }
 
-const activeIndex = ref(0);
+
 
 function snapToClosest() {
   const spacing = spacingFactor * viewportHeight.value;
@@ -483,7 +345,16 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
   backdrop-filter: blur(10px);
   z-index: 0; /* behind carousel */
   pointer-events: none;
+ /*  max-width: 90%; will shrink on small screens */
+}
 
+@media (max-width: 600px) {
+  .vertical-bg {
+    width: 100%;       /* fill viewport width */
+    max-width: none;   /* remove desktop cap */
+    top: 0;            /* optional, adjust vertical placement */
+    bottom: auto;      /* if needed */
+  }
 }
 
 .perspective {
