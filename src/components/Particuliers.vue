@@ -482,17 +482,52 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
 }
 
 .card {
-  flex: 1;              /* 👈 make card stretch inside carousel-item */
+  flex: 1;              
   padding: 1.5rem;
-  background: white;
+  background: white;  /* keep content readable */
   border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 2px solid rgba(0,0,0,0.05); /* light playful border */
+  box-shadow: 
+    0 10px 25px rgba(0,0,0,0.15), 
+    0 0 30px rgba(255, 200, 200, 0.08), /* soft pink glow */
+    0 0 25px rgba(180, 230, 255, 0.08); /* soft blue glow */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 100%;          /* 👈 fill container */
-  min-width: 260px;     /* 👈 safeguard for very narrow mobiles */
+  width: 100%;          
+  min-width: 260px;     
+  transition: all 0.35s ease;
+  animation: cardAura 4s ease-in-out infinite alternate;
 }
+
+/* 🎨 subtle gradient pulse animation */
+@keyframes cardAura {
+  0% {
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,245,240,0.2) 100%);
+    border-color: rgba(255,200,200,0.3);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.15), 
+      0 0 30px rgba(255,200,200,0.1),
+      0 0 25px rgba(180,230,255,0.1);
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(240,250,255,0.2) 100%);
+    border-color: rgba(180,230,255,0.3);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.15), 
+      0 0 30px rgba(200,230,200,0.1),
+      0 0 25px rgba(220,200,255,0.1);
+  }
+  100% {
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(250,240,255,0.2) 100%);
+    border-color: rgba(255,180,220,0.3);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.15), 
+      0 0 30px rgba(255,180,220,0.1),
+      0 0 25px rgba(180,220,255,0.1);
+  }
+}
+
 
 
 @media (max-width: 600px) {
