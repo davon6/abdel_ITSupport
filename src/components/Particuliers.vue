@@ -11,6 +11,7 @@
  
     <div class="perspective sticky top-0  flex items-start justify-center">
       
+      
       <div class="carousel">
         <div
           v-for="(section, i) in sections"
@@ -21,10 +22,22 @@
           :style="getItemStyle(i)"
         >
           <div class="card">
-            <h2 class="text-xl font-bold text-blue-600 mb-4">{{ section.label }}</h2>
+            <h2 class="text-xl font-bold text-blue-600 mb-4 flex items-center justify-center space-x-2">
+    <component :is="sectionIcons[section.id]" class="w-6 h-6" />
+    <span>{{ section.label }}</span>
+  </h2>
             <ul class="text-gray-700 text-sm space-y-1 text-center">
               <li v-for="(line, idx) in section.content" :key="idx">{{ line }}</li>
             </ul>
+              <!-- mobile side details -->
+  <div v-if="isMobile" class="mobile-side-details">
+    <hr class="mobile-separator" />
+    <ul class="text-gray-600 text-sm space-y-1 mt-2">
+      <li v-for="(detail, idx) in section.details" :key="`mobile-detail-${idx}`">
+        {{ detail }}
+      </li>
+    </ul>
+  </div>
           </div>
         </div>
       </div>
@@ -74,6 +87,19 @@ declare global {
 import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import type { CSSProperties } from "vue";
 import { useRoute } from 'vue-router'
+import WrenchIcon from '@/assets/icons/wrench.svg'
+import BoxIcon from '@/assets/icons/box.svg'
+import CloudIcon from '@/assets/icons/cloud.svg'
+import MobileIcon from '@/assets/icons/mobile.svg'
+import GraduationIcon from '@/assets/icons/graduation.svg'
+
+const sectionIcons = {
+  depannage: WrenchIcon,
+  installation: BoxIcon,
+  sauvegarde: CloudIcon,
+  'assistance-mobile': MobileIcon,
+  formation: GraduationIcon,
+}
 
 
 const route = useRoute()
@@ -108,10 +134,17 @@ function scrollToSection(id: string) {
 }
 
 // Sections data
-const sections = [
+type SectionId = keyof typeof sectionIcons;
+
+const sections: Array<{
+  id: SectionId;
+  label: string;
+  content: string[];
+  details: string[];
+}> = [
   { 
     id: "depannage", 
-    label: "🔧 Dépannage", 
+    label: " Dépannage", 
     content: ["Réparation PC/Mac","Suppression virus","Optimisation","Réinstallation"],
     details: [
       "Réparation de PC / Mac (système lent, bugs, écran bleu, etc.)",
@@ -122,7 +155,7 @@ const sections = [
   },
   { 
     id: "installation", 
-    label: "📦 Installation", 
+    label: " Installation", 
     content: ["Installation périphériques","Configuration email","Wi-Fi setup"],
     details: [
       "Installation d’imprimantes, réseaux, périphériques, box Internet",
@@ -133,7 +166,7 @@ const sections = [
   },
   { 
     id: "sauvegarde", 
-    label: "☁️ Sauvegarde", 
+    label: " Sauvegarde", 
     content: ["Sauvegarde Cloud/disque","Récupération","Clonage SSD"],
     details: [
       "Sauvegarde automatique sur disque ou cloud",
@@ -144,7 +177,7 @@ const sections = [
   },
   { 
     id: "assistance-mobile", 
-    label: "📱 Assistance", 
+    label: " Assistance", 
     content: ["Smartphones/tablettes","Connexion téléphone-PC","Apps utiles"],
     details: [
       "Aide à l’utilisation de smartphones / tablettes",
@@ -154,7 +187,7 @@ const sections = [
   },
   { 
     id: "formation", 
-    label: "🧓 Formation", 
+    label: " Formation", 
     content: ["Initiation informatique","Séances seniors","Sécurité numérique"],
     details: [
       "Initiation à l’informatique (email, Internet, Word…)",
@@ -338,7 +371,7 @@ function getItemStyle(i: number) {
   const scrollFactor = scrollY.value / totalScroll;
 
   const rotateY = -angle * i + scrollFactor * (angle * (total - 1));
-  const offsetY = 40; // tweak between 20–60px depending on how "low" you want it
+  const offsetY = 80; // tweak between 20–60px depending on how "low" you want it
 
 const translateY =
   i * spacing -
@@ -444,7 +477,7 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
+  width: 760px;
   background:
    linear-gradient(180deg, rgba(255,255,255,0.35), rgba(32, 89, 174, 0.635));
   backdrop-filter: blur(10px);
@@ -529,6 +562,26 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
 }
 
 
+/*
+
+old design
+
+
+.card {
+  flex: 1;             
+  padding: 1.5rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;          
+  min-width: 260px;     
+}
+
+*/
+
 
 @media (max-width: 600px) {
   .carousel-item {
@@ -600,8 +653,9 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
 
 @media (max-width: 900px) {
   .side-left,
-  .side-right {
-    display: none;
+  .side-right,
+  .tiny-box {
+    display: none !important;
   }
 }
 
@@ -732,5 +786,30 @@ function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
 .tiny-box.variant-2 { transform: rotate(-0.8deg) scale(1.02); }
 .tiny-box.variant-3 { transform: rotate(0.5deg) scale(1.01); }
 
+/* mobile details section */
+.mobile-side-details {
+  padding-top: 0.5rem;
+}
 
+/* soft separator line */
+.mobile-separator {
+  border: none;
+  height: 1px;
+  background: rgba(66, 133, 244, 0.15); /* soft blue */
+  margin: 0.5rem 0;
+  border-radius: 0.5px;
+}
+
+/* optional: slightly smaller font for mobile details */
+@media (max-width: 600px) {
+  .mobile-side-details ul li {
+    font-size: 0.875rem;
+    color: #3b82f6; /* subtle blue from your color palette */
+  }
+}
+.card h2 svg {
+  fill: #506fc5; /* match your text-blue-600 */
+  width: 1.5rem;
+  height: 1.5rem;
+}
 </style>
