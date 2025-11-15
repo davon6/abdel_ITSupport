@@ -22,7 +22,6 @@ declare global {
 }
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import type { CSSProperties } from "vue";
 import CarouselDesktop from '@/components/CarouselDesktop.vue'
 import CarouselMobile from '@/components/CarouselMobile.vue'
 import { sections } from '../data/sections'
@@ -37,12 +36,7 @@ const spacingFactor = 0.7
 const total = sections.length
 const route = useRoute()
 const isMobile = ref(window.innerWidth <= 600)
-// 💡 Mobile detail toggle
-const showMobileDetails = ref(false);
 
-function toggleMobileDetails() {
-  showMobileDetails.value = !showMobileDetails.value;
-}
 watch(
   () => route.hash,
   (newHash: string) => {
@@ -65,12 +59,6 @@ function scrollToSection(id: string) {
     }
   }
 }
-
-
-
-const angle = 360 / total;            // rotation per card
-
-
 
 
 
@@ -110,8 +98,7 @@ onUnmounted(() => {
 });
 
 function handleWheel(e: WheelEvent) {
-  if (window.__isModalOpen?.value) return 
-  e.preventDefault();
+  if (window.__isModalOpen?.value) return e.preventDefault();
   const base = 1.2;
   const boost = Math.min(Math.abs(e.deltaY) / 100, 1);
   const factor = base + boost * 0.5;
@@ -145,26 +132,6 @@ function handleScroll() {
   }, 250);
 }
 
-
-
-// Add these at the top of your script
-
-/*
-function handleScrollMobile() {
-  scrollY.value = Math.round(window.scrollY);
-
-  if (scrollTimeout) clearTimeout(scrollTimeout);
-
-  scrollTimeout = window.setTimeout(() => {
-    const spacing = spacingFactor * viewportHeight.value;
-    const targetIndex = Math.round(scrollY.value / spacing);
-    const targetScroll = targetIndex * spacing;
-
-    if (Math.abs(scrollY.value - targetScroll) > 1) {
-      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-    }
-  }, 100); // slightly shorter delay
-}*/
 
 function handleScrollMobile() {
   scrollY.value = Math.round(window.scrollY);
@@ -226,99 +193,7 @@ function smoothScrollTo(target: number, duration: number) {
 }
 
 
-function getItemStyle(i: number) {
-  const spacing = spacingFactor * viewportHeight.value;
-  const totalScroll = spacing * (total - 1);
 
-  const scrollFactor = scrollY.value / totalScroll;
-
-  const rotateY = -angle * i + scrollFactor * (angle * (total - 1));
-  const offsetY = 80; // tweak between 20–60px depending on how "low" you want it
-
-const translateY =
-  i * spacing -
-  (isMobile.value ? Math.round(scrollY.value) : scrollY.value) +
-  (viewportHeight.value / 2 - cardHeight.value / 2 + offsetY);
-
-
-
-  // distance from current focus
-  const focusDist = Math.abs(scrollY.value / spacing - i);
-
-  // opacity (like before, but tied to distance)
-  const opacity = 1 - Math.min(focusDist * 0.5, 0.7);
-
-  // scale: shrink away
-  const scale = 1 - Math.min(focusDist * 0.15, 0.4);
-
-  // brightness: dim as it goes away
-  const brightness = 1 - Math.min(focusDist * 0.3, 0.6);
-
-  return {
-    transform: `translateY(${translateY}px) rotateY(${rotateY}deg) translateZ(300px) scale(${scale})`,
-    opacity,
-    filter: `blur(${focusDist * 2}px) brightness(${brightness})`,
-    transformOrigin: "center center",
-    transition: "filter 0.3s, transform 0.3s, opacity 0.3s",
-  };
-}
-/*
-function getSidePosition(index: number) {
-  if (isMobile.value) return 'side-bottom'
-
-  const carouselHalf = 250; // half of max-width 500px
-  const margin = 20;
-
-  return index % 2 === 0
-    ? `left: calc(50% - ${carouselHalf + margin}px);`
-    : `left: calc(50% + ${carouselHalf + margin}px);`
-}
-*/
-
-function getSideTop(index: number) {
-  const spacing = spacingFactor * viewportHeight.value;
-  const translateY = index * spacing - scrollY.value + (viewportHeight.value / 2 - cardHeight.value / 2);
-  // clamp to top/bottom of viewport so it never goes outside
-  const minTop = 20;
-  const maxTop = viewportHeight.value - cardHeight.value - 20;
-  return Math.max(minTop, Math.min(translateY, maxTop));
-}
-
-function getTinyBoxStyle(sectionIndex: number, detailIndex: number) {
-  const spacing = spacingFactor * viewportHeight.value;
-  const baseTop =
-    sectionIndex * spacing - scrollY.value + (viewportHeight.value / 2 - cardHeight.value / 2);
-
-  const perDetailOffset = 70;
-  const top = baseTop + detailIndex * perDetailOffset;
-
-  // introduce a stable pseudo-random offset based on indices
-  const randomOffset = ((sectionIndex * 13 + detailIndex * 7) % 20) - 30; // -10 to +10px
-
-  // alternate but not mirrored perfectly
-  const sideShift = ((sectionIndex + detailIndex) % 2 === 0)
-    ? `calc(50% - ${360 + randomOffset}px  - 180px)`  // left, but slightly varied
-    : `calc(50% + ${320 + randomOffset}px - 50px)`; // right, slightly varied
-
-  const minTop = 20;
-  const maxTop = viewportHeight.value - 60;
-  const clampedTop = Math.max(minTop, Math.min(top + randomOffset, maxTop));
-
-
-  const variantIndex = (sectionIndex * 3 + detailIndex) % 4; // 0–3
-
-
-  return {
-    position: "fixed",
-    top: `${clampedTop}px`,
-    left: sideShift,
-    opacity: 1,
-    zIndex: 5,
-    pointerEvents: "none",
-    transition: "top 0.35s ease, opacity 0.35s ease, transform 0.35s ease",
-    "--variant": variantIndex,
-  } as CSSProperties;
-}
 
 
 
