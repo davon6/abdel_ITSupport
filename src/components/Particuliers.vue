@@ -69,33 +69,40 @@ function handleResize() {
 
 // Lifecycle
 onMounted(async () => {
-  // ✅ Your existing setup
   updateWrapperHeight();
-  window.addEventListener("wheel", handleWheel, { passive: false });
+  
+  // Handle scroll for desktop and mobile separately
   if (isMobile.value) {
-    window.addEventListener("scroll", handleScrollMobile);
+    // For mobile, just use default scroll behavior
+    window.removeEventListener("wheel", handleWheel);
+    window.removeEventListener("scroll", handleScroll); // Remove scroll event for mobile
   } else {
+    // Desktop: Attach wheel event and desktop scroll handler
+    window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("scroll", handleScroll);
   }
+  
   window.addEventListener("resize", handleResize);
 
-  // ✅ New hash-handling logic
+  // Handle initial route hash
   if (route.hash) {
-    // Wait until the DOM is ready
     await nextTick();
     scrollToSection(route.hash.substring(1));
   }
 });
 
 onUnmounted(() => {
-  window.removeEventListener("wheel", handleWheel);
+  window.removeEventListener("resize", handleResize);
+  
+  // Clean up event listeners
   if (isMobile.value) {
-    window.removeEventListener("scroll", handleScrollMobile);
+    window.removeEventListener("scroll", handleScrollMobile); // Mobile scroll handler
   } else {
+    window.removeEventListener("wheel", handleWheel);
     window.removeEventListener("scroll", handleScroll);
   }
-  window.removeEventListener("resize", handleResize);
 });
+
 
 function handleWheel(e: WheelEvent) {
   if (window.__isModalOpen?.value) return e.preventDefault();
@@ -558,4 +565,6 @@ old design
   width: 1.5rem;
   height: 1.5rem;
 }
+
+
 </style>

@@ -412,6 +412,7 @@ old design
   background: rgba(235, 245, 255, 0.95);   /* very light blue */
   border: 1px solid rgba(66, 133, 244, 0.35); /* bright blue */
   box-shadow: 0 0 12px rgba(66, 133, 244, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+  font-size: 1.25rem; 
 }
 
 .tiny-box.variant-1 {
@@ -419,6 +420,7 @@ old design
   background: rgba(240, 235, 255, 0.95);   /* subtle lavender */
   border: 1px solid rgba(99, 102, 241, 0.35); /* indigo border */
   box-shadow: 0 0 12px rgba(99, 102, 241, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+  font-size: 1.25rem; 
 }
 
 .tiny-box.variant-2 {
@@ -426,6 +428,7 @@ old design
   background: rgba(230, 245, 255, 0.95);   /* soft cyan */
   border: 1px solid rgba(59, 130, 246, 0.35); /* light blue */
   box-shadow: 0 0 12px rgba(59, 130, 246, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+  font-size: 1.25rem; 
 }
 
 .tiny-box.variant-3 {
@@ -433,6 +436,7 @@ old design
   background: rgba(220, 235, 255, 0.95);   /* slightly deeper sky */
   border: 1px solid rgba(147, 197, 253, 0.35); /* sky blue border */
   box-shadow: 0 0 12px rgba(147, 197, 253, 0.25), 0 4px 20px rgba(0,0,0,0.1);
+  font-size: 1.25rem; 
 }
 
 /* 🌬️ Add subtle rotation / scale jitter */
