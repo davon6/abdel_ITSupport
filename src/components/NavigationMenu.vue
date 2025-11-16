@@ -119,13 +119,12 @@
 <template v-else>
   <router-link
     :to="item.basePath || '/'"
-    :class="['mobile-main-link', { 'text-blue-600 font-bold': route.path === item.basePath }]"
+    class="mobile-main-link"
     @click="toggleBurger"
   >
     {{ item.label }}
   </router-link>
 </template>
-
 
     <!-- Submenu -->
     <ul v-if="openLabel === item.label && item.children">
@@ -144,7 +143,7 @@
               <router-link
                 :to="`${sub.basePath || ''}#${link.anchor}`"
                 class="mobile-sub-sub-link"
-                @click.prevent="() => { handleAnchor(sub.basePath, link.anchor); toggleBurger(); }"
+                @click.prevent="handleMobileAnchor(sub.basePath, link.anchor)"
               >
                 {{ link.label }}
               </router-link>
@@ -205,7 +204,6 @@ function updateSubmenuPosition(label: string) {
 
   const hoveredSub = ref<string | null>(null)
   let hoverTimeout: ReturnType<typeof setTimeout> | null = null
-  let closeTimeout: ReturnType<typeof setTimeout> | null = null
     const openLabel = ref<string | null>(null)
     watch(openLabel, (newVal) => {
   if (!newVal) {
@@ -243,28 +241,75 @@ function clearSubHover() {
   const activeSub = ref<string | null>(null)
   
   function handleAnchor(basePath: string | undefined, anchor: string) {
-    const fullPath = `${basePath || ''}#${anchor}`
-  
-    if (route.path === basePath) {
-      router.replace({ hash: '' }).then(() => {
-        router.push({ hash: `#${anchor}` })
-      })
-    } else {
-      router.push(fullPath)
+  const fullPath = `${basePath || ''}#${anchor}`
+
+  const navigateAndScroll = () => {
+    const targetEl = document.getElementById(anchor)
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-  
-    openLabel.value = null
-    activeSub.value = null
   }
-  
-  function handleMouseLeave() {
-  if (closeTimeout) clearTimeout(closeTimeout)
-  closeTimeout = setTimeout(() => {
+
+  if (route.path === basePath) {
+    router.replace({ hash: '' }).then(() => {
+      router.push({ hash: `#${anchor}` }).then(() => {
+        nextTick(() => navigateAndScroll())
+      })
+    })
+  } else {
+    router.push(fullPath).then(() => {
+      nextTick(() => navigateAndScroll())
+    })
+  }
+
+  activeSub.value = null
+
+  // Delay closing burger so scrolling works
+  if (isMobile.value) {
+    setTimeout(() => {
+      burgerOpen.value = false
+      openLabel.value = null
+    }, 50) // small delay
+  } else {
     openLabel.value = null
-    activeSub.value = null
-    hoveredSub.value = null // 👈 reset sub-sub too
-  }, 300)
+  }
 }
+
+
+
+function handleMobileAnchor(basePath: string | undefined, anchor: string) {
+  const fullPath = `${basePath || ''}#${anchor}`;
+
+  // Push router first
+  if (route.path === basePath) {
+    router.replace({ hash: '' }).then(() => {
+      router.push({ hash: `#${anchor}` }).then(() => {
+        scrollToAnchor(anchor);
+      });
+    });
+  } else {
+    router.push(fullPath).then(() => {
+      scrollToAnchor(anchor);
+    });
+  }
+
+  // Close burger after a short delay to allow scrolling
+  setTimeout(() => {
+    burgerOpen.value = false;
+    openLabel.value = null;
+    hoveredSub.value = null;
+  }, 50);
+}
+
+function scrollToAnchor(anchor: string) {
+  nextTick(() => {
+    const el = document.getElementById(anchor);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
 
 // Also add watcher
 watch(openLabel, (val) => {

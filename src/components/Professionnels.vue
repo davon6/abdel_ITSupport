@@ -1,207 +1,124 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted  } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ContactForm from './ContactForm.vue'
+import Modal from "./Modal.vue"
+import { services, type ServiceItem } from "../data/services"
 
 const isMobile = ref(false)
 const pathHeight = ref('2500px')
+
+const selectedService = ref<ServiceItem | null>(null)
+const openModal = (service: ServiceItem | null) => (selectedService.value = service)
+const closeModal = () => (selectedService.value = null)
 
 const checkMobile = () => {
   isMobile.value = window.innerWidth <= 768
 }
 
 onMounted(() => {
-  // Init animations
   AOS.init({ duration: 800, once: true })
   new Rellax('.rellax')
 
-  // Path height calc
   const container = document.querySelector('main.container')
-  if (container) {
-    pathHeight.value = container.scrollHeight + 'px'
-  }
+  if (container) pathHeight.value = container.scrollHeight + 'px'
 
-  // Mobile detection
   checkMobile()
   window.addEventListener('resize', checkMobile)
 
   const oldColor = document.body.style.backgroundColor
+  document.body.style.backgroundColor = '#0042a5'
 
-// override body background
-document.body.style.backgroundColor = '#0042a5'
-
-// restore on leave
-onUnmounted(() => {
-  document.body.style.backgroundColor = oldColor
-})
+  onUnmounted(() => {
+    document.body.style.backgroundColor = oldColor
+  })
 })
 </script>
 
 <template>
   <div class="fullpage">
- 
-   
-  <section class="parallax-hero rellax" data-rellax-speed="-3">
-    <div class="icon-wrapper">
-    <div class="overlay"></div>
-    <div class="container text-center hero-content">
-      <h1>Services pour les Professionnels</h1>
-      <p>Solutions fiables, adaptées et sécurisées pour TPE, PME, indépendants et professions libérales.</p>
-      <router-link to="#services" class="btn-main">Découvrir nos services</router-link>
-    </div>
+    <section class="parallax-hero rellax" data-rellax-speed="-3">
+      <div class="icon-wrapper">
+        <div class="overlay"></div>
+        <div class="container text-center hero-content">
+          <h1>Services pour les Professionnels</h1>
+          <p>Solutions fiables, adaptées et sécurisées pour TPE, PME, indépendants et professions libérales.</p>
+         
+        </div>
+      </div>
+    </section>
+
+    <main class="container" id="services">
+      <div class="background-path" :style="{ height: pathHeight }">
+        <svg viewBox="0 0 500 2500" preserveAspectRatio="none">
+          <path
+            d="M250,0 
+              C450,200 50,400 450,600
+              C50,800 450,1000 50,1200
+              C450,1400 100,1600 400,1800
+              C100,2000 450,2200 150,2400"
+            fill="none"
+            stroke="#007BFF"
+            stroke-width="6"
+            stroke-dasharray="10 10"
+          />
+        </svg>
+      </div>
+
+      <!-- SERVICE CARDS LOOP -->
+      <article
+        v-for="(section, i) in services"
+        :key="section.id"
+        class="section-card"
+        :class="i % 2 === 0 ? 'layout-left' : 'layout-right'"
+        :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+        :data-aos-delay="i * 100"
+      >
+        
+        <!-- LEFT TEXT BLOCK -->
+        <div class="text-block">
+          <!-- ICON -->
+          <div v-html="section.icon" class="service-icon"></div>
+
+          <h2 class="shine-title">{{ section.title }}</h2>
+          <p class="highlight">{{ section.highlight }}</p>
+          <p class="description">{{ section.description }}</p>
+
+          <button class="btn-main mt-3" @click="openModal(section)">
+            Découvrir
+          </button>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="image-block">
+          <div class="image-frame">
+         <!--     <img
+              v-if="!isMobile"
+              :src="section.image"
+              :alt="section.title"
+            /> -->
+          </div>
+        </div>
+
+      </article>
+
+      <ContactForm />
+    </main>
+
+    <!-- MODAL -->
+    <Modal
+      v-if="selectedService"
+      :title="selectedService.title"
+      :image="selectedService.image"
+      :modalSections="selectedService.modalSections"
+      @close="closeModal"
+    />
   </div>
-  </section>
-
-
-
-
-
-
-  <main class="container" id="services">
-
-    <div class="background-path" :style="{ height: pathHeight }">
-  <svg viewBox="0 0 500 2500" preserveAspectRatio="none">
-    <path d="
-  M250,0 
-  C450,200 50,400 450,600
-  C50,800 450,1000 50,1200
-  C450,1400 100,1600 400,1800
-  C100,2000 450,2200 150,2400
-" 
-fill="none" stroke="#007BFF" stroke-width="6" stroke-dasharray="10 10"/>
-</svg>
-</div>
-
-
-
-    <article
-  v-for="(section, i) in sections"
-  :key="i"
-  class="section-card"
-  :class="i % 2 === 0 ? 'layout-left' : 'layout-right'"
-  :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
-  :data-aos-delay="i * 100"
->
-  <div class="text-block">
-    <h2 class="shine-title">{{ section.title }}</h2>
-    <ul>
-      <li v-for="(item, idx) in section.items" :key="idx">{{ item }}</li>
-    </ul>
-  </div>
-
-  <div class="image-block">
-    <div class="image-frame">
-  <img
-    v-if="!isMobile"
-    src="/istockphoto.jpg"
-    alt="Business IT Solutions"
-  />
   
-  <div v-else v-html="section.svgIcon" class="mobile-svg pulse-stroke"></div>
-</div>
-
-</div>
-
-</article>
-
-    <ContactForm />
-
-  </main>
-</div>
 </template>
 
-<script lang="ts">
-
-
-const supportIcon  =  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-  <path d="M14 42l10-10 12 12-10 10a6 6 0 01-8.49 0 6 6 0 010-8.49z"/>
-  <path d="M45 19l-6-6a4 4 0 00-5.66 0l-4 4"/>
-</svg> `
-
-
-const securityIcon = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-  <path d="M32 2 L12 12v20c0 13 20 28 20 28s20-15 20-28V12L32 2z"/>
-  <path d="M32 22v18" />
-</svg>`
-
-const installationIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-  <circle cx="32" cy="32" r="10" />
-  <path d="M32 2v8M32 54v8M2 32h8M54 32h8M12 12l5.5 5.5M46.5 46.5l5.5 5.5M12 52l5.5-5.5M46.5 17.5l5.5-5.5"/>
-</svg>`
-
-const servicesIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-  <circle cx="32" cy="32" r="30"/>
-  <path d="M2 32h60M32 2a58 58 0 010 60"/>
-  <path d="M12 12c8 8 8 32 0 40M52 12c-8 8-8 32 0 40"/>
-</svg> `
-
-const reseauIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-  <circle cx="12" cy="32" r="6"/>
-  <circle cx="32" cy="32" r="6"/>
-  <circle cx="52" cy="32" r="6"/>
-  <path d="M18 32h8M38 32h8"/>
-</svg>`
-
-
-export default {
-  data() {
-    return {
-      sections: [
-        {
-          title: 'Support & Maintenance',
-          items: [
-            'Contrats mensuels ou à la demande',
-            'Téléassistance rapide (TeamViewer, AnyDesk…)',
-            'Réparation express & diagnostic matériel/logiciel',
-            'Mise en réseau sécurisée (LAN, Wi-Fi pro)'
-          ],
-          svgIcon: supportIcon
-        },
-        {
-          title: 'Sécurité Informatique',
-          items: [
-            'Antivirus professionnels & pare-feu',
-            'Maintenance préventive & sauvegardes automatiques',
-            'Sensibilisation aux risques cyber'
-          ],
-          svgIcon: securityIcon
-        },
-        {
-          title: 'Installation & Déploiement',
-          items: [
-            'Configuration de parc informatique complet',
-            'Installation d’outils collaboratifs (Google Workspace, Office 365)',
-            'Mise en place de serveurs NAS'
-          ],
-          svgIcon: installationIcon
-        },
-        {
-          title: 'Services Web & Support Logiciel',
-          items: [
-            'Création de sites vitrines simples (WordPress, Wix)',
-            'Conseils hébergement, nom de domaine & référencement local',
-            'Aide à l’utilisation et migration de logiciels métier'
-          ],
-          svgIcon: servicesIcon
-        },
-        {
-          title: 'Installation Réseau & Baies',
-          items: [
-            'Installation de baies de brassage professionnelles',
-            'Câblage réseau structuré (RJ45, fibre optique)',
-            'Configuration switchs & routeurs pro',
-            'Optimisation du réseau pour performances & sécurité'
-          ],
-          svgIcon: reseauIcon
-        }
-      ]
-    }
-  }
-}
-</script>
 
 <style scoped>
 .container {

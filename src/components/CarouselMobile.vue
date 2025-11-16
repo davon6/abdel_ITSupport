@@ -1,8 +1,9 @@
 <template>
   <div class="mobile-wrapper px-4 py-12 space-y-12">
     <div
-      v-for="(section, i) in sections"
+      v-for="(section) in sections"
       :key="section.id"
+       :id="section.id"
       class="card"
     >
       <h2 class="text-xl font-bold text-blue-600 mb-4 flex items-center justify-center space-x-2">
