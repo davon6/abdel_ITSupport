@@ -20,13 +20,23 @@
   @mouseleave="openLabel = null"
 >
 
-          <router-link
-      :to="item.basePath /*|| item.to*/ || '/'"
-      class="nav-button"
-      @click.native="openLabel = null"
-    >
-      {{ item.label }}
-    </router-link>
+<router-link
+  v-if="!item.children || item.children.length === 0"
+  :to="item.basePath || '/'"
+  class="nav-button"
+  @click.native="openLabel = null"
+>
+  {{ item.label }}
+</router-link>
+
+<button
+  v-else
+  class="nav-button"
+  @click="openLabel = openLabel === item.label ? null : item.label"
+>
+  {{ item.label }}
+</button>
+
           <div
             v-if="item.children && openLabel === item.label"
             class="dropdown-menu flex gap-2"
@@ -462,9 +472,9 @@ const toggleBurger = () => {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 2px); /* 2px gap max — minimal! */
+  top: 100%;
  left: 0;
-transform: none;
+  transform: none;
   transform-origin: top center;
   background: white;
   color: black;
@@ -786,5 +796,25 @@ nav {
   left: 100%;
   margin-left: 0; /* flush with parent */
 }
+
+.nav-button {
+  display: inline-flex;       /* like inline-block but more flexible */
+  align-items: center;        /* vertical center */
+  justify-content: center;    /* horizontal center */
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-button:focus-visible {
+  outline: 2px solid #60a5fa; /* Tailwind blue-400 */
+  outline-offset: 2px;
+  box-shadow: none; /* just in case */
+}
+
   </style>
   

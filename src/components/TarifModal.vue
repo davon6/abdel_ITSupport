@@ -63,170 +63,167 @@
   </script>
   
   <style scoped>
-  /* Modal card container */
-/* Modal card container with background opacity */
-.tarif-card {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 95%;
-  max-width: 85%;
-  max-height: 95vh;
-  background: rgba(255, 255, 255, 0.15); /* White background with 0.15 opacity */
-  border-radius: 1.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  pointer-events: auto;
-  z-index: 999999 !important;
-  overflow: hidden;
-  padding-bottom: 10px;  /* Small space at the bottom */
-}
-
-/* Transition animation for modal appearance */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;  /* Smooth fade and slide transition */
-}
-
-.fade-slide-enter-from,
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(20px);  /* Start with a slide-up effect */
-}
-
-.fade-slide-enter-to,
-.fade-slide-leave-from {
-  opacity: 1;
-  transform: translateY(0);  /* Final state with normal opacity */
-}
-
-  
-  /* Styling for category title */
-  h3 {
-    font-size: 1.25rem;  /* Shrink the category title */
-    color: #0051a0;
-    font-weight: bold;
-    margin-bottom: 8px;
+  /* 🔮 MODAL BACKDROP CARD — Soft Glass + Glow */
+  .tarif-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 95%;
+    max-width: 1000px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(16px);
+    border-radius: 1.8rem;
+    box-shadow:
+      0 18px 35px rgba(0,0,0,0.15),
+      0 0 35px rgba(255,200,200,0.10),
+      0 0 28px rgba(180,230,255,0.12);
+    animation: modalPulse 5s ease-in-out infinite alternate;
+    padding: 1.4rem 1.6rem;
+    z-index: 999999;
+    pointer-events: auto;
+    overflow: hidden;
+    max-height: none;
+    height: auto;
   }
   
-  /* Service card styles */
-  .service-card {
-    background-color: white;
-    padding: 0.75rem;  /* Reduced padding */
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+  /* Background pulse animation */
+  @keyframes modalPulse {
+    0% {
+      background: rgba(255,255,255,0.35);
+      box-shadow:
+        0 18px 35px rgba(0,0,0,0.15),
+        0 0 35px rgba(255,200,200,0.12),
+        0 0 22px rgba(180,230,255,0.10);
+    }
+    100% {
+      background: rgba(255,255,255,0.45);
+      box-shadow:
+        0 18px 38px rgba(0,0,0,0.2),
+        0 0 38px rgba(180,220,255,0.15),
+        0 0 25px rgba(255,180,220,0.12);
+    }
   }
   
-  .service-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  /* ✨ APPEAR TRANSITION */
+  .fade-slide-enter-active,
+  .fade-slide-leave-active {
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .fade-slide-enter-from,
+  .fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
   }
   
-  h4 {
-    font-size: 0.275rem;  /* Smaller font size for the service name */
-    font-weight: 600;
-    color: #0051a0;
-  }
-  
-  p {
-    font-size: 0.75rem;  /* Smaller font size for the service details */
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  button.close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #4913ad;
+  /* 🎀 Close Button — tiny floating variant */
+  .close-btn {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 8px;
-    transition: color 0.2s ease;
-    opacity: 0.5;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #3b4eb7;
+    cursor: pointer;
+    opacity: 0.8;
+    z-index: 10;
+    transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  }
+  .close-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.85);
+    opacity: 1;
   }
   
-  button.close-btn:hover {
-    color: #d1d1d1;
+  /* 🌸 CATEGORY TITLE */
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #3b4eb7;
+    margin-bottom: 0.7rem;
+    text-shadow: 0 1px 5px rgba(100,130,255,0.15);
   }
   
-  /* Grid layout */
+  /* 💎 MINI SERVICE CARDS (tiny-box inspired, compact) */
+  .service-card {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(66,133,244,0.25);
+    box-shadow:
+      0 0 10px rgba(66,133,244,0.12),
+      0 3px 12px rgba(0,0,0,0.06);
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition:
+      transform 0.25s cubic-bezier(0.25,1,0.5,1),
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+      0 0 15px rgba(66,133,244,0.18),
+      0 5px 18px rgba(0,0,0,0.1);
+    filter: brightness(1.03);
+  }
+  
+  /* 📝 Service title inside mini-card */
+  .service-card h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+  }
+  
+  /* ✏️ Service details */
+  .service-card p {
+    font-size: 0.75rem;
+    color: #4a4a4a;
+    margin: 0 0 0.3rem 0;
+  }
+  
+  /* SMALL TEXT */
+  .text-xs {
+    font-size: 0.78rem;
+    color: #2d3a5f;
+  }
+  
+  /* GRID LAYOUT — horizontal rows */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  /* Allow more cards per row */
-    gap: 1rem;  /* Reduced gap between items */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
   }
   
-  .text-sm {
-    font-size: 0.75rem;  /* Smaller font size */
+  /* Remove forced vertical spacing between categories */
+  .space-y-6 > * {
+    margin-bottom: 1.2rem;
   }
   
-  .text-gray-700 {
-    color: #4a4a4a;
+  /* Remove internal scroll constraint */
+  .overflow-y-auto {
+    max-height: none !important;
+    overflow-y: visible !important;
   }
-  
-  .text-gray-800 {
-    color: #333;
-  }
-  
-  .text-blue-700 {
-    color: #0051a0;
-  }
-  
-  .text-blue-800 {
-    color: #003f7d;
-  }
-  
-  .text-lg {
-    font-size: 1.125rem;
-  }
-  
-  .space-y-6 > :not(:last-child) {
-    margin-bottom: 1.5rem;  /* Reduced space between sections */
-  }
-
-
-
-
-
-
-/* Service card styles */
-.service-card {
-  background-color: white;
-  padding: 0.3rem;  /* Reduced padding for the service card */
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  opacity: 0.95;  /* Slightly reduced opacity for a softer look */
-}
-
-.service-card:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-h4 {
-  font-size: 0.875rem;  /* Reasonable font size for the service name */
-  font-weight: 600;
-  color: #0051a0;
-  margin-bottom: 0.2rem;  /* Reduced margin below the service title (less space between title and details) */
-}
-
-p {
-  font-size: 0.75rem;  /* Smaller font size for the service details */
-  color: #555;
-  margin-bottom: 0.5rem;  /* Reduced margin at the bottom of the paragraph */
-}
-
-/* Grid layout adjustments */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  /* Allow more cards per row */
-  gap: 0.75rem;  /* Reduced gap between items */
-}
-
-
   </style>
   

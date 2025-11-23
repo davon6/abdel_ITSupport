@@ -52,6 +52,7 @@ export interface ServiceItem {
     icon: string
     image: string
     modalSections: ModalSection[];
+    interCardText: string;
   }
   
   export const services: ServiceItem[] = [
@@ -132,7 +133,8 @@ export interface ServiceItem {
           "🔐 Confidentialité garantie"
         ]
       }
-    ]
+    ],
+     interCardText: "Custom text that will appear between this card and the next one."
   },
   
     // --------------------------------------------------------------------------
@@ -217,8 +219,8 @@ export interface ServiceItem {
             "Prestations sur site ou à distance selon vos besoins"
           ]
         }
-      ]
-      
+      ],
+       interCardText: "Custom text that will appear between this card and the next one."
     },
   
     {
@@ -294,15 +296,16 @@ export interface ServiceItem {
             "Conseils sur la protection des données sensibles"
           ]
         }
-      ]
+      ],
+       interCardText: "Custom text that will appear between this card and the next one."
       
     },
   
     {
       id: "telephonie",
       title: "Solutions & Support Téléphonie",
-      highlight: "Optimisez vos communications",
-      description: "Téléphonie IP / VoIP, installation, gestion, maintenance.",
+      highlight: "Téléphonie IP / VoIP, installation, gestion, maintenance.",
+      description: "Optimisez vos communications",
       icon: servicesIcon,
       image: "/telephonie.avif",
       modalSections: [
@@ -351,15 +354,15 @@ export interface ServiceItem {
             "Amélioration continue et suivi des performances"
           ]
         }
-      ]
-      
+      ],
+       interCardText: "Custom text that will appear between this card and the next one."
     },
   
     {
       id: "reseau",
       title: "Administration Systèmes & Réseaux",
-      highlight: "Optimisez la connectivité de votre entreprise",
-      description: "Installation, migration, sécurisation de réseaux.",
+      highlight: "Installation, migration, sécurisation de réseaux.",
+      description: "Optimisez la connectivité de votre entreprise",
       icon: reseauIcon,
       image: "/network.avif",
       modalSections: [
@@ -410,15 +413,16 @@ export interface ServiceItem {
             "Accompagnement sur mesure, adapté à votre budget et vos besoins"
           ]
         }
-      ]
+      ],
+       interCardText: "Custom text that will appear between this card and the next one."
       
     },
   
     {
       id: "cloud",
       title: "Solutions Cloud & Collaboration",
-      highlight: "Accélérez votre transformation numérique",
-      description: "Cloud, mobilité, productivité, outils collaboratifs.",
+      highlight:  "Cloud, mobilité, productivité, outils collaboratifs.",
+      description:"Accélérez votre transformation numérique",
       icon: servicesIcon,
       image: "/cloud.avif",
       modalSections: [
@@ -438,7 +442,7 @@ export interface ServiceItem {
             "Organisation des dossiers et gestion des droits d’accès",
             "Coédition en temps réel et collaboration simplifiée",
             "Sauvegardes journalières : cloud, local ou hybride"
-          ]
+          ],
         },
         {
           title: "🧑‍🤝‍🧑 Collaboration & télétravail",
@@ -467,7 +471,8 @@ export interface ServiceItem {
             "Conformité RGPD et archivage légal des emails"
           ]
         }
-      ]
+      ],
+       interCardText: "Custom text that will appear between this card and the next one."
       
     }
   

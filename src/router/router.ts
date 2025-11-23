@@ -6,11 +6,13 @@ import Home from '../components/Home.vue'
 import Particuliers from '../components/Particuliers.vue'
 import Professionnels from '../components/Professionnels.vue'
 import Apropos from '../components/Apropos.vue'
+import Nouschoisir from '../components/NousChoisir.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/particuliers', name: 'Particuliers', component: Particuliers },
   { path: '/professionnels', name: 'Professionnels', component: Professionnels },
+  { path: '/nouschoisir', name: 'Nouschoisir', component: Nouschoisir },
   { path: '/apropos', name: 'Apropos', component: Apropos }
 ]
 

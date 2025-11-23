@@ -3,7 +3,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import ContactForm from './ContactForm.vue'
 import Modal from "./Modal.vue"
 import { services, type ServiceItem } from "../data/services"
 
@@ -36,7 +35,6 @@ onMounted(() => {
   })
 })
 </script>
-
 <template>
   <div class="fullpage">
     <section class="parallax-hero rellax" data-rellax-speed="-3">
@@ -45,7 +43,6 @@ onMounted(() => {
         <div class="container text-center hero-content">
           <h1>Services pour les Professionnels</h1>
           <p>Solutions fiables, adaptées et sécurisées pour TPE, PME, indépendants et professions libérales.</p>
-         
         </div>
       </div>
     </section>
@@ -67,44 +64,59 @@ onMounted(() => {
         </svg>
       </div>
 
-      <!-- SERVICE CARDS LOOP -->
-      <article
-        v-for="(section, i) in services"
-        :key="section.id"
-        class="section-card"
-        :class="i % 2 === 0 ? 'layout-left' : 'layout-right'"
-        :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
-        :data-aos-delay="i * 100"
-      >
-        
-        <!-- LEFT TEXT BLOCK -->
-        <div class="text-block">
-          <!-- ICON -->
-          <div v-html="section.icon" class="service-icon"></div>
-
-          <h2 class="shine-title">{{ section.title }}</h2>
-          <p class="highlight">{{ section.highlight }}</p>
-          <p class="description">{{ section.description }}</p>
-
-          <button class="btn-main mt-3" @click="openModal(section)">
-            Découvrir
-          </button>
+      <!-- SERVICE CARDS LOOP WITH INTER-CARD TEXT -->
+      <div v-for="(section, i) in services" :key="section.id">
+         <!-- BETWEEN CARDS TEXT -->
+         <div
+          v-if="section.description"
+          class="between-text"
+          :data-aos="'fade-in'"
+          :data-aos-delay="i * 100 + 50"
+        >
+          {{ section.description }}
         </div>
+        <article
+          class="section-card"
+          :class="i % 2 === 0 ? 'layout-left' : 'layout-right'"
+          :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+          :data-aos-delay="i * 100"
+        >
 
-        <!-- IMAGE -->
-        <div class="image-block">
-          <div class="image-frame">
-         <!--     <img
-              v-if="!isMobile"
-              :src="section.image"
-              :alt="section.title"
-            /> -->
+      
+
+             <div class="icon-block">
+    <div v-html="section.icon" class="service-icon"></div>
+  </div>
+
+
+  <div class="text-block">
+    <h2 class="shine-title">{{ section.title }}</h2>
+    <p class="highlight">{{ section.highlight }}</p>
+    <button class="btn-main mt-3" @click="openModal(section)">
+      Découvrir
+    </button>
+  </div>
+       
+<!-- 
+
+
+          <div class="icon-block">
+            <div v-html="section.icon" class="service-icon"></div>
+            <h2 class="shine-title">{{ section.title }}</h2>
+            <p class="highlight">{{ section.highlight }}</p>
+            <p class="description">{{ section.description }}</p>
+            <button class="btn-main mt-3" @click="openModal(section)">
+              Découvrir
+            </button>
           </div>
-        </div>
+   -->
+          
+        </article>
 
-      </article>
+       
+      </div>
 
-      <ContactForm />
+ 
     </main>
 
     <!-- MODAL -->
@@ -116,8 +128,8 @@ onMounted(() => {
       @close="closeModal"
     />
   </div>
-  
 </template>
+
 
 
 <style scoped>
@@ -144,36 +156,36 @@ onMounted(() => {
   overflow: hidden;
   animation: glowPulse 8s infinite ease-in-out;
 }
-.layout-left .text-block {
+.layout-left .icon-block {
   order: 1;
 }
-.layout-left .image-block {
+.layout-left .text-block {
+  order: 2;
+}
+.layout-right .icon-block {
   order: 2;
 }
 .layout-right .text-block {
-  order: 2;
-}
-.layout-right .image-block {
   order: 1;
 }
 
 /* Text narrow column */
-.text-block {
+.icon-block {
   flex: 1;
   max-width: 450px;
 }
-.text-block ul {
+.icon-block ul {
   list-style-type: disc;
   padding-left: 1.5em;
   color: #555;
 }
-.text-block li {
+.icon-block li {
   margin-bottom: 0.6em;
   line-height: 1.4;
 }
 
 /* Image out of frame effect */
-.image-block {
+.text-block {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -411,7 +423,7 @@ onMounted(() => {
   gap: 2em; /* was 3em — tighter */
 }
 
-.text-block {
+.icon-block {
   flex: 1;
   max-width: 500px; /* was 450px — give more space */
 }
@@ -473,10 +485,10 @@ main.container {
   }
 
   /* Title above SVG */
-  .section-card .text-block {
+  .section-card .icon-block {
     order: 1;
   }
-  .section-card .image-block {
+  .section-card .text-block {
     order: 2;
     margin-top: 0.5em !important;
     margin-bottom: 0.5em !important;
@@ -488,7 +500,7 @@ main.container {
     font-size: 1.1em !important;
     margin-bottom: 0.3em !important; /* tighter under title */
   }
-  .section-card .text-block li {
+  .section-card .icon-block li {
     font-size: 0.95em !important;
     line-height: 1.4em !important;
   }
@@ -695,6 +707,137 @@ main.container {
   position: relative; /* or absolute/fixed if needed */
   z-index: 1;        /* higher than the background div */
   background: rgba(255, 255, 255, 0.8);
+}
+
+.between-text {
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  background: #f0f7ff;
+  border-left: 4px solid #007BFF;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0.9;
+  animation: slideFade 0.8s ease-in-out forwards;
+}
+
+@keyframes slideFade {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* --- Compact service card --- */
+.section-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  min-height: 80px;           /* much shorter */
+  max-height: 120px;          /* optional, caps height */
+  width: 100%;
+  gap: 1.5rem;                /* spacing between icon and text */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Alternate layout: icon on right */
+.layout-right .icon-block {
+  order: 2;
+}
+.layout-right .text-block {
+  order: 1;
+}
+
+/* Icon / logo block */
+.text-block {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;              /* consistent size for icon */
+  height: 60px;
+}
+
+/* Optional image frame styling if using real images */
+.image-frame {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;       /* round icon or logo */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text block */
+.icon-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* Title & text */
+.shine-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+.highlight {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+.description {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Button */
+.btn-main {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* Hover effect */
+.section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .section-card {
+    flex-direction: column;
+    min-height: auto;
+    max-height: none;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .layout-right .icon-block,
+  .layout-right .text-block {
+    order: unset;
+  }
+
+  .text-block,
+  .image-frame {
+    width: 50px;
+    height: 50px;
+  }
+
+  .shine-title {
+    font-size: 1rem;
+  }
+  .highlight, .description {
+    font-size: 0.85rem;
+  }
 }
 
 

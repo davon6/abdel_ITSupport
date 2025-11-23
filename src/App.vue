@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import TarifModal from '@/components/TarifModal.vue'
+import ChatWidget from './components/ChatWidget.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -86,6 +87,8 @@ function preventScroll(e) {
     </Transition>
 
     <AppHeader />
+    <ChatWidget />
+
     <FooterComponent />
 
     <teleport to="body" :style="{ zIndex: 9999999 }">

@@ -26,7 +26,11 @@ export const navigationLinks = [
       ],
     },
     {
-      label: 'À propos',
+      label: 'Nous Choisir',
+      basePath: '/nouschoisir',
+    },
+    {
+      label: 'Contactez Nous',
       basePath: '/apropos',
     },
   ]
