@@ -10,7 +10,9 @@
       :viewport-height="viewportHeight"
       :card-height="cardHeight"
     />
+    <FooterForm class="footer-fix"/>
   </div>
+ 
 </template>
 
 <script setup lang="ts">
@@ -25,7 +27,7 @@ import { useRoute } from 'vue-router'
 import CarouselDesktop from '@/components/CarouselDesktop.vue'
 import CarouselMobile from '@/components/CarouselMobile.vue'
 import { sections } from '../data/sections'
-
+import FooterForm from '@/components/FooterForm.vue'
 // --- reactive state
 const viewportHeight = ref(window.innerHeight)
 const scrollY = ref(0)
@@ -78,8 +80,8 @@ onMounted(async () => {
     window.removeEventListener("scroll", handleScroll); // Remove scroll event for mobile
   } else {
     // Desktop: Attach wheel event and desktop scroll handler
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("scroll", handleScroll);
+    window.removeEventListener("wheel", handleWheel);
+    window.removeEventListener("scroll", handleScroll);
   }
   
   window.addEventListener("resize", handleResize);
@@ -208,6 +210,12 @@ function smoothScrollTo(target: number, duration: number) {
 
 
 <style scoped>
+
+.footer-fix {
+  position: relative;
+  z-index: 20; /* or 9999 */
+}
+
 .carousel-wrapper {
   position: relative;
   width: 100%;

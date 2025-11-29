@@ -810,8 +810,10 @@ nav {
   text-decoration: none;
 }
 
+
+
 .nav-button:focus-visible {
-  outline: 2px solid #60a5fa; /* Tailwind blue-400 */
+  outline:none;
   outline-offset: 2px;
   box-shadow: none; /* just in case */
 }

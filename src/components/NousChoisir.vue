@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import FooterForm from '@/components/FooterForm.vue'
 
 const advantages = [
   {
@@ -73,7 +74,9 @@ onMounted(() => {
         </div>
       </div>
     </section>
+    <FooterForm class="footer-fix"/>
   </main>
+  
 </template>
 
 <style scoped>
@@ -143,4 +146,9 @@ onMounted(() => {
     gap: 30px;
   }
 }
+.footer-fix {
+  position: relative;
+  z-index: 20; /* or 9999 */
+}
+
 </style>

@@ -143,7 +143,6 @@ const submitForm = () => {
     padding: 0.4rem 0;
     font-size: 1rem;
     transition: border-color 0.3s;
-   
   }
   
   input::placeholder,
@@ -213,6 +212,118 @@ textarea::placeholder {
 
   color: rgba(0, 0, 0, 0.3);
 
+}
+
+
+input,
+textarea {
+  color: white; /* user-typed text */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6); /* softer white */
+}
+
+input:focus,
+textarea:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+.title {
+  color: white;
+}
+
+.submit-btn {
+  color: white;
+}
+
+.submit-btn::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.submit-btn:hover {
+  color: #ffdddd;
+}
+
+.submit-btn:hover::after {
+  background-color: rgba(255, 200, 200, 0.7);
+}
+
+
+
+/* Default (white/dark theme) */
+.contact-form-container input,
+.contact-form-container textarea {
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.contact-form-container input::placeholder,
+.contact-form-container textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contact-form-container input:focus,
+.contact-form-container textarea:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-form-container .title {
+  color: white;
+}
+
+.contact-form-container .submit-btn {
+  color: white;
+}
+
+.contact-form-container .submit-btn::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.contact-form-container .submit-btn:hover {
+  color: #ffdddd;
+}
+
+.contact-form-container .submit-btn:hover::after {
+  background-color: rgba(255, 200, 200, 0.7);
+}
+
+/* Special/light theme overrides */
+.contact-form-container.special input,
+.contact-form-container.special textarea {
+  color: black;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.contact-form-container.special input::placeholder,
+.contact-form-container.special textarea::placeholder {
+  color: rgba(0,0,0,0.3);
+}
+
+.contact-form-container.special input:focus,
+.contact-form-container.special textarea:focus {
+  border-bottom-color: rgba(0,0,0,0.6);
+}
+
+.contact-form-container.special .title {
+  color: black;
+}
+
+.contact-form-container.special .submit-btn {
+  color: black;
+}
+
+.contact-form-container.special .submit-btn::after {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.contact-form-container.special .submit-btn:hover {
+  color: #c0392b;
+}
+
+.contact-form-container.special .submit-btn:hover::after {
+  background-color: rgba(192, 57, 43, 0.7);
 }
 
   </style>

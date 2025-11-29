@@ -5,6 +5,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Modal from "./Modal.vue"
 import { services, type ServiceItem } from "../data/services"
+import FooterForm from '@/components/FooterForm.vue'
+
 
 const isMobile = ref(false)
 const pathHeight = ref('2500px')
@@ -116,7 +118,7 @@ onMounted(() => {
        
       </div>
 
- 
+      <FooterForm class="footer-fix"/>
     </main>
 
     <!-- MODAL -->
@@ -128,11 +130,18 @@ onMounted(() => {
       @close="closeModal"
     />
   </div>
+  
 </template>
 
 
 
 <style scoped>
+
+.footer-fix {
+  position: relative;
+  z-index: 20; /* or 9999 */
+}
+
 .container {
   max-width: 1100px;
   margin: 2em auto;

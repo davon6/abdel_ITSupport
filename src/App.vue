@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
-import FooterComponent from '@/components/FooterComponent.vue'
+//import FooterComponent from '@/components/FooterComponent.vue'
 import TarifModal from '@/components/TarifModal.vue'
 import ChatWidget from './components/ChatWidget.vue'
 
@@ -89,7 +89,7 @@ function preventScroll(e) {
     <AppHeader />
     <ChatWidget />
 
-    <FooterComponent />
+    <!--<FooterComponent />-->
 
     <teleport to="body" :style="{ zIndex: 9999999 }">
       <button

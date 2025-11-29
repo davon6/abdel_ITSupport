@@ -4,9 +4,9 @@
     <footer class="footer">
 
 
-      <ContactForm />
+    
 
-      
+
       <div class="footer-left">
         <p>© 2025 Shotech. All rights reserved.</p>
         <nav class="footer-links">
@@ -42,8 +42,6 @@
   
   <script lang="ts" setup>
   
-
-import ContactForm from './ContactForm.vue'
   // No specific logic for now
   </script>
   

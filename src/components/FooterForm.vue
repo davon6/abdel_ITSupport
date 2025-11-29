@@ -57,6 +57,7 @@ import ContactForm from './ContactForm.vue'
     padding: 20px;
     flex-wrap: wrap;
     font-family: Arial, sans-serif;
+    z-index: 9;
   }
   
   .footer-left {
