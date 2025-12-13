@@ -237,7 +237,7 @@ onMounted(() => {
 
   margin: 0.75rem auto 0; /* ← centers horizontally */
   padding: 0.45rem 1.1rem;
-  font-size: 0.85rem;
+  font-size: 1.25rem;
   font-weight: 600;
 
   background: rgba(0, 123, 255, 0.14);
@@ -386,6 +386,20 @@ footer, .footer-fix {
   justify-content: center;
   background: rgba(0,123,255,0.06);
   border-radius: 50%;
+}
+
+
+.shine-title {
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.4rem;       /* slightly bigger, confident */
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+
+  color: #003f9c;          /* deep blue, professional */
+  letter-spacing: 0.5px;   /* subtle spacing, more premium */
+  text-transform: capitalize;
+  position: relative;
 }
 
 </style>
