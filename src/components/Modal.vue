@@ -43,7 +43,7 @@
   .modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0, 0, 0, 0.65);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -56,12 +56,13 @@
     background: white;
     max-width: 1100px;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 2rem;
     position: relative;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-out;
-    top:10%
+    top: 10%;
+    border: 1px solid rgba(80, 90, 150, 0.12); /* subtle indigo */
   }
   
   .close-btn {
@@ -72,6 +73,11 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    color: #555;
+    transition: 0.2s;
+  }
+  .close-btn:hover {
+    color: #3a4aa6;
   }
   
   .modal-body {
@@ -84,16 +90,17 @@
   
   .modal-image-wrapper {
     flex: 0 0 250px;
-    margin-top: -50px; /* pop outside modal */
+    margin-top: -50px;
   }
   
   .modal-image {
     width: 100%;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     transform: translateY(-20px);
   }
   
+  /* Keep the same layout fully */
   .modal-sections {
     display: flex;
     flex-wrap: wrap;
@@ -103,23 +110,48 @@
     overflow-y: auto;
   }
   
+  /* Section container - subtle hint of color */
   .modal-section {
     flex: 1 1 45%;
     min-width: 280px;
+    padding: 0.5rem 0.2rem;
+    border-left: 3px solid rgba(60, 70, 150, 0.3); /* subtle indigo bar */
   }
   
+  /* Header color: clean indigo-blue */
   .modal-section h3 {
-    color: #007BFF;
+    color: #3a4aa6;
     margin-bottom: 0.5rem;
+    font-weight: 600;
   }
   
+  /* Remove bullets completely */
   .modal-section ul {
-    padding-left: 1.2rem;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
   }
   
+  /* New cleaner list style */
   .modal-section li {
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
+    margin-bottom: 0.45rem;
+    padding-left: 0.75rem;
+    position: relative;
+    line-height: 1.45;
+    font-size: 0.97rem;
+  }
+  
+  /* Tiny indigo bar instead of bullet, super minimal */
+  .modal-section li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    height: 4px;
+    width: 4px;
+    border-radius: 2px;
+    background: #3a4aa6;
+    opacity: 0.7;
   }
   
   /* Responsive */
@@ -128,11 +160,9 @@
       flex-direction: column;
       align-items: center;
     }
-  
     .modal-image-wrapper {
       margin-top: 0;
     }
-  
     .modal-section {
       flex: 1 1 100%;
     }
@@ -142,5 +172,30 @@
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .modal-section ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0;
+}
+
+.modal-section li {
+  margin-bottom: 0.55rem;
+  line-height: 1.45;
+  font-size: 0.97rem;
+
+  /* remove *all* bullet/marker behavior */
+  list-style-type: none !important;
+  list-style: none !important;
+  display: block;
+}
+
+.modal-section li::marker,
+.modal-section li::before,
+.modal-section li::after {
+  content: none !important;
+  display: none !important;
+}
+
   </style>
   

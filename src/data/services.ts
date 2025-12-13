@@ -144,7 +144,7 @@ export interface ServiceItem {
     {
       id: "infogerance",
       title: "Infogérance & Conseil IT",
-      highlight: "Nous prenons en charge votre système d’information",
+      highlight: "Nous prenons en charge l’ensemble ou une partie de votre système d’information via des contrats de services adaptés à vos besoins.",
       description: "Confiez-nous la gestion partielle ou totale de votre système d'information, et concentrez-vous sur l’essentiel : votre activité.",
       icon: securityIcon,
       image: "/infogerance.avif",
@@ -297,14 +297,14 @@ export interface ServiceItem {
           ]
         }
       ],
-       interCardText: "Custom text that will appear between this card and the next one."
+       interCardText: "Protégez vos systèmes, vos données et votre réputation.ShoTech vous accompagne dans la mise en place de solutions de cybersécurité adaptées à la taille et aux enjeux de votre structure. Nous agissons en prévention, en sécurisation et en réaction aux menaces numériques, avec une approche globale et conforme au RGPD."
       
     },
   
     {
       id: "telephonie",
       title: "Solutions & Support Téléphonie",
-      highlight: "Téléphonie IP / VoIP, installation, gestion, maintenance.",
+      highlight: "📞 Optimisez vos communications avec des solutions téléphoniques modernes, flexibles et évolutives.➡️ Installation, gestion,maintenance et assistance téléphonie IP & VoIP, et Smart Phone Simplifiez la gestion de vos appels et assurez la continuité de votre activité grâce à notre solution téléphonie",
       description: "Optimisez vos communications",
       icon: servicesIcon,
       image: "/telephonie.avif",
@@ -355,14 +355,14 @@ export interface ServiceItem {
           ]
         }
       ],
-       interCardText: "Custom text that will appear between this card and the next one."
+       interCardText: "ShoTech vous conseille et vous accompagne dans votre projet de mise en place d’une solution de téléphonie d’entreprise VoIP. Depuis l’analyse de vos besoins à l’intégration de la solution, les consultants ShoTech vous aident à choisir la solution la mieux adaptée."
     },
   
     {
       id: "reseau",
       title: "Administration Systèmes & Réseaux",
       highlight: "Installation, migration, sécurisation de réseaux.",
-      description: "Optimisez la connectivité de votre entreprise",
+      description: "ShoTech vous conseille et vous accompagne dans votre projet de mise en place d’une solution de téléphonie d’entreprise VoIP. Depuis l’analyse de vos besoins à l’intégration de la solution, les consultants ShoTech vous aident à choisir la solution la mieux adaptée.",
       icon: reseauIcon,
       image: "/network.avif",
       modalSections: [
@@ -414,7 +414,7 @@ export interface ServiceItem {
           ]
         }
       ],
-       interCardText: "Custom text that will appear between this card and the next one."
+       interCardText: "Optimisez la connectivité de votre entreprise"
       
     },
   
@@ -472,7 +472,7 @@ export interface ServiceItem {
           ]
         }
       ],
-       interCardText: "Custom text that will appear between this card and the next one."
+       interCardText: "ShoTech vous accompagne dans la transformation numérique de votre organisation grâce à des solutions cloud performantes, évolutives et sécurisées. Nous déployons des outils de travail collaboratif adaptés à votre structure pour améliorer la communication, la productivité et la mobilité de vos équipes"
       
     }
   
