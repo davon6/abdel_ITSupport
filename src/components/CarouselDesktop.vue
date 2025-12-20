@@ -99,6 +99,40 @@
     border: 1px solid #bfdbfe;
   }
 
-  
+  .content-list {
+  list-style: none;   /* remove bullets */
+  padding-left: 0;    /* remove default left padding */
+  margin: 0;          /* optional: remove default margin */
+}
+.content-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* space between items */
+}
+
+.content-list li {
+  position: relative;
+  padding: 0.8rem 1rem;  /* vertical + horizontal padding */
+  border-left: 3px solid #3b82f6; /* thin blue accent line */
+  background: rgba(59, 130, 246, 0.05); /* very subtle blue background */
+  border-radius: 0.6rem; 
+  color: #1e3a8a;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Optional: big tick icon on the left */
+.content-list li::before {
+  content: "✔";          /* big tick */
+  font-size: 1.2rem;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
   </style>
   

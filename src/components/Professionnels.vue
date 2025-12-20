@@ -13,13 +13,13 @@ const closeModal = () => (selectedService.value = null)
 
 onMounted(() => {
   AOS.init({ duration: 800, once: true })
-  new Rellax('.rellax')
+ /* new Rellax('.rellax')
 
   const oldColor = document.body.style.backgroundColor
   document.body.style.backgroundColor = '#0042a5'
   onUnmounted(() => {
     document.body.style.backgroundColor = oldColor
-  })
+  })*/
 })
 </script>
 
@@ -107,8 +107,8 @@ onMounted(() => {
   z-index: 1;
   max-width: 600px;
 }
-.hero-content h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5em; }
-.hero-content p { font-size: 1.2rem; line-height: 1.4; }
+.hero-content h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5em; color:#063e91 }
+.hero-content p { font-size: 1.2rem; line-height: 1.4; color:#063e91}
 
 /* Container */
 .container {
@@ -117,9 +117,9 @@ onMounted(() => {
 
   position: relative;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  background: rgba(255,255,255,0.05); /* super subtle */
-  backdrop-filter: blur(4px);
+ 
+  background: rgba(255,255,255,0.05); 
+ backdrop-filter: blur(2px);
   border-radius: 12px;
   padding: 2em 1em;
 }
@@ -322,7 +322,7 @@ footer, .footer-fix {
   position: absolute;
   inset: 0;
   background: url('/wix_bg.avif') center / cover no-repeat;
-  opacity: 0.25; /* subtle, decorative */
+ /*opacity: 0.25;  subtle, decorative */
   z-index: 0;
 }
 
@@ -400,6 +400,9 @@ footer, .footer-fix {
   letter-spacing: 0.5px;   /* subtle spacing, more premium */
   text-transform: capitalize;
   position: relative;
+}
+.h1 {
+
 }
 
 </style>
