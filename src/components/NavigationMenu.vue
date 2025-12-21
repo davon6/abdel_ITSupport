@@ -619,7 +619,7 @@ const toggleBurger = () => {
 .burger svg {
   width: 52px;
   height: 52px;
-  stroke: white; /* or your brand color */
+  stroke: rgba(23, 47, 232, 0.763); /* or your brand color */
   transition: stroke 0.2s ease;
 }
 

@@ -225,14 +225,13 @@ function smoothScrollTo(target: number, duration: number) {
   overflow-x: hidden; /* prevent horizontal scroll */
 }
 
-/* Center gradient */
 .vertical-bg {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 760px;
+  width: min(760px, 100vw);
   background: linear-gradient(
     180deg,
     rgba(255,255,255,0.35),
@@ -242,6 +241,18 @@ function smoothScrollTo(target: number, duration: number) {
   z-index: 0;
   pointer-events: none;
 }
+
+@media (max-width: 768px) {
+  .vertical-bg {
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    width: 100vw; /* force full viewport width */
+  }
+}
+
+
 
 /* Side backgrounds */
 .side-bg {
@@ -281,6 +292,11 @@ function smoothScrollTo(target: number, duration: number) {
   }
 }
 
+@media (max-width: 600px) {
+  .carousel-wrapper {
+    overflow-x: visible; /* allow full-width cards */
+  }
+}
 
 
 </style>

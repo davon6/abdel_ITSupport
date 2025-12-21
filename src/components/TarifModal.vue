@@ -1,12 +1,12 @@
 <template>
     <teleport to="body">
       <transition name="fade-slide">
-        <div v-if="show" class="fixed inset-0 flex items-center justify-center pointer-events-auto">
+        <div v-if="show"  class="fixed inset-0 flex items-start justify-center pt-4 px-2">
           <div
             class="tarif-card relative bg-gradient-to-br from-blue-100 to-blue-300 rounded-3xl shadow-3xl p-4 max-w-[90%] w-[95%] pointer-events-auto"
           >
             <!-- Modal header with title and close button -->
-            <div class="flex justify-between items-center w-full mb-3 p-2">
+            <div class="modal-content overflow-y-auto max-h-[90vh]">
              
               <button
                 @click="$emit('close')"
@@ -225,5 +225,19 @@
     max-height: none !important;
     overflow-y: visible !important;
   }
+
+  @media (max-width: 600px) {
+  .tarif-card {
+    position: fixed;
+    top: 1rem;           /* start near the top */
+    left: 50%;
+    transform: translateX(-50%); /* only horizontal centering */
+    width: 95%;
+    max-height: 95vh;    /* prevent overflow */
+    overflow-y: auto;    /* allow scrolling if content is too tall */
+    padding: 1rem 1.2rem;
+  }
+}
+
   </style>
   

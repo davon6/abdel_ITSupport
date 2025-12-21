@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import Rellax from 'rellax'
+import { ref, onMounted} from 'vue'
+//import Rellax from 'rellax'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Modal from "./Modal.vue"
@@ -88,7 +88,7 @@ onMounted(() => {
 .parallax-hero {
   position: relative;
   height: 320px;
-  background: url('/professional-hero.jpg') center/cover no-repeat;
+ /* background: url('/professional-hero.jpg') center/cover no-repeat;*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -401,8 +401,24 @@ footer, .footer-fix {
   text-transform: capitalize;
   position: relative;
 }
-.h1 {
+@media (max-width: 768px) {
+  .hero-content {
+    max-width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
 
+  .hero-content h1 {
+    font-size: 1.6rem;
+    line-height: 1.25;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-wrapper px-4 py-12 space-y-12">
+  <div class="mobile-wrapper px-0 sm:px-4 py-12 space-y-12">
     <div
       v-for="(section) in sections"
       :key="section.id"
@@ -57,6 +57,8 @@ import { sections, sectionIcons } from '../data/sections'
     margin-top: 2rem;  /* Add space above each card */
     margin-bottom: 2rem;  /* Add space below each card */
     box-shadow: none; /* No shadow for mobile */
+    position: relative;
+    z-index: 2;
 }
 
 
@@ -132,4 +134,64 @@ import { sections, sectionIcons } from '../data/sections'
     background-color: rgba(66, 133, 244, 0.2); /* Light blue separator */
   }
   
+@media (max-width: 600px) {
+  .card h2 svg {
+    filter: drop-shadow(0 0 6px rgba(66,133,244,0.35));
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.95),
+      rgba(240,248,255,0.85)
+    );
+
+    border: 1px solid rgba(66, 133, 244, 0.18);
+    border-radius: 1.2rem;
+
+    box-shadow:
+      0 8px 20px rgba(0, 66, 165, 0.12),
+      0 0 18px rgba(120, 180, 255, 0.18);
+
+    backdrop-filter: blur(6px);
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-item:nth-child(odd) .card {
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.95),
+      rgba(235,245,255,0.9)
+    );
+  }
+
+  .carousel-item:nth-child(even) .card {
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.95),
+      rgba(245,240,255,0.9)
+    );
+  }
+}
+@media (max-width: 600px) {
+  .card h2 svg {
+    filter: drop-shadow(0 0 6px rgba(66,133,244,0.35));
+  }
+}
+
+
+@media (max-width: 600px) {
+  .card {
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 1.2rem;
+    max-width: 100%;
+  }
+}
+
+
 </style>
