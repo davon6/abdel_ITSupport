@@ -130,6 +130,14 @@ function preventScroll(e) {
 </template>
 <style>
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
 body.modal-open #app {
   filter: blur(6px);
   transition: filter 0.3s ease;
@@ -150,6 +158,12 @@ body.modal-open::before {
   z-index: 99998;
   pointer-events: none;
   transition: opacity 0.3s ease;
+}
+#app {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 </style>

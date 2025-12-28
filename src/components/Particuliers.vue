@@ -104,10 +104,23 @@ function updateWrapperHeight() {
   const spacing = spacingFactor * viewportHeight.value;
 
   // The last card should end exactly at the bottom of the wrapper
-  wrapperHeight.value = spacing * (total - 1) + cardHeight.value;
+  wrapperHeight.value = spacing * (total - 1) + cardHeight.value-500;
+  
 }
 
+/*
+function updateWrapperHeight() {
+  const spacing = spacingFactor * viewportHeight.value;
 
+  const overshoot =
+    viewportHeight.value - cardHeight.value;
+
+  wrapperHeight.value =
+    spacing * (total - 1) +
+    cardHeight.value -
+    overshoot;
+}
+*/
 
 let scrollTimeout: number | null = null;
 function handleScroll() {
@@ -212,11 +225,13 @@ function smoothScrollTo(target: number, duration: number) {
       :viewport-height="viewportHeight"
       :card-height="cardHeight"
     />
-    <FooterForm class="footer-fix"/>
+
   </div>
+      <FooterForm class="footer-fix"/>
 </template>
 
 <style scoped>
+
 .carousel-wrapper {
   position: relative;
   width: 100%;
@@ -259,7 +274,7 @@ function smoothScrollTo(target: number, duration: number) {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 200px; /* adjust thickness */
+  width: 1200px; /* adjust thickness */
   background-image: url("/17973908.jpg");
   background-size: auto 3200px; /* bigger vertical size -> fewer repeats */
   opacity: 0.25;

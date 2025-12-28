@@ -197,5 +197,41 @@
   display: none !important;
 }
 
+
+/* Force light mode colors */
+.modal-container {
+  background: #ffffff;
+  color: #1c2b4a; /* text fallback for Opera iOS */
+}
+
+/* All headings (h1-h6), paragraphs, list items inside modal */
+.modal-container h1,
+.modal-container h2,
+.modal-container h3,
+.modal-container h4,
+.modal-container h5,
+.modal-container h6,
+.modal-container p,
+.modal-container li {
+  color: #1c2b4a !important;
+}
+
+/* Optional: make links readable too */
+.modal-container a {
+  color: #0042a5 !important;
+  text-decoration: underline;
+}
+
+/* Keep the existing blue for h3 */
+.modal-section h3 {
+  color: #3a4aa6 !important;
+}
+
+/* List bullet indicators */
+.modal-section li::before {
+  background: #3a4aa6 !important;
+  opacity: 0.7;
+}
+
   </style>
   

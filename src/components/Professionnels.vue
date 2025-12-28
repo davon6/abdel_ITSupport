@@ -63,9 +63,9 @@ onMounted(() => {
         
       </div>
 
-      <FooterForm />
+    
     </main>
-
+    <FooterForm />
     <Modal
       v-if="selectedService"
       :title="selectedService.title"
@@ -420,5 +420,70 @@ footer, .footer-fix {
     line-height: 1.35;
   }
 }
+
+
+.highlight {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+  color: #1e2a3a; /* ← FORCE readable color */
+}
+.between-text {
+  position: relative;
+  margin: 2rem 0;
+  padding: 1rem 1.5rem 1rem 2rem;
+  background: #f0f7ff;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  overflow: hidden;
+
+  color: #1c2b4a; /* ← FORCE TEXT COLOR */
+}
+.icon-block {
+  color: #0042a5; /* ← THIS CONTROLS SVG COLOR */
+}
+.icon-block svg {
+  stroke: #0042a5 !important;
+  fill: none;
+}
+
+.icon-block svg path,
+.icon-block svg circle,
+.icon-block svg rect,
+.icon-block svg line {
+  stroke: #0042a5 !important;
+}
+.icon-block svg [fill]:not([fill="none"]) {
+  fill: #0042a5 !important;
+}
+html, body {
+  background-color: #ffffff;
+  color: #1e2a3a;
+}
+
+/*
+
+.background-path::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+  to right,
+  #284d97 0%,
+  #284d97 5%,                    
+  transparent calc(50% - 250px),
+  transparent calc(50% + 250px),
+  #f9fbff 95%,
+  #f9fbff 100%
+);
+
+right: 400cm;
+
+  pointer-events: none;
+  z-index: 1;
+
+  width:1600px
+}*/
 
 </style>

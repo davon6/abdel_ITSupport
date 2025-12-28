@@ -49,6 +49,7 @@ onMounted(() => {
 
 
 <template>
+  <div class="home-bg">
   <header>
 
   </header>
@@ -180,6 +181,7 @@ onMounted(() => {
 
   </main>
   <FooterComponent />
+  </div>
 </template>
 
 
@@ -331,11 +333,25 @@ html {
 }
 
 .presentation-wrapper {
+  color: #0b1f33;
   padding: 120px 20px;
   background: linear-gradient(135deg, #f4f4f9 0%, #ffffff 100%);
   position: relative;
   z-index: 2;
 }
+
+.contact-wrapper h2 {
+  color: #0b1f33;
+}
+
+.contact-wrapper p {
+  color: #2c2c2c;
+}
+
+.presentation-wrapper .lead {
+  color: #2c2c2c;
+}
+
 
 .section-title {
   margin-bottom: 30px;
@@ -514,13 +530,13 @@ html {
   position: relative;
   z-index: 2;
 }
-
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  justify-content: center;
   gap: 30px;
-  margin-top: 60px;
 }
+
 
 .service-card {
   background: rgba(255, 255, 255, 0.05);
@@ -600,6 +616,72 @@ html, body {
 
 }
 
+.home-bg {
+  position: relative;
+  min-height: 100vh;
+  width: 100%; /* instead of 100vw */
+  background: url('/home.jpg') center / cover no-repeat;
+  overflow-x: hidden; /* just in case */
+}
+.home-bg main {
+  max-width: 1200px; /* or whatever you like */
+  margin: 0 auto;    /* center content */
+  padding: 0 20px;   /* spacing on sides */
+}
+
+/* soft veil so content stays clean */
+.home-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(244, 244, 249, 0.92);
+  z-index: 0;
+}
+
+/* bring content above overlay */
+.home-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.parallax-hero,
+.section-parallax,
+.section-light,
+.contact-wrapper {
+  width: 100%;
+  min-width: 100%;   /* just in case */
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2; /* above overlay */
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.home-bg {
+  width: 100%; /* not 100vw */
+  position: relative;
+  overflow-x: hidden;
+}
 
 
 </style>
