@@ -1,10 +1,12 @@
 <template>
 
+<div class="footer-zone">
+  <ContactForm theme="footer"/>
 
-    <footer class="footer">
+    <footer class="footer" >
 
 
-      <ContactForm />
+    
 
       
       <div class="footer-left">
@@ -38,6 +40,7 @@
         </a>
       </div>
     </footer>
+  </div>
   </template>
   
   <script lang="ts" setup>
@@ -48,6 +51,9 @@ import ContactForm from './ContactForm.vue'
   </script>
   
   <style scoped>
+  .footer-zone {
+    background-color: #0077cc;
+}
   .footer {
     display: flex;
     justify-content: space-between;
@@ -128,5 +134,6 @@ import ContactForm from './ContactForm.vue'
       gap: 20px;
     }
   }
+
   </style>
   
